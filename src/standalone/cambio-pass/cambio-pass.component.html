@@ -1,0 +1,39 @@
+
+  <div class="modal-body">
+
+    <div class=" text-center alert alert-warning">
+      <p class="mb-2 text-black font-weight-bold">{{usuario?.nombre}}, {{usuario?.apellido}}</p>
+      <div class=" p-2 d-flex align-items-center justify-content-center" style="border-radius: 10px;">
+        <div>
+          <p class="mb-0">Por seguridad, debes actualizar tu contraseña.</p>
+          <p class="text-muted small">Este cambio es necesario para continuar.</p>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="formulario">
+      <div class="mb-3 filled form-group tooltip-end-top">
+          <i data-acorn-icon="lock-off"></i>
+          <input [type]="mostrarPassword ? 'text' : 'password'" class="form-control pe-7" name="password" placeholder="Contraseña" formControlName="password"/>
+          <a class="text-small position-absolute t-3 e-3" (click)="cambiarVisibilidad()" style="cursor: pointer;">Revelar</a>
+          <app-error-formulario [control]="formulario.get('password')"></app-error-formulario>
+      </div>
+
+      <div class="mb-3 filled form-group tooltip-end-top">
+        <i data-acorn-icon="lock-off"></i>
+          <input [type]="mostrarPassword ? 'text' : 'password'" class="form-control pe-7" name="confirmPassword" placeholder="Confirmar Contraseña" formControlName="confirmPassword"/>
+          <a class="text-small position-absolute t-3 e-3" (click)="cambiarVisibilidad()" style="cursor: pointer;">Revelar</a>
+          <div *ngIf="formulario.errors?.['passwordMismatch'] && formulario.get('confirmPassword')?.touched">
+            <small class="text-danger ms-2">Las contraseñas no coinciden.</small>
+          </div>
+      </div>
+
+      <button type="button" class="btn btn-primary me-2" (click)="aceptar()" [disabled]="!formulario.valid">Aceptar</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+  </form>
+
+
+  </div>
+
+
+
+

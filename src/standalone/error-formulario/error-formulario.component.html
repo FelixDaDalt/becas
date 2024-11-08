@@ -1,0 +1,14 @@
+<div *ngIf="control && (control.touched || control.dirty) ">
+  <small class="text-danger" *ngIf="control.hasError('required')">Este campo es obligatorio.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('minlength')">Debe tener al menos {{ control.errors?.['minlength'].requiredLength }} caracteres.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('maxlength')">Debe tener máximo {{ control.errors?.['maxlength'].requiredLength }} caracteres.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('pattern')">Solo numeros.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('noDisponible')">{{control.value}} está en uso.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('email')">Ingrese un email válido.</small>
+  <small class="text-danger ms-2" *ngIf="control.hasError('maxFileSize')">El archivo no debe exceder los  1 MB.</small>
+
+  <!-- Agrega otros mensajes personalizados aquí si es necesario -->
+  <div *ngIf="control?.valid && control?.value && !control?.errors?.['noDisponible'] && checkDisponibilidad">
+    <small class="text-success">{{control.value}} está disponible</small>
+  </div>
+</div>

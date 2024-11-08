@@ -25,9 +25,37 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/font/CS-Interface/style.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/vendor/OverlayScrollbars.min.css",
+              "src/assets/css/styles.css",
+              "src/assets/css/main.css",
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
-            "scripts": []
+            "scripts": [
+
+              "src/assets/js/vendor/jquery-3.5.1.min.js",
+              "src/assets/js/vendor/bootstrap.bundle.min.js",
+              "src/assets/js/vendor/OverlayScrollbars.min.js",
+              "src/assets/js/vendor/autoComplete.min.js",
+              "src/assets/js/vendor/clamp.min.js",
+
+              "src/assets/icon/acorn-icons.js",
+              "src/assets/icon/acorn-icons-interface.js",
+              "src/assets/icon/acorn-icons-learning.js",
+
+              "src/assets/js/base/helpers.js",
+              "src/assets/js/base/globals.js",
+              "src/assets/js/base/nav.js",
+              "src/assets/js/base/search.js",
+              "src/assets/js/base/settings.js",
+
+              "src/assets/js/common.js",
+              "src/assets/js/scripts.js"
+
+            ]
           },
           "configurations": {
             "production": {
@@ -94,5 +122,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "fbb92075-63bc-4c2d-a79d-a73e1cc64f01"
   }
 }

@@ -1,0 +1,48 @@
+
+
+
+
+  <!-- Background Start -->
+  <div class="fixed-background"></div>
+  <!-- Background End -->
+
+  <div class="container-fluid p-0 position-relative vh-100">
+    <div class="row g-0 h-100">
+      <!-- Left Side Start -->
+      <div class="offset-0 col-12 d-none d-lg-flex offset-md-1 col-lg h-lg-100">
+
+      </div>
+      <!-- Left Side End -->
+
+      <!-- Right Side Start -->
+      <div class="col-12 col-lg-auto h-100 pb-4 px-4 pt-0 p-lg-0">
+        <div class="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center align-items-center shadow-deep py-5 full-page-content-right-border">
+          <div class="sw-lg-60 px-5 min-h-100">
+            <div class="sh-11">
+              <a href="index.html">
+                <div class="logo-default"></div>
+              </a>
+            </div>
+            <div class="mb-5">
+              <h2 class="cta-1 mb-0 text-primary">Ooops !</h2>
+              <h2 class="cta-1 mb-0 text-primary">{{ usuario?.apellido }}, {{ usuario?.nombre }}</h2>
+            </div>
+            <div class="mb-5">
+              <p class="h6" *ngIf="usuario?.id_colegio_colegio?.suspendido">Tu colegio <strong>"{{ usuario?.id_colegio_colegio?.nombre }}"</strong> está suspendido.</p>
+              <p class="h6" *ngIf="!usuario?.id_colegio_colegio?.suspendido && usuario?.suspendido">Tu usuario <strong>"{{ usuario?.dni }}"</strong> está suspendido.</p>
+              <p class="h6">
+                Ponte en contacto con el administrador para arreglarlo
+                <a href="index.html">contactar</a>
+              </p>
+            </div>
+            <div>
+              <button (click)="logout()" class="btn btn-primary mt-2">Cerrar sesión</button> <!-- Botón de cerrar sesión -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right Side End -->
+    </div>
+  </div>
+
+
