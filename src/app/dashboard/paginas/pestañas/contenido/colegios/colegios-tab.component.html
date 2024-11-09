@@ -1,0 +1,93 @@
+<div class="row">
+  <!-- Page Content Start -->
+  <div class="col">
+      <!-- Contenedor del buscador -->
+
+        <!--Search input-->
+        <div class="text-center">
+          <div class="input-group input-group-sm mb-3">
+            <!-- Alta -->
+            <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()"><i class="bi bi-plus-circle me-2"></i>Alta</button>
+            <!-- Alta -->
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
+          </div>
+
+        </div>
+
+
+
+
+    <!--Colegios Cards-->
+    <ng-container *ngIf="(colegios$|async) as colegios">
+    <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="colegios.length > 0; else sinDatos">
+        <div class="col" *ngFor="let colegio of colegios">
+          <div class="card sh-20 hover-img-scale-up hover-reveal">
+            <span class="badge position-absolute top-0 end-0 m-2"
+            style="cursor: pointer;z-index: 9999;"
+            [ngClass]="{
+              'bg-danger': colegio.suspendido,
+              'bg-success': !colegio.suspendido
+            }">{{colegio.suspendido?'Suspendido':'Activo'}}</span>
+            <img *ngIf="colegio.logo" [src]="'data:image/png;base64,' + colegio.logo" class="card-img h-100 scale colegio-logo" alt="card image" />
+            <div class="card-img-overlay d-flex align-items-end reveal-content">
+              <div class="row g-0">
+                <div class="col pe-2">
+
+                    <h5 class="heading text-white mb-1 fw-bold text-shadow">{{colegio.nombre}}</h5>
+
+
+                  <div class="d-inline-block">
+                    <div class="text-white"><span>{{colegio.direccion_calle}} {{colegio.direccion_numero}} - {{colegio.localidad}}</span></div>
+                  </div>
+
+                  <div class="col-auto me-auto pt-2">
+                    <button
+                    class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
+                    type="button"
+                    (click)="agregarResponsable(colegio.id)">
+                      <i class="bi bi-person-fill-add text-primary"></i>
+                    </button>
+
+                    <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                      <i class="bi bi-pencil-fill text-primary"></i>
+                    </button>
+
+
+                    <button
+                    class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                    type="button"
+                    (click)="suspenderColegio(colegio.id)"
+                    >
+                      <i class="text-primary" [ngClass]="colegio.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                    </button>
+
+                    <button
+                    class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                    type="button"
+                    (click)="detalleColegio(colegio.id)"
+                    >
+                      <i class="text-primary bi bi-eye-fill"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+        <!--Load More-->
+        <div class="text-center">
+          <button class="btn btn-xl btn-outline-primary sw-30">Load More</button>
+        </div>
+    </ng-container>
+  </div>
+
+
+</div>
+
+<ng-template #sinDatos>
+  <app-sin-datos></app-sin-datos>
+</ng-template>
+

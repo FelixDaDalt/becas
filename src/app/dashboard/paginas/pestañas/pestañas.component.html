@@ -1,0 +1,36 @@
+<!--Pestañas-->
+<ul class="nav nav-tabs nav-tabs-title nav-tabs-line-title responsive-tabs" role="tablist" >
+  <li class="nav-item" role="presentation"  *Roles="[0]">
+    <a class="nav-link" routerLink="colegios" routerLinkActive="active" role="tab">Colegios</a>
+  </li>
+
+  <li class="nav-item" role="presentation" *Roles="[0]">
+    <a class="nav-link" routerLink="administradores" routerLinkActive="active" role="tab" >Administradores</a>
+  </li>
+
+  <li class="nav-item" role="presentation"  *Roles="[1,2,3]">
+    <a class="nav-link" routerLink="colegio" routerLinkActive="active" role="tab">Mi Colegio</a>
+  </li>
+
+  <li class="nav-item" role="presentation" *Roles="[0,1]">
+    <a class="nav-link" routerLink="responsables" routerLinkActive="active" role="tab" >Responsables</a>
+  </li>
+
+  <li class="nav-item" role="presentation" *Roles="[0]">
+    <a class="nav-link" routerLink="configuraciones" routerLinkActive="active" role="tab" ><i class="bi bi-gear-fill"></i> Configuraciones</a>
+  </li>
+
+</ul>
+<!--Pestañas-->
+
+<!--Contenido-->
+<div class="tab-content">
+
+  <!-- Colegios Tab Start -->
+  <div class="tab-pane fade active show" role="tabpanel">
+    <router-outlet></router-outlet>
+  </div>
+  <!-- Colegios Tab End -->
+
+</div>
+<!--Contenido-->

@@ -96,4 +96,9 @@ export class AuthService {
     const user = this.getUser();
     return user?.id_rol || 0;
   }
+
+  userHasRole(rolesPermitidos: number[]): boolean {
+    const rolUsuario = this.getUserRole();
+    return rolesPermitidos.includes(rolUsuario);
+  }
 }

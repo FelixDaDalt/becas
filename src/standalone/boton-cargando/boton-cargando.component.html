@@ -1,0 +1,9 @@
+<button [disabled]="loading || disabled" class="btn btn-primary mb-1">
+  <ng-container *ngIf="loading; else buttonContent">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      cargando...
+  </ng-container>
+  <ng-template #buttonContent>
+    {{label}}
+  </ng-template>
+</button>

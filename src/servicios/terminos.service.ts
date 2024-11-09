@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, shareReplay, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { tyc } from 'src/app/standalone/terminos/tyc';
+import { tyc } from 'src/standalone/terminos/tyc';
+
 
 @Injectable({
   providedIn: 'root'

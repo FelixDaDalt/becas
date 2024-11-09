@@ -1,0 +1,19 @@
+.input-group-text {
+  background-color: #e9ecef; /* Fondo sutil para el ícono */
+  border: 1px solid #ced4da; /* Borde para el ícono */
+}
+
+.custom-card-body img {
+  width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Hace que la imagen ocupe toda la altura del contenedor */
+  object-fit: cover; /* Asegura que la imagen mantenga su proporción al recortarse */
+}
+
+.card-img-overlay{
+  background: rgba(0, 0, 0, 0.075);
+}
+
+.card .card-img-overlay {
+  padding-top: 20px;
+  padding-left: 40px;
+}

@@ -122,6 +122,16 @@ Table of Contents
   height: calc(100% - var(--small-title-height)) !important;
 }
 
+.h-95-card {
+  height: calc(95% - var(--small-title-height)) !important;
+}
+
+
+.h-90-card {
+  height: calc(90% - var(--small-title-height)) !important;
+}
+
+
 .w-100 {
   width: 100% !important;
 }
@@ -5486,7 +5496,7 @@ button {
   font-size: 0.9em;
   border-radius: var(--border-radius-md);
   line-height: 1;
-  height: 30px;
+  height: 28px;
 }
 .btn-sm.btn-icon,
 .btn-group-sm > .btn.btn-icon {
@@ -16033,3 +16043,5 @@ html[data-radius=standard] #settings .figure {
 html[data-show=true] .settings-button {
   opacity: 1;
 }
+
+

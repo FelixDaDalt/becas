@@ -1,9 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-error-formulario',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './error-formulario.component.html',
   styleUrls: ['./error-formulario.component.css']
 })
