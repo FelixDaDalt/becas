@@ -8,7 +8,7 @@ import { Usuario } from 'src/interfaces/usuario';
 @Injectable({
   providedIn: 'root'
 })
-export class Delegadoservice {
+export class DelegadoService {
 
   private delegadosSubject = new BehaviorSubject<Usuario[]>([])
   delegados$ = this.delegadosSubject.asObservable().pipe(shareReplay(1))

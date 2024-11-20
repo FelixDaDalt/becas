@@ -1,9 +1,10 @@
- <!--Search input-->
-
- <div class="text-center">
+<div class="text-center">
   <div class="input-group input-group-sm mb-3">
-  <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
+    <!-- Alta -->
+    <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()" *Roles="[0]"><i class="bi bi-plus-circle me-2"></i>Alta</button>
+    <!-- Alta -->
     <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+    <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
   </div>
 </div>
 
@@ -22,15 +23,28 @@
                 <div class="d-flex flex-column">
                   <div>{{responsable.apellido}},{{responsable.nombre}}</div>
                   <div class="text-small text-muted">{{responsable.id_colegio_colegio?.nombre}}</div>
+                  <div class="text-small text-muted">DNI: {{responsable.dni}}</div>
                   <span class="badge rounded-pill me-1 position-absolute s-2 t-n2 z-index-1"  [ngClass]="responsable.suspendido==1?'bg-danger':'bg-success'">
                     {{responsable.suspendido==1?'suspendido':'Activo'}}
                   </span>
                 </div>
                 <div class="d-flex">
-                  <button type="button" class="btn btn-outline-primary btn-icon btn-sm ms-1" (click)="reiniciarPassword(responsable.id)"><i class="bi bi-key-fill"></i></button>
-                  <button type="button" class="btn btn-outline-primary btn-icon btn-sm ms-1" (click)="suspender(responsable.id)">
+                  <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(responsable.id)"><i class="bi bi-key-fill"></i></button>
+                  <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(responsable.id)">
                     <i [ngClass]="responsable.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                   </button>
+                  <div class="btn-group">
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" (click)="verUsuario(responsable.id)">Ver</a>
+                        <a class="dropdown-item" href="#">Editar</a>
+                        <a class="dropdown-item" (click)="confirmarEliminar(responsable)">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

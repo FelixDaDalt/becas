@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { AdminService } from 'src/servicios/admin.service';
 
@@ -22,7 +22,8 @@ export class AltaAdministradorComponent {
 
   constructor(private fb: FormBuilder,
     private router:Router,
-    private adminService:AdminService) {
+    private adminService:AdminService,
+    private activeRoute:ActivatedRoute) {
 
     this.wizardForm = this.fb.group({
       // Paso 1: Datos principales
@@ -62,9 +63,8 @@ export class AltaAdministradorComponent {
   submitForm() {
     if (this.wizardForm.valid) {
       const formData = this.estructurarFormulario();
-      this.adminService.altaAdministrador(formData).subscribe(respuesta=>{
-        const actualizar = true;
-        this.router.navigate(['admin','administradores'], {queryParams: {actualizar: true}});;
+      this.adminService.altaAdministrador(formData).subscribe(respuesta=>{;
+        this.router.navigate(['../administradores'],{relativeTo:this.activeRoute});
       })
     }else{
       this.wizardForm.markAllAsTouched()

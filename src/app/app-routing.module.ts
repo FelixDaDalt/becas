@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/core/authGuard';
+import { SuspendidoComponent } from 'src/standalone/suspendido/suspendido.component';
 
 
 
@@ -18,6 +19,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: [0,1,2,3] },
     loadChildren: () => import('./dashboard/dasboard.module').then(m => m.DasboardModule)
+  },
+  { path: 'suspendido',
+    component: SuspendidoComponent
   },
   {
     path: '**',

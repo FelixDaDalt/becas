@@ -1,0 +1,15 @@
+.colegio-logo {
+  object-fit: contain !important;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra suave */
+}
+
+.card:hover .card-img {
+  filter: blur(4px); /* Aplicar desenfoque a la imagen */
+}
+
+.text-white span{
+  font-size: 12px;
+}

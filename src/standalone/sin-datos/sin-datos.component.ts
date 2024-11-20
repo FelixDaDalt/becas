@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-sin-datos',
@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./sin-datos.component.css']
 })
 export class SinDatosComponent {
+  @Input() mensaje = 'Parece que no hay nada por aquí. ¿Qué tal si comienzas a agregar algunos?'
 
+  constructor(){
+
+  }
 }

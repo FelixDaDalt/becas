@@ -14,7 +14,7 @@ export class SuspendidoGuard implements CanActivate {
     if (this.authService.isAuthenticated()) {
       const user = this.authService.getUser();
       // Redirigir según el estado de suspendido del colegio
-      if (user.id_colegio_colegio.suspendido == 1 || user.suspendido == 1) {
+      if (user.id_colegio_colegio?.suspendido == 1 || user.suspendido == 1) {
         // Redirigir al componente de suspensión
         this.router.navigate(['/suspendido']); // Asegúrate de que la ruta sea correcta
         return false; // Evitar la activación de la ruta original

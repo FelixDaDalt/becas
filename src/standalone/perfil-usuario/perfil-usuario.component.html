@@ -1,0 +1,97 @@
+
+
+
+<div class="card" *ngIf="usuario$ | async as usuario">
+  <div class="card-header p-2 m-0 bg-primary text-white">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="card-title m-0">Perfil Usuario</h5>
+      <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close" (click)="cerrar()"></button>
+    </div>
+  </div>
+  <div class="card-body mb-n5">
+    <div class="d-flex align-items-center flex-column mb-5">
+      <div class="mb-2 d-flex align-items-center flex-column">
+        <div class="sw-13 position-relative mb-3">
+          <img src="assets/img/profile/admin.png" class="img-fluid rounded-xl" alt="thumb" />
+        </div>
+        <div class="h5 mb-0">{{usuario?.apellido || 'No definido'}},{{usuario?.nombre || 'No definido'}}</div>
+        <div class="text-muted">{{usuario?.id_rol_role?.descripcion}}</div>
+        <div class="text-small text-primary">{{usuario?.id_colegio_colegio?.nombre}}</div>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <div class="row g-0 align-items-center mb-2">
+        <div class="col-auto">
+          <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+            <i class="bi-person-bounding-box text-primary"></i>
+          </div>
+        </div>
+        <div class="col ps-3">
+          <div class="row g-0">
+            <div class="col">
+              <div class="sh-5 d-flex align-items-center lh-1-25">DNI</div>
+            </div>
+            <div class="col-auto">
+              <div class="sh-5 d-flex align-items-center ">{{usuario?.dni || 'No definido'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 align-items-center mb-2">
+        <div class="col-auto">
+          <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+            <i class="bi bi-telephone text-primary"></i>
+          </div>
+        </div>
+        <div class="col ps-3">
+          <div class="row g-0">
+            <div class="col">
+              <div class="sh-5 d-flex align-items-center lh-1-25">Telefono</div>
+            </div>
+            <div class="col-auto">
+              <div class="sh-5 d-flex align-items-center">{{usuario?.telefono || 'No definido'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 align-items-center mb-2">
+        <div class="col-auto">
+          <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+            <i class="bi bi-phone text-primary"></i>
+          </div>
+        </div>
+        <div class="col ps-3">
+          <div class="row g-0">
+            <div class="col">
+              <div class="sh-5 d-flex align-items-center lh-1-25">Celular</div>
+            </div>
+            <div class="col-auto">
+              <div class="sh-5 d-flex align-items-center">{{usuario?.celular || 'No definido'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-0 align-items-center mb-2">
+        <div class="col-auto">
+          <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+            <i class="bi bi-envelope text-primary"></i>
+          </div>
+        </div>
+        <div class="col ps-3">
+          <div class="row g-0">
+            <div class="col">
+              <div class="sh-5 d-flex align-items-center lh-1-25">Email</div>
+            </div>
+            <div class="col-auto">
+              <div class="sh-5 d-flex align-items-center">{{usuario?.email || 'No definido'}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+

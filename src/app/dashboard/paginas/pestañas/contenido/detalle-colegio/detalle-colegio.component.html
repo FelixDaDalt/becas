@@ -5,13 +5,13 @@
   <div class="col-12 mb-5 tab-content"
   [Class]="{ roles: [0], classes: 'col-xl-9 col-xxl-9' }">
 
-    <!-- Colegio Nombre-->
+    <!-- Nombre-->
     <div class="w-100">
       <div class="card mb-3">
         <div class="row g-0 sh-10">
           <div class="col-auto h-100">
             <img *ngIf="detalle.colegio.logo" [src]="'data:image/png;base64,'+ detalle.colegio.logo"
-              alt="alternate text" class="card-img card-img-horizontal sw-11 ms-2" />
+              alt="alternate text" class="card-img card-img-horizontal sw-8 ms-2" />
           </div>
           <div class="col">
             <div class="card-body d-flex flex-column pt-0 pb-0 h-100 justify-content-center">
@@ -25,10 +25,10 @@
         </div>
       </div>
     </div>
-    <!--Colegio Nombre-->
+    <!-- Nombre-->
 
 
-    <!-- Detalles -->
+    <!-- Informacion -->
     <div class="tab-pane fade show active" id="detallesTab" role="tabpanel" >
 
       <h2 class="small-title">Detalles</h2>
@@ -128,9 +128,11 @@
       </div>
 
     </div>
-    <!-- Detalles -->
+    <!-- Informacion -->
 
+    <!-- Solo Administradores -->
     <ng-container *Roles="[0]">
+
       <!-- Responsables -->
       <div class="tab-pane fade" id="responsablesTab" role="tabpanel" >
         <h2 class="small-title">Responsables</h2>
@@ -165,7 +167,7 @@
         <!-- Buscador -->
 
         <!-- Listado -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-2 mb-5" *ngIf="detalle.usuarios.responsables.length>0;else sinDatos">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5" *ngIf="detalle.usuarios.responsables.length>0;else sinDatos">
           <div class="col"  *ngFor="let responsable of detalle.usuarios.responsables">
             <div class="card">
               <div class="card-body">
@@ -185,7 +187,22 @@
                         </span>
                       </div>
                       <div class="d-flex">
-                        <button type="button" class="btn btn-outline-primary btn-sm ms-1">Follow</button>
+                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(responsable.id)"><i class="bi bi-key-fill"></i></button>
+                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(responsable.id)">
+                          <i [ngClass]="responsable.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                        </button>
+                        <div class="btn-group">
+                          <div class="dropdown">
+                            <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <a class="dropdown-item" (click)="verUsuario(responsable.id)">Ver</a>
+                              <a class="dropdown-item" href="#">Editar</a>
+                              <a class="dropdown-item" (click)="confirmarEliminar(responsable)">Eliminar</a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -232,7 +249,7 @@
         <!-- Buscador -->
 
         <!-- Listado -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-2 mb-5" *ngIf="detalle.usuarios.delegados.length>0;else sinDatos">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5" *ngIf="detalle.usuarios.delegados.length>0;else sinDatos">
           <div class="col"  *ngFor="let delegado of detalle.usuarios.delegados">
             <div class="card">
               <div class="card-body">
@@ -252,7 +269,22 @@
                         </span>
                       </div>
                       <div class="d-flex">
-                        <button type="button" class="btn btn-outline-primary btn-sm ms-1">Follow</button>
+                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(delegado.id)"><i class="bi bi-key-fill"></i></button>
+                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(delegado.id)">
+                          <i [ngClass]="delegado.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                        </button>
+                        <div class="btn-group">
+                          <div class="dropdown">
+                            <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <a class="dropdown-item" (click)="verUsuario(delegado.id)">Ver</a>
+                              <a class="dropdown-item" href="#">Editar</a>
+                              <a class="dropdown-item" (click)="confirmarEliminar(delegado)">Eliminar</a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -265,8 +297,8 @@
       </div>
       <!-- Delegados -->
 
-        <!-- Autorizados -->
-        <div class="tab-pane fade" id="autorizadosTab" role="tabpanel">
+      <!-- Autorizados -->
+      <div class="tab-pane fade" id="autorizadosTab" role="tabpanel">
           <h2 class="small-title">Autorizados</h2>
 
           <!-- Buscador -->
@@ -299,7 +331,7 @@
           <!-- Buscador -->
 
           <!-- Listado -->
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-2 mb-5" *ngIf="detalle.usuarios.autorizados.length>0;else sinDatos">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5" *ngIf="detalle.usuarios.autorizados.length>0;else sinDatos">
             <div class="col"  *ngFor="let autorizado of detalle.usuarios.autorizados">
               <div class="card">
                 <div class="card-body">
@@ -319,7 +351,22 @@
                           </span>
                         </div>
                         <div class="d-flex">
-                          <button type="button" class="btn btn-outline-primary btn-sm ms-1">Follow</button>
+                          <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(autorizado.id)"><i class="bi bi-key-fill"></i></button>
+                          <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(autorizado.id)">
+                            <i [ngClass]="autorizado.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                          </button>
+                          <div class="btn-group">
+                            <div class="dropdown">
+                              <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" (click)="verUsuario(autorizado.id)">Ver</a>
+                                <a class="dropdown-item" href="#">Editar</a>
+                                <a class="dropdown-item" (click)="confirmarEliminar(autorizado)">Eliminar</a>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -329,8 +376,8 @@
             </div>
           </div>
           <!-- Listado -->
-        </div>
-        <!-- Autorizados -->
+      </div>
+      <!-- Autorizados -->
 
       <!-- Redes -->
       <div class="tab-pane fade" id="redesTab" role="tabpanel">
@@ -370,42 +417,13 @@
       <!-- Redes -->
 
       <!-- Registros -->
-      <div class="tab-pane fade" id="registrosTab" role="tabpanel">
-        <h2 class="small-title">About</h2>
-        <div class="card">
-          <div class="card-body">
-            <div class="mb-5">
-              <p class="text-small text-muted mb-2">ME</p>
-              <p>
-                Jujubes brownie marshmallow apple pie donut ice cream jelly-o jelly-o gummi bears. Tootsie roll chocolate
-                bar dragée bonbon cheesecake
-                icing. Danish wafer donut cookie caramels gummies topping.
-              </p>
-            </div>
-            <div class="mb-5">
-              <p class="text-small text-muted mb-2">INTERESTS</p>
-              <p>
-                Chocolate cake biscuit donut cotton candy soufflé cake macaroon. Halvah chocolate cotton candy sweet roll
-                jelly-o candy danish dragée.
-                Apple pie cotton candy tiramisu biscuit cake muffin tootsie roll bear claw cake. Cupcake cake fruitcake.
-              </p>
-            </div>
-            <div>
-              <p class="text-small text-muted mb-2">CONTACT</p>
-              <a href="#" class="d-block body-link mb-1">
-                <i data-acorn-icon="screen" class="me-2" data-acorn-size="17"></i>
-                <span class="align-middle">blainecottrell.com</span>
-              </a>
-              <a href="#" class="d-block body-link">
-                <i data-acorn-icon="email" class="me-2" data-acorn-size="17"></i>
-                <span class="align-middle">contact</span>
-              </a>
-            </div>
-          </div>
-        </div>
+      <div class="tab-pane fade" id="registrosTab" role="tabpanel" *ngIf="registros$ | async as registros">
+        <h2 class="small-title">Registros</h2>
+          <app-registro-colegio [registros]="registros"></app-registro-colegio>
       </div>
       <!-- Registros -->
     </ng-container>
+    <!-- Solo Administradores -->
 
   </div>
   <!-- Right Side End -->

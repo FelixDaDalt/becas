@@ -1,0 +1,42 @@
+
+
+.custom-card-body img {
+  width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+  height: 100%; /* Hace que la imagen ocupe toda la altura del contenedor */
+  object-fit: cover; /* Asegura que la imagen mantenga su proporción al recortarse */
+}
+
+.card-img-overlay{
+  background: rgba(0, 0, 0, 0.075);
+}
+
+.card .card-img-overlay {
+  padding-top: 20px;
+  padding-left: 40px;
+}
+
+.colegio-logo {
+  object-fit: contain !important;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra suave */
+}
+
+.card-logo:hover .card-img {
+  filter: blur(4px); /* Aplicar desenfoque a la imagen */
+}
+
+.text-white span{
+  font-size: 12px;
+}
+
+::ng-deep .ng-select .ng-select-container {
+  border: 0px;
+  min-height: 0px;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container {
+  height: 26px !important;
+}
+

@@ -1,0 +1,207 @@
+<div class="row">
+  <!-- Page Content Start -->
+  <div class="col">
+      <!-- Contenedor del buscador -->
+
+        <!--Search input-->
+        <div class="text-center">
+          <div class="input-group input-group-sm mb-3">
+            <!-- Alta -->
+            <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()" *Roles="[0]"><i class="bi bi-plus-circle me-2"></i>Alta</button>
+            <!-- Alta -->
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
+          </div>
+
+        </div>
+
+    <!--reds Cards-->
+    <ng-container *ngIf="(redes$|async) as redes">
+
+      <ng-container *Roles="[0]">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.redes.length > 0; else sinDatos">
+            <div class="col" *ngFor="let red of redes.redes">
+              <div class="card sh-20 hover-img-scale-up hover-reveal">
+                <!-- <span class="badge position-absolute top-0 end-0 m-2"
+                style="cursor: pointer;z-index: 9999;"
+                [ngClass]="{
+                  'bg-danger': red.suspendido,
+                  'bg-success': !red.suspendido
+                }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
+                <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
+                <div class="card-img-overlay d-flex align-items-end reveal-content">
+                  <div class="row g-0">
+                    <div class="col pe-2">
+
+                        <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+
+
+                      <div class="d-inline-block">
+                        <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                      </div>
+
+                      <div class="col-auto me-auto pt-2">
+                        <button
+                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
+                        type="button"
+                        (click)="confirmarEliminar(red)">
+                          <i class="bi bi-trash-fill text-primary"></i>
+                        </button>
+
+                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                          <i class="bi bi-pencil-fill text-primary"></i>
+                        </button>
+
+
+                        <!-- <button
+                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                        type="button"
+                        (click)="suspenderred(red.id)"
+                        >
+                          <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                        </button> -->
+
+                        <button
+                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                        type="button"
+
+                        >
+                          <i class="text-primary bi bi-eye-fill"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </ng-container>
+
+      <ng-container *Roles="[1,2,3]">
+        <h4 class="text-primary">Patrocinador</h4>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.misRedes.length > 0; else sinDatos" >
+          <div class="col" *ngFor="let red of redes.redes">
+            <div class="card sh-20 hover-img-scale-up hover-reveal">
+              <!-- <span class="badge position-absolute top-0 end-0 m-2"
+              style="cursor: pointer;z-index: 9999;"
+              [ngClass]="{
+                'bg-danger': red.suspendido,
+                'bg-success': !red.suspendido
+              }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
+              <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
+              <div class="card-img-overlay d-flex align-items-end reveal-content">
+                <div class="row g-0">
+                  <div class="col pe-2">
+
+                      <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+
+
+                    <div class="d-inline-block">
+                      <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                    </div>
+
+                    <div class="col-auto me-auto pt-2">
+                      <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
+                      type="button"
+                      (click)="confirmarEliminar(red)">
+                        <i class="bi bi-trash-fill text-primary"></i>
+                      </button>
+
+                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                        <i class="bi bi-pencil-fill text-primary"></i>
+                      </button>
+
+
+                      <!-- <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                      type="button"
+                      (click)="suspenderred(red.id)"
+                      >
+                        <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                      </button> -->
+
+                      <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                      type="button"
+
+                      >
+                        <i class="text-primary bi bi-eye-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h4 class="text-primary">Vinculado</h4>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.vinculado.length > 0; else sinDatos">
+          <div class="col" *ngFor="let red of redes.redes">
+            <div class="card sh-20 hover-img-scale-up hover-reveal">
+              <!-- <span class="badge position-absolute top-0 end-0 m-2"
+              style="cursor: pointer;z-index: 9999;"
+              [ngClass]="{
+                'bg-danger': red.suspendido,
+                'bg-success': !red.suspendido
+              }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
+              <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
+              <div class="card-img-overlay d-flex align-items-end reveal-content">
+                <div class="row g-0">
+                  <div class="col pe-2">
+
+                      <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+
+
+                    <div class="d-inline-block">
+                      <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                    </div>
+
+                    <div class="col-auto me-auto pt-2">
+                      <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
+                      type="button"
+                      (click)="confirmarEliminar(red)">
+                        <i class="bi bi-trash-fill text-primary"></i>
+                      </button>
+
+                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                        <i class="bi bi-pencil-fill text-primary"></i>
+                      </button>
+
+
+                      <!-- <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                      type="button"
+                      (click)="suspenderred(red.id)"
+                      >
+                        <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                      </button> -->
+
+                      <button
+                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                      type="button"
+
+                      >
+                        <i class="text-primary bi bi-eye-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+  </div>
+
+
+</div>
+
+<ng-template #sinDatos>
+  <app-sin-datos [mensaje]="''"></app-sin-datos>
+</ng-template>
+

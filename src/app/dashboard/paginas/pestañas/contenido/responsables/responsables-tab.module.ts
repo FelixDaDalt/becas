@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ResponsablesTabComponent } from './responsables-tab.component';
 import { RouterModule } from '@angular/router';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
+import { RoleDirective } from 'src/directiva/role.directiva';
 
 
 
 @NgModule({
   declarations: [ResponsablesTabComponent],
   imports: [
+    RoleDirective,
     CommonModule,
     SinDatosComponent,
     RouterModule.forChild([

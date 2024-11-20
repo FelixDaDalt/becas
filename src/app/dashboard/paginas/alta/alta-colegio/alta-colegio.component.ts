@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, shareReplay, take, tap } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { ZonasService } from 'src/servicios/zonas.service';
 import { ColegioService } from 'src/servicios/colegio.service';
@@ -47,7 +47,8 @@ export class AltaColegioComponent  {
     private router:Router,
     private colegioService:ColegioService,
     private imageCompress: NgxImageCompressService,
-    private zonaService:ZonasService) {
+    private zonaService:ZonasService,
+    private activeRoute:ActivatedRoute) {
 
     this.wizardForm = this.fb.group({
       // Paso 1: Datos principales
@@ -113,7 +114,7 @@ export class AltaColegioComponent  {
     if (this.wizardForm.valid) {
       const formData = this.estructurarFormulario();
       this.colegioService.altaColegio(formData).subscribe(respuesta=>{
-        this.router.navigate(['admin','colegios']);
+        this.router.navigate(['../colegios'],{relativeTo:this.activeRoute});
       })
     }else{
       this.wizardForm.markAllAsTouched()
@@ -180,6 +181,7 @@ export class AltaColegioComponent  {
         take(1)
       ).subscribe(
         disponible => {
+          console.log(disponible)
           if (!disponible) {
             this.wizardForm.get('acceso.dni')?.setErrors({ noDisponible: true });
           }

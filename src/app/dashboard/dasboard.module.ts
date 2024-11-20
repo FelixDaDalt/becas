@@ -5,6 +5,7 @@ import { EstructuraModule } from 'src/estructura/estructura.module';
 import { DasboardComponent } from './dasboard.component';
 import { RoleDirective } from 'src/directiva/role.directiva';
 import { MisDatosColumnaComponent } from './mis-datos-columna/mis-datos-columna.component';
+import { breadcrumb } from "../../standalone/breadcrumb/breadcrumb.component";
 
 
 
@@ -17,7 +18,8 @@ import { MisDatosColumnaComponent } from './mis-datos-columna/mis-datos-columna.
     CommonModule,
     DashboardRoutingModule,
     EstructuraModule,
-    RoleDirective
-  ]
+    RoleDirective,
+    breadcrumb
+]
 })
 export class DasboardModule { }

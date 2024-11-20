@@ -6,11 +6,7 @@ import { FormatDniCuitPipe } from 'src/pipes/formatoDniCuit.pipe';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
 import { RolClassDirective } from 'src/directiva/class.directiva';
 import { RoleDirective } from 'src/directiva/role.directiva';
-
-
-
-
-
+import { RegistroColegioComponent } from './registro-colegio/registro-colegio.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +18,8 @@ import { RoleDirective } from 'src/directiva/role.directiva';
     FormatDniCuitPipe,
     SinDatosComponent,
     RolClassDirective,
-    RoleDirective
+    RoleDirective,
+    RegistroColegioComponent
 ]
 })
 export class DetalleColegioModule { }

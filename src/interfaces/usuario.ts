@@ -8,14 +8,14 @@ export interface administrador{
   apellido: string;
   telefono?: string;
   celular?: string;
-  id_rol_role?: Rol
+  id_rol_role?: Rol;
+  suspendido: number;
 }
 
 export interface Usuario extends administrador{
   id_colegio: number;
   email?: string;
   id_colegio_colegio?:Colegio
-  suspendido:number
 }
 
 export interface Rol{

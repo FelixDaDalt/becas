@@ -24,10 +24,27 @@
               <div class="card-body d-flex flex-row pt-0 pb-0 ps-3 pe-0 h-100 align-items-center justify-content-between">
                 <div class="d-flex flex-column">
                   <div>{{administrador.apellido}},{{administrador.nombre}}</div>
-                  <div class="text-small text-muted"></div>
+                  <span class="badge rounded-pill me-1 position-absolute s-2 t-n2 z-index-1"  [ngClass]="administrador.suspendido==1?'bg-danger':'bg-success'">
+                    {{administrador.suspendido==1?'suspendido':'Activo'}}
+                  </span>
                 </div>
                 <div class="d-flex">
-                  <button type="button" class="btn btn-outline-primary btn-icon btn-sm ms-1" (click)="reiniciarPassword(administrador.id)"><i class="bi bi-key-fill"></i></button>
+                  <button type="button" class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1" (click)="reiniciarPassword(administrador.id)"><i class="bi bi-key-fill"></i></button>
+                  <button type="button" class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1" (click)="suspender(administrador.id)">
+                    <i [ngClass]="administrador.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                  </button>
+                  <div class="btn-group">
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" (click)="verAdmin(administrador.id)">Ver</a>
+                        <a class="dropdown-item" href="#">Editar</a>
+                        <a class="dropdown-item" (click)="confirmarEliminar(administrador)">Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

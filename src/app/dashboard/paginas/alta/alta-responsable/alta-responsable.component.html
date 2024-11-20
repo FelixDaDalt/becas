@@ -1,0 +1,142 @@
+<h2 class="small-title"></h2>
+
+<div class="card">
+  <img src="/assets/img/background/blue.jpg" class="card-img-top" alt="card image" style="height: 75px;">
+  <div class="card-img-overlay d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="display-4 text-white"><strong>Nuevo Responsable</strong></h1>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card wizard h-100">
+      <div class="card-header border-0 pb-0">
+        <ul class="nav nav-tabs justify-content-center">
+          <li *ngFor="let step of steps; let i = index"
+              class="nav-item" (click)="currentStep = i" [class.active]="currentStep === i"> <!-- (click)="currentStep = i"  -->
+            <a class="nav-link text-center" [class.active]="currentStep === i">
+              <div class="mb-1 title d-none d-sm-block">{{ step.nombre }}</div>
+              <div class="text-small description d-none d-md-block">{{step.descripcion}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="wizardForm">
+
+          <!-- Paso 1: Responsable -->
+          <div *ngIf="currentStep === 0" formGroupName="responsable">
+            <h5>Responsable</h5>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-person-fill"></i></span>
+                    <input class="form-control form-control-sm" formControlName="nombre" placeholder="Ingrese nombre">
+                  </div>
+                  <span class="ms-5 text-primary">Nombre</span>
+                  <app-error-formulario [control]="wizardForm.get('responsable.nombre')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-person-lines-fill"></i></span>
+                    <input class="form-control form-control-sm" formControlName="apellido" placeholder="Ingrese apellido">
+                  </div>
+                  <span class="ms-5 text-primary">Apellido</span>
+                  <app-error-formulario [control]="wizardForm.get('responsable.apellido')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-telephone"></i></span>
+                    <input class="form-control form-control-sm" formControlName="telefono" placeholder="Ingrese telefono">
+                  </div>
+                  <span class="ms-5 text-primary">Telefono</span>
+                  <app-error-formulario [control]="wizardForm.get('responsable.telefono')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-phone"></i></span>
+                    <input class="form-control form-control-sm" formControlName="celular" placeholder="Ingrese celular">
+                  </div>
+                  <span class="ms-5 text-primary">Celular</span>
+                  <app-error-formulario [control]="wizardForm.get('responsable.celular')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12  mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-envelope-at"></i></span>
+                    <input class="form-control form-control-sm" formControlName="email" placeholder="Ingrese Email">
+                  </div>
+                  <span class="ms-5 text-primary">Email</span>
+                  <app-error-formulario [control]="wizardForm.get('responsable.email')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 2: Responsable  -->
+          <div *ngIf="currentStep === 1" formGroupName="acceso">
+            <h5>Acceso</h5>
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white">
+                      <i class="text-primary bi bi-card-checklist"></i>
+                    </span>
+                    <ng-select
+                      class="form-control form-control-sm"
+                      [items]="colegios$ | async"
+                      bindLabel="nombre"
+                      bindValue="id"
+                      formControlName="id_colegio"
+                      placeholder="Seleccione un colegio">
+                    </ng-select>
+                  </div>
+                  <span class="ms-5 text-primary">Colegio</span>
+                  <app-error-formulario [control]="wizardForm.get('acceso.id_colegio')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-card-checklist"></i></span>
+                    <input class="form-control form-control-sm" formControlName="dni" placeholder="Ingrese DNI" (blur)="comprobarDni()">
+                  </div>
+                  <span class="ms-5 text-primary">DNI</span>
+                  <app-error-formulario [control]="wizardForm.get('acceso.dni')" [checkDisponibilidad]="true"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-key"></i></span>
+                    <input class="form-control form-control-sm" [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="Ingrese contraseña">
+                    <a class="text-small position-absolute t-3 e-3" (click)="cambiarVisibilidad()" style="cursor: pointer;">Revelar</a>
+                  </div>
+                  <span class="ms-5 text-primary">Contraseña</span>
+                  <app-error-formulario [control]="wizardForm.get('acceso.password')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="card-footer text-center border-0 pt-1">
+        <button (click)="goToPreviousStep()" [disabled]="currentStep === 0" class="btn btn-outline-primary me-2">Volver</button>
+        <button *ngIf="currentStep < 1" (click)="goToNextStep()" class="btn btn-outline-primary">Siguiente</button>
+        <app-boton-cargando *ngIf="currentStep === 1" (click)="submitForm()" label="Enviar"></app-boton-cargando>
+      </div>
+    </div>
+  </div>
+</div>

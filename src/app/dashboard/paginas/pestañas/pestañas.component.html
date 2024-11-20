@@ -16,6 +16,20 @@
     <a class="nav-link" routerLink="responsables" routerLinkActive="active" role="tab" >Responsables</a>
   </li>
 
+  <li class="nav-item" role="presentation" *Roles="[1,2]">
+    <a class="nav-link" routerLink="delegados" routerLinkActive="active" role="tab" >Delegados</a>
+  </li>
+
+  <li class="nav-item" role="presentation" *Roles="[1,2,3]">
+    <a class="nav-link" routerLink="autorizados" routerLinkActive="active" role="tab" >Autorizados</a>
+  </li>
+  <li class="nav-item" role="presentation" *Roles="[0,1,2,3]">
+    <a class="nav-link" routerLink="redes" routerLinkActive="active" role="tab" >Redes</a>
+  </li>
+  <li class="nav-item" role="presentation" *Roles="[0,1,2]">
+    <a class="nav-link" routerLink="registros" routerLinkActive="active" role="tab" > Registros</a>
+  </li>
+
   <li class="nav-item" role="presentation" *Roles="[0]">
     <a class="nav-link" routerLink="configuraciones" routerLinkActive="active" role="tab" ><i class="bi bi-gear-fill"></i> Configuraciones</a>
   </li>

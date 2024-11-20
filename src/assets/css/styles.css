@@ -103,6 +103,10 @@ Table of Contents
 * Root breakpoints and Sass functions.
 *
 */
+a{
+cursor: pointer !important;
+}
+
 :root {
   --sm: 576px;
   --md: 768px;

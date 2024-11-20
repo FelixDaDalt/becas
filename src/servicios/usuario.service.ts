@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { take, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -31,4 +31,10 @@ export class usuarioService {
       }),
     )
   }
+
+  obtenerUsuario(idUsuario:number){
+    return this.http.get(`${environment.apiUrl}${environment.endpoint.usuario.obtener}?idUsuario=${idUsuario}`).pipe(
+      take(1),
+      map((respuesta: any) => respuesta.data)
+  )}
 }

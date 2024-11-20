@@ -31,18 +31,6 @@ export class AdminService {
       });
   }
 
-
-  comprobarDni(dni: string): Observable<boolean> {
-    return this.http
-      .get<{ disponible: boolean }>(
-        `${environment.apiUrl}${environment.endpoint.admin.comprobar}?dniAdmin=${dni}`
-      )
-      .pipe(
-        map((respuesta: any) => respuesta.disponible),
-        take(1)
-      );
-  }
-
   altaAdministrador(nuevoAdministrador: any): Observable<any> {
     return this.http
       .post(
@@ -58,18 +46,53 @@ export class AdminService {
       );
   }
 
-  reiniciarPassword(tipo: string, id: number | string) {
-    this.http
+  suspenderAdministrador(idAdmin: number) {
+    this.http.put(`${environment.apiUrl}${environment.endpoint.admin.suspender}?idAdmin=${idAdmin}`,null)
+    .pipe(
+      take(1)
+    ).subscribe((respuesta:any)=>{
+      this.toast.success(respuesta.mensaje);
+      this.obtenerAdministradores()
+    })
+  }
+
+  obtenerAdmin(idAdmin:number){
+    return this.http.get(`${environment.apiUrl}${environment.endpoint.admin.obtener}?idAdmin=${idAdmin}`).pipe(
+      take(1),
+      map((respuesta: any) => respuesta.data))
+  }
+
+  eliminarAdmin(idAdmin:number){
+    this.http.put(`${environment.apiUrl}${environment.endpoint.admin.borrar}?idAdmin=${idAdmin}`,null)
+    .pipe(
+      take(1),
+    ).subscribe((respuesta:any)=>{
+      this.toast.success(respuesta.mensaje);
+      this.obtenerAdministradores()
+    })
+  }
+
+
+  comprobarDni(dni: string): Observable<boolean> {
+    return this.http
       .get<{ disponible: boolean }>(
-        `${environment.apiUrl}${environment.endpoint.usuario.resetearPass}?${tipo}=${id}`
+        `${environment.apiUrl}${environment.endpoint.admin.comprobar}?dniAdmin=${dni}`
       )
       .pipe(
-        take(1),
-        tap((respuesta: any) => {
-          this.toast.success(respuesta.mensaje);
-        })
-      )
-      .subscribe();
+        map((respuesta: any) => respuesta.disponible),
+        take(1)
+      );
+  }
+
+
+
+  reiniciarPassword(tipo: string, id: number | string) {
+    this.http.get<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.usuario.resetearPass}?${tipo}=${id}`)
+    .pipe(
+      take(1),
+    ).subscribe((respuesta:any)=>{
+        this.toast.success(respuesta.mensaje);
+    });
   }
 
   suspenderUsuario(idUsuario: number) {
@@ -85,4 +108,16 @@ export class AdminService {
         })
       );
   }
+
+  eliminarUsuario(idUsuario:number){
+    return this.http.put(`${environment.apiUrl}${environment.endpoint.usuario.borrar}?id=${idUsuario}`,null)
+    .pipe(
+      take(1),
+      tap((respuesta: any) => {
+        this.toast.success(respuesta.mensaje);
+      })
+    )
+  }
+
+
 }

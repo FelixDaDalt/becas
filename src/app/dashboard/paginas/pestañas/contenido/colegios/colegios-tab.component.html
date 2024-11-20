@@ -57,17 +57,22 @@
                     <button
                     class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                     type="button"
-                    (click)="suspenderColegio(colegio.id)"
-                    >
-                      <i class="text-primary" [ngClass]="colegio.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                    (click)="suspenderColegio(colegio.id)">
+                    <i class="text-primary" [ngClass]="colegio.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                     </button>
 
                     <button
                     class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                     type="button"
-                    (click)="detalleColegio(colegio.id)"
-                    >
-                      <i class="text-primary bi bi-eye-fill"></i>
+                    (click)="detalleColegio(colegio.id)">
+                    <i class="text-primary bi bi-eye-fill"></i>
+                    </button>
+
+                    <button
+                    class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                    type="button"
+                    (click)="confirmarEliminar(colegio)">
+                    <i class="text-primary bi bi-trash-fill"></i>
                     </button>
                   </div>
                 </div>
@@ -77,10 +82,10 @@
         </div>
     </div>
 
-        <!--Load More-->
+        <!-- Load More
         <div class="text-center">
           <button class="btn btn-xl btn-outline-primary sw-30">Load More</button>
-        </div>
+        </div> -->
     </ng-container>
   </div>
 

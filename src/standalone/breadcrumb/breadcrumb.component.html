@@ -1,0 +1,24 @@
+<div class="page-title-container">
+  <div class="row">
+    <!-- Title Start -->
+    <div class="col-12 col-md-7">
+      <h1 class="mb-0 pb-0 display-4" id="title">Panel Administrativo</h1>
+      <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
+        <ul class="breadcrumb pt-0">
+
+          <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let last = last">
+            <ng-container *ngIf="!last">
+            <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+            </ng-container>
+
+            <ng-container *ngIf="last">
+              {{ breadcrumb.label }}
+            </ng-container>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- Title End -->
+  </div>
+</div>
+

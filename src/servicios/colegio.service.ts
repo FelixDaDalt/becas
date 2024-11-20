@@ -85,17 +85,17 @@ export class ColegioService {
       );
   }
 
-  private getColegio() {
-    return this.http
-      .get(`${environment.apiUrl}${environment.endpoint.colegio.obtener}`)
-      .pipe(map((respuesta: any) => respuesta.data));
-  }
+  // private getColegio() {
+  //   return this.http
+  //     .get(`${environment.apiUrl}${environment.endpoint.colegio.obtener}`)
+  //     .pipe(map((respuesta: any) => respuesta.data));
+  // }
 
-  obtenerColegio() {
-    this.getColegio()
-      .pipe(take(1))
-      .subscribe((colegio) => this.colegioSubject.next(colegio));
-  }
+  // obtenerColegio() {
+  //   this.getColegio()
+  //     .pipe(take(1))
+  //     .subscribe((colegio) => this.colegioSubject.next(colegio));
+  // }
 
   private getDetalle(idColegio?: number | string) {
     return this.http
@@ -111,5 +111,15 @@ export class ColegioService {
     this.getDetalle(idColegio)
       .pipe(take(1))
       .subscribe((colegio) => this.colegioDetalleSubject.next(colegio));
+  }
+
+  eliminarColegio(idColegio:number){
+    this.http.put(`${environment.apiUrl}${environment.endpoint.colegio.borrar}?idColegio=${idColegio}`,null)
+    .pipe(
+      take(1),
+    ).subscribe((respuesta:any)=>{
+      this.toast.success(respuesta.mensaje);
+      this.obtenerColegios()
+    })
   }
 }

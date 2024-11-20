@@ -31,10 +31,34 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/responsables/responsables-tab.module').then(m => m.ResponsablesTabModule)
     },
     {
+      path:'delegados',
+      canActivate: [RoleGuard],
+      data: { roles: [1,2] },
+      loadChildren: () => import('./contenido/delegados/delegados-tab.module').then(m => m.DelegadosTabModule)
+    },
+    {
+      path:'autorizados',
+      canActivate: [RoleGuard],
+      data: { roles: [1,2,3] },
+      loadChildren: () => import('./contenido/autorizados/autorizados-tab.module').then(m => m.AutorizadosTabModule)
+    },
+    {
+      path:'redes',
+      canActivate: [RoleGuard],
+      data: { roles: [0,1,2,3] },
+      loadChildren: () => import('./contenido/redes/redes-tab.module').then(m => m.RedesTabModule)
+    },
+    {
       path:'configuraciones',
       canActivate: [RoleGuard],
       data: { roles: [0] },
       loadChildren: () => import('./contenido/configuraciones-tab/configuraciones-tab.module').then(m => m.ConfiguracionesTabModule)
+    },
+    {
+      path:'registros',
+      canActivate: [RoleGuard],
+      data: { roles: [0,1,2] },
+      loadChildren: () => import('./contenido/registro/registro-tab.module').then(m => m.RegistroTabModule)
     }]
   }
 ];
