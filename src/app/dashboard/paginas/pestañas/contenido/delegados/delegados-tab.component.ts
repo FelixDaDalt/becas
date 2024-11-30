@@ -6,6 +6,7 @@ import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { DelegadoService } from 'src/servicios/delegado.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
 
 
@@ -64,6 +65,16 @@ export class DelegadosTabComponent{
   private eliminarUsuario(idUsuario:number){
     this.adminService.eliminarUsuario(idUsuario).subscribe(respuesta=>{
       this.delegadoService.obtenerDelegados()
+    })
+  }
+
+  editar(Delegado:Usuario){
+    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idUsuario = Delegado.id
+    modalEditar.componentInstance.idRol = Delegado.id_rol
+    modalEditar.result.then(r=>{
+      if(r)
+        this.delegadoService.obtenerDelegados()
     })
   }
 

@@ -1,0 +1,19 @@
+.nav-tabs .nav-link.active {
+  color: var(--primary) !important;
+  background-color: white;
+}
+
+.nav-tabs .nav-link {
+  color: var(--muted);
+  background-color: initial;
+  border-color: var(--bs-nav-tabs-link-active-border-color);
+}
+
+.nav-tabs .nav-link:hover {
+  color: var(--primary);
+  background-color: white;
+}
+
+
+
+

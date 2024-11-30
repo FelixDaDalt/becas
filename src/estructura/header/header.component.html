@@ -1,5 +1,5 @@
 
-<div id="nav" class="nav-container d-flex" #navElement *ngIf="user$ | async as user">
+<div id="nav" class="nav-container d-flex" #navElement >
   <div class="nav-content d-flex">
     <!-- Logo Start -->
     <div class="logo position-relative">
@@ -18,40 +18,41 @@
     <!-- User Menu Start -->
     <div class="user-container d-flex">
       <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img class="profile" alt="profile" src="img/profile/profile-9.webp" />
-        <div class="name">{{user.apellido}},{{user.nombre}}</div>
+        <img class="profile" alt="profile" [src]="'http://localhost:3002'+(user$ | async)?.foto" />
+        <div class="name">{{(user$ | async)?.apellido}},{{(user$ | async)?.nombre}}</div>
       </a>
       <div class="dropdown-menu dropdown-menu-end user-menu wide">
         <div class="row mb-1 ms-0 me-0">
+          MENU
           <div class="col-12 p-1 mb-3 pt-3">
             <div class="separator-light"></div>
           </div>
           <div class="col-12 ps-1 pe-1">
             <ul class="list-unstyled">
               <li>
-                <a href="#">
-                  <i data-acorn-icon="help" class="me-2" data-acorn-size="17"></i>
-                  <span class="align-middle">Ayuda</span>
+                <a (click)="editar()">
+                  <i class="bi bi-gear me-2"></i>
+                  <span class="align-middle">Editar</span>
+                </a>
+              </li>
+              <li>
+                <a (click)="cambiarPass(user)" *ngIf="(user$ | async) as user">
+                  <i class="bi bi-key-fill me-2"></i>
+                  <span class="align-middle">Contraseña</span>
                 </a>
               </li>
               <li>
                 <a href="#">
                   <i data-acorn-icon="file-text" class="me-2" data-acorn-size="17"></i>
-                  <span class="align-middle">Docs</span>
+                  <span class="align-middle">Ayuda</span>
                 </a>
               </li>
             </ul>
           </div>
           <div class="col-12 pe-1 ps-1">
-            <ul class="list-unstyled">
+            <ul class="list-unstyled ">
               <li>
-                <a href="#">
-                  <i data-acorn-icon="gear" class="me-2" data-acorn-size="17"></i>
-                  <span class="align-middle">Configuración</span>
-                </a>
-              </li>
-              <li>
-                <a (click)="logout()">
+                <a (click)="logout()" class="text-danger">
                   <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
                   <span class="align-middle">Cerrar Sesión</span>
                 </a>

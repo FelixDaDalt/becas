@@ -1,11 +1,15 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { tap } from 'rxjs';
+import { shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Red } from 'src/interfaces/red';
 import { RedService } from 'src/servicios/red.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { AltaRedComponent } from '../../../alta/alta-red/alta-red.component';
+import { EditarRedComponent } from './editar-red/editar-red.component';
+import { EditarMiembrosComponent } from './editar-miembros/editar-miembros.component';
+import { PanelRedModule } from 'src/app/panel-red/panel-red.module';
 
 @Component({
   selector: 'app-redes-tab',
@@ -15,7 +19,7 @@ import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component
 export class RedesTabComponent{
 
   redCache = false
-  redes$ = this.redService.redes$.pipe(tap(r=>console.log(r)))
+  redes$ = this.redService.redes$
   apiUrl = environment.apiUrl
   constructor(private redService:RedService,
     private activeRoute: ActivatedRoute,
@@ -29,7 +33,15 @@ export class RedesTabComponent{
     }
   }
 
+  editar(red:Red){
+    const editarRed=this.modalService.open(EditarRedComponent, {backdrop:'static', size:'lg'})
+    editarRed.componentInstance.red = red
+  }
 
+  editarMiembros(red:Red){
+    const editarRed=this.modalService.open(EditarMiembrosComponent, {backdrop:'static', size:'lg'})
+    editarRed.componentInstance.red = red
+  }
 
   alta(){
     this.router.navigate(['../alta-red'], {relativeTo: this.activeRoute })
@@ -46,6 +58,20 @@ export class RedesTabComponent{
 
   private eliminarRed(idRed:number){
     this.redService.eliminar(idRed)
+  }
+
+  verRed(idRed:number){
+
+    this.router.resetConfig([
+      {
+        path: 'panel-red',
+        loadChildren: () => import('src/app/panel-red/panel-red.module').then(m => m.PanelRedModule),
+      },
+      { path: '**', redirectTo: 'login', pathMatch: 'full' },
+    ]);
+
+    // Navegar a la ruta absoluta
+    this.router.navigate(['/panel-red']);
   }
 
 }

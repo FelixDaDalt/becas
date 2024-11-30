@@ -12,6 +12,7 @@ import { AutorizadoService } from 'src/servicios/autorizado.service';
 import { DelegadoService } from 'src/servicios/delegado.service';
 import { ResponsableService } from 'src/servicios/responsable.service';
 import { RegistroService } from 'src/servicios/registro.service';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 
 @Component({
   selector: 'app-detalle-colegio',
@@ -20,8 +21,8 @@ import { RegistroService } from 'src/servicios/registro.service';
 })
 export class DetalleColegioComponent implements OnInit, OnDestroy {
 
-  detalle$ = this.colegioService.colegioDetalle$
-  registros$ = this.registroService.registros$.pipe(tap(r=>console.log(r)))
+  detalle$ = this.colegioService.colegioDetalle$.pipe(tap(r=>console.log(r)))
+  registros$ = this.registroService.registros$
   private queryParamsSubscription: Subscription | undefined;
   idColegio = null
 
@@ -106,5 +107,16 @@ export class DetalleColegioComponent implements OnInit, OnDestroy {
     })
   }
 
+  editar(usuario:Usuario){
+    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idUsuario = usuario.id
+    modalEditar.componentInstance.idRol = usuario.id_rol
+    modalEditar.result.then(r=>{
+      if(r && this.idColegio){
+        this.colegioService.obtenerDetalle(this.idColegio)
+      }
+
+    })
+  }
 
 }

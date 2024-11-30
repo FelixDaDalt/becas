@@ -1,20 +1,37 @@
 
 
-<h2 class="small-title">Mis Datos</h2>
 <div class="card" *ngIf="user$ | async as user">
   <div class="card-body mb-n5">
-    <div class="d-flex align-items-center flex-column mb-5">
+    <div class="d-flex align-items-center flex-column mb-1">
       <div class="mb-2 d-flex align-items-center flex-column">
         <div class="sw-13 position-relative mb-3">
-          <img src="assets/img/profile/admin.png" class="img-fluid rounded-xl" alt="thumb" />
+          <img [src]="'http://localhost:3002'+user.foto" class="img-fluid rounded-xl" alt="thumb" />
         </div>
         <div class="h5 mb-0">{{user.apellido || 'No definido'}},{{user.nombre || 'No definido'}}</div>
-        <div class="text-muted">{{user.id_rol_role.descripcion}}</div>
+        <div class="text-muted">{{user.id_rol_role?.descripcion}}</div>
       </div>
 
     </div>
-
-    <div class="mb-5">
+    <div class="d-flex flex-row justify-content-between w-100">
+      <button (click)="editar()" class="btn btn-outline-primary w-100 me-1 btn-sm">Editar</button>
+      <div class="dropdown">
+        <button
+          class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1"
+          id="dropdownMenuLink"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+          data-bs-display="static">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" (click)="cambiarPass(user)"><i class="bi bi-key-fill me-2"></i>Cambiar Contraseña</a>
+          <a class="dropdown-item text-danger" (click)="logout()"><i class="bi bi-box-arrow-left me-2"></i>Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+    <hr class="text-muted">
+    <div class="mt-2">
       <div class="row g-0 align-items-center mb-2">
         <div class="col-auto">
           <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
@@ -84,6 +101,8 @@
         </div>
       </div>
     </div>
+
+
 
 
   </div>

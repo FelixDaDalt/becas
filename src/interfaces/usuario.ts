@@ -10,11 +10,12 @@ export interface administrador{
   celular?: string;
   id_rol_role?: Rol;
   suspendido: number;
+  email: string;
+  foto:string
 }
 
 export interface Usuario extends administrador{
   id_colegio: number;
-  email?: string;
   id_colegio_colegio?:Colegio
 }
 

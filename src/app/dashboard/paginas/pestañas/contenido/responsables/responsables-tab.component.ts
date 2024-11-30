@@ -6,6 +6,7 @@ import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { ResponsableService } from 'src/servicios/responsable.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
 
 
@@ -75,4 +76,13 @@ export class ResponsablesTabComponent{
     })
   }
 
+  editar(Responsable:Usuario){
+    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idUsuario = Responsable.id
+    modalEditar.componentInstance.idRol = Responsable.id_rol
+    modalEditar.result.then(r=>{
+      if(r)
+        this.responsableService.obtenerResponsables()
+    })
+  }
 }

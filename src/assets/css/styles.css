@@ -14300,7 +14300,7 @@ html[data-placement=vertical] .nav-container {
   background-size: cover;
   width: var(--nav-size);
   background-position: center;
-  background-image: linear-gradient(160deg, var(--gradient-1), var(--gradient-1), var(--gradient-2), var(--gradient-3));
+  background-image: url('../img/background/blue.jpg');
 }
 html[data-placement=horizontal] .nav-container .nav-shadow,
 html[data-placement=vertical] .nav-container .nav-shadow {

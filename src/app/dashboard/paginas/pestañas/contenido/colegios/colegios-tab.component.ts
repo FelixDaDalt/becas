@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Colegio } from 'src/interfaces/colegio';
 import { ColegioService } from 'src/servicios/colegio.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
+
 
 @Component({
   selector: 'app-colegios-tab',
@@ -54,6 +56,11 @@ export class ColegiosTabComponent{
 
   private eliminarColegio(idColegio:number){
     this.colegioService.eliminarColegio(idColegio)
+  }
+
+  editarColegio(colegio:Colegio){
+    const editarModal = this.modalService.open(EditarColegioComponent,{backdrop:'static', size:'lg'})
+    editarModal.componentInstance.colegio = colegio
   }
 
 }

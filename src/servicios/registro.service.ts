@@ -37,4 +37,17 @@ export class RegistroService {
         })
   }
 
+  private getRegistrosAdmin(){
+    return this.http.get(`${environment.apiUrl}${environment.endpoint.registro.listadoAdmin}`).pipe(
+      map((respuesta:any) => respuesta.data))
+  }
+
+  obtenerRegistrosAdmin(){
+      this.getRegistrosAdmin().pipe(take(1)).subscribe(
+        registros=>{
+          console.log(registros)
+          this.registrosSubject.next(registros)
+        })
+  }
+
 }

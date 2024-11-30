@@ -60,7 +60,7 @@
                 <a class="text-small position-absolute t-3 e-3" (click)="cambiarVisibilidad()" style="cursor: pointer;">Revelar</a>
                 <app-error-formulario [control]="formulario.get('password')"></app-error-formulario>
               </div>
-              <app-boton-cargando (click)="login()" label="Ingresar"></app-boton-cargando>
+              <app-boton-cargando (action)="login()" label="Ingresar"></app-boton-cargando>
 
             </form>
           </div>

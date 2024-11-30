@@ -1,0 +1,85 @@
+<div class="modal-body p-2 m-0">
+
+
+    <div class="card">
+
+        <img src="/assets/img/background/blue.jpg" class="card-img-top" alt="card image" style="height: 75px;">
+        <div class="card-img-overlay d-flex flex-column justify-content-between">
+          <div>
+            <h1 class="display-4 text-white"><strong>Editar Red</strong></h1>
+          </div>
+        </div>
+
+      <div class="card-body">
+        <form [formGroup]="formularioEdicion">
+          <!-- Paso 1: Datos principales -->
+            <h5 class="pb-2">Datos Principales</h5>
+            <div class="row">
+              <!-- Campo Nombre -->
+              <div class="col-12 col-md-7 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-diagram-3-fill"></i></span>
+                    <input class="form-control form-control-sm" formControlName="nombre" placeholder="Ingrese nombre"
+                    [ngClass]="{ 'is-invalid': formularioEdicion.get('nombre')?.invalid && formularioEdicion.get('nombre')?.touched }"
+                    [RolesReadonly]="nombre" [Roles]="[0]" #nombre>
+                  </div>
+                  <span class="ms-5 text-primary">Nombre</span>
+                  <app-error-formulario [control]="formularioEdicion.get('nombre')"></app-error-formulario>
+                </label>
+              </div>
+
+              <!-- Campo Porcentaje -->
+              <div class="col-12 col-md-5 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-percent"></i></span>
+                    <input type="number" class="form-control form-control-sm" formControlName="porcentaje"
+                    [ngClass]="{ 'is-invalid':formularioEdicion.get('porcentaje')?.invalid && formularioEdicion.get('porcentaje')?.touched }" readonly>
+                  </div>
+                  <span class="ms-5 text-primary">Porcentaje</span>
+                  <app-error-formulario [control]="formularioEdicion.get('porcentaje')"></app-error-formulario>
+                </label>
+              </div>
+
+              <!-- Campo Foto -->
+              <div class="col-12 mb-3">
+                <div class="input-group">
+                  <span class="input-group-text bg-white"><i class="text-primary bi bi-image"></i></span>
+                  <input
+                    class="form-control form-control-sm"
+                    type="file"
+                    (change)="seleccionFoto($event)"
+                    accept="image/*"
+                  />
+                </div>
+                <app-error-formulario [control]="formularioEdicion.get('foto')"></app-error-formulario>
+              </div>
+
+              <!-- Campo Características -->
+              <div class="col-12 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-pencil-fill text-primary"></i></span>
+                    <textarea class="form-control form-control-sm" formControlName="caracteristicas" placeholder="Ingrese descripcion"
+                    [ngClass]="{ 'is-invalid': formularioEdicion.get('caracteristicas')?.invalid && formularioEdicion.get('datosPrincipales.caracteristicas')?.touched }"></textarea>
+                  </div>
+                  <span class="ms-5 text-primary">Características</span>
+                  <app-error-formulario [control]="formularioEdicion.get('caracteristicas')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+        </form>
+
+      </div>
+      <div class="card-footer text-center border-0 pt-1">
+        <app-boton-cargando (action)="submitForm()" label="Guadar"></app-boton-cargando>
+        <button type="button" class="btn btn-outline-secondary ms-2" (click)="cancelar()">Cancelar</button>
+      </div>
+    </div>
+
+</div>
+
+<ng-template #sinDatos>
+  <app-sin-datos></app-sin-datos>
+</ng-template>

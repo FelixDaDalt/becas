@@ -29,7 +29,7 @@
               'bg-danger': colegio.suspendido,
               'bg-success': !colegio.suspendido
             }">{{colegio.suspendido?'Suspendido':'Activo'}}</span>
-            <img *ngIf="colegio.logo" [src]="'data:image/png;base64,' + colegio.logo" class="card-img h-100 scale colegio-logo" alt="card image" />
+            <img *ngIf="colegio.foto" [src]="'http://localhost:3002' + colegio.foto" class="card-img h-100 scale colegio-logo" alt="card image" />
             <div class="card-img-overlay d-flex align-items-end reveal-content">
               <div class="row g-0">
                 <div class="col pe-2">
@@ -49,7 +49,9 @@
                       <i class="bi bi-person-fill-add text-primary"></i>
                     </button>
 
-                    <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                    <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                    type="button"
+                    (click)="editarColegio(colegio)">
                       <i class="bi bi-pencil-fill text-primary"></i>
                     </button>
 

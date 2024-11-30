@@ -7,6 +7,11 @@ import {
 } from '@angular/core';
 import { shareReplay } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
+import { usuarioService } from 'src/servicios/usuario.service';
+import { CambioPassComponent } from 'src/standalone/cambio-pass/cambio-pass.component';
+import { Usuario } from 'src/interfaces/usuario';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +19,17 @@ import { AuthService } from 'src/core/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements AfterViewInit {
-  navScriptLoaded = false;
+
   @ViewChild('navElement', { static: false }) navElement!: ElementRef;
 
-  user$ = this.authService.currentUser.pipe(shareReplay(1));
+  user$ = this.usuarioService.me$.pipe(shareReplay(1));
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private usuarioService: usuarioService,
+    private router: Router,
+    private modalService:NgbModal,
+    private authService:AuthService) {
     (window as any).navegar = this.navegar.bind(this);
+    this.usuarioService.obtenerMe()
   }
 
   ngAfterViewInit(): void {
@@ -28,9 +37,7 @@ export class HeaderComponent implements AfterViewInit {
     Scripts.navBase();
   }
 
-  logout() {
-    this.authService.logout();
-  }
+
 
   navegar(route: string, element: HTMLElement) {
     this.router.navigate([route]);
@@ -42,5 +49,23 @@ export class HeaderComponent implements AfterViewInit {
       .querySelectorAll('a')
       .forEach((el) => el.classList.remove('active'));
     element.classList.add('active');
+  }
+
+  editar(){
+   const modalEditar = this.modalService.open(EditarMisDatosComponent)
+  }
+
+  cambiarPass(usuario:Usuario){
+    const modalPass = this.modalService.open(CambioPassComponent)
+    modalPass.componentInstance.usuario = usuario
+    modalPass.componentInstance.alerta = false
+    modalPass.result.then(r=>{
+      if(r)
+        this.logout()
+    })
+   }
+
+   logout() {
+    this.authService.logout();
   }
 }

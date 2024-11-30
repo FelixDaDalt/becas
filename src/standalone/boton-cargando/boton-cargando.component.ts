@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CargandoService } from 'src/servicios/cargando.service';
 
 @Component({
@@ -10,17 +10,23 @@ import { CargandoService } from 'src/servicios/cargando.service';
   styleUrls: ['./boton-cargando.component.css']
 })
 export class BotonCargandoComponent {
+  @Input() disabled = false;
+  @Input() label: string = 'Submit';
+  @Output() action = new EventEmitter<void>();
 
-  @Input() disabled = false; // Propiedad para habilitar/deshabilitar el botón
-  @Input() label: string = 'Submit'; // Texto del botón
-
-  loading: boolean = false; // Estado local de loading
+  loading: boolean = false;
 
   constructor(private cargandoService: CargandoService) {}
 
   ngOnInit(): void {
     this.cargandoService.cargando$.subscribe(cargando => {
-      this.loading = cargando; // Actualizar el estado local al del servicio
+      this.loading = cargando;
     });
+  }
+
+  onClick(): void {
+    if (!this.disabled && !this.loading) {
+      this.action.emit(); // Emitir el evento solo si no está deshabilitado o cargando
+    }
   }
 }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TycPassGuard } from 'src/core/tyc-pass.Guard';
 import { PestañasComponent } from './pestañas.component';
 import { RoleGuard } from 'src/core/roleGuard';
 

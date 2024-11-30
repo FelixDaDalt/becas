@@ -122,4 +122,13 @@ export class ColegioService {
       this.obtenerColegios()
     })
   }
+
+  editarColegio(colegio:any){
+    return this.http.put(`${environment.apiUrl}${environment.endpoint.colegio.editar}`,colegio).pipe(
+      take(1),
+      tap((respuesta: any) => {
+        this.toast.success(respuesta.mensaje)
+        this.obtenerColegios()
+      })
+  )}
 }

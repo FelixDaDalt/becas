@@ -23,6 +23,11 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
           },
           { path: 'zonas',
             loadChildren: () => import('./secciones/zonas/zonas.module').then(m => m.ZonasModule),
+          },
+          {
+            path:'',
+            redirectTo:'terminos',
+            pathMatch:'full'
           }
         ]}
     ])

@@ -26,16 +26,13 @@ export class AltaRedComponent  {
   colegios$=this.colegioService.colegios$.pipe(tap(r=>console.log(r)))
   colegiosSeleccionados:Colegio[] = []
 
-
-
   constructor(private fb: FormBuilder,
     private router:Router,
     private activeRoute:ActivatedRoute,
     private colegioService:ColegioService,
     private imageCompress: NgxImageCompressService,
     private redService:RedService) {
-
-    this.colegioService.obtenerColegios()
+      this.colegioService.obtenerColegios()
     this.wizardForm = this.fb.group({
       // Paso 1: Datos principales
       datosPrincipales: this.fb.group({

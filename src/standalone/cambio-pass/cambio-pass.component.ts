@@ -18,6 +18,7 @@ export class CambioPassComponent implements OnInit{
 
   formulario: FormGroup;
   mostrarPassword = false;
+  @Input() alerta=true
   @Input() usuario?:Usuario
 
   constructor(

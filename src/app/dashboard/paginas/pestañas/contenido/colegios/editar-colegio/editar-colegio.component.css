@@ -1,0 +1,14 @@
+.input-group-text {
+  background-color: #e9ecef; /* Fondo sutil para el ícono */
+  border: 1px solid #ced4da; /* Borde para el ícono */
+}
+
+.card-img-overlay{
+  background: rgba(0, 0, 0, 0.075);
+  max-height: 75px;
+}
+
+.card .card-img-overlay {
+  padding-top: 20px;
+  padding-left: 40px;
+}

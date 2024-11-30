@@ -13,7 +13,8 @@ import { RoleDirective } from 'src/directiva/role.directiva';
   imports: [
     CommonModule,
     PestañasRoutingModule,
-    RoleDirective
+    RoleDirective,
+
   ]
 })
 export class PestañasModule { }

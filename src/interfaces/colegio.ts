@@ -1,4 +1,3 @@
-import { BufferData } from "./bufferData";
 import { Usuario } from "./usuario";
 import { zona_localidad } from "./zona";
 
@@ -15,12 +14,13 @@ export interface Colegio {
   telefono: string;
   url: string;
   email?: string | null;
-  logo?: BufferData;
   zona_localidad?:zona_localidad
   usuarios?: Usuario[];
   suspendido?: boolean
   terminos?:boolean
-
+  anfitrion?:number
+  foto?:string
+  id_zona?:number
 }
 
 

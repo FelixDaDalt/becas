@@ -1,7 +1,10 @@
-<button [disabled]="loading || disabled" class="btn btn-primary mb-1">
+<button
+  [disabled]="loading || disabled"
+  class="btn btn-primary mb-1"
+  (click)="onClick()">
   <ng-container *ngIf="loading; else buttonContent">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      cargando...
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    cargando...
   </ng-container>
   <ng-template #buttonContent>
     {{label}}

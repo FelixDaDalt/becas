@@ -13,6 +13,7 @@ import { ColegioService } from 'src/servicios/colegio.service';
 })
 export class AltaColegioComponent  {
 
+  public archivoSeleccionado: File | null = null;
   wizardForm: FormGroup;
   currentStep = 0;
   logoPreview: string | ArrayBuffer | null = null;
@@ -46,7 +47,6 @@ export class AltaColegioComponent  {
   constructor(private fb: FormBuilder,
     private router:Router,
     private colegioService:ColegioService,
-    private imageCompress: NgxImageCompressService,
     private zonaService:ZonasService,
     private activeRoute:ActivatedRoute) {
 
@@ -112,7 +112,7 @@ export class AltaColegioComponent  {
 
   submitForm() {
     if (this.wizardForm.valid) {
-      const formData = this.estructurarFormulario();
+      const formData = this.crearFormData();
       this.colegioService.altaColegio(formData).subscribe(respuesta=>{
         this.router.navigate(['../colegios'],{relativeTo:this.activeRoute});
       })
@@ -123,53 +123,16 @@ export class AltaColegioComponent  {
 
 
 
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    const logo = this.wizardForm.get('personalizacion.logo');
+  seleccionFoto(event: Event) {
+    const input = event.target as HTMLInputElement;
 
-    // Validar el tamaño del archivo
-    if (file && file.size > 4 * 1024 * 1024) { // 1 MB en bytes
-      logo?.setErrors({ maxFileSize: true });
-      logo?.markAsTouched();
-      return; // Salir de la función si el tamaño es demasiado grande
+    if (input.files && input.files.length > 0) {
+      this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
+      console.log('Archivo seleccionado:', this.archivoSeleccionado);
+    } else {
+      this.archivoSeleccionado = null;
+      console.log('No se seleccionó ningún archivo');
     }
-
-    // Convertir archivo a base64 antes de comprimir
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64Image = reader.result as string;
-
-      // Comprimir la imagen
-      const orientation = 1; // Normal
-      const ratio = 100; // Escalar al 70%
-      const quality = 100; // Calidad al 80%
-      const maxwidth = 310; // Limitar ancho a 800 px
-      const maxheight = 160; // Limitar altura a 600 px
-
-      this.imageCompress.compressFile(base64Image, orientation, ratio, quality, maxwidth, maxheight).then(
-        compressedImage => {
-          // Validar el tamaño de la imagen comprimida
-          const compressedSize = this.getBase64Size(compressedImage);
-          if (compressedSize > 100 * 1024) { // 100 KB en bytes
-            logo?.setErrors({ maxFileSize: true });
-            logo?.markAsTouched();
-            return; // Salir si el tamaño comprimido es demasiado grande
-          }
-
-          this.logoPreview = compressedImage; // Previsualización en el cliente
-          logo?.setValue(compressedImage); // Guarda el archivo comprimido en formato base64 en el formulario
-        }
-      );
-    };
-
-    reader.readAsDataURL(file); // Leer el archivo como URL de datos (base64)
-  }
-
-  // Función para calcular el tamaño de una imagen en base64
-  private getBase64Size(base64: string): number {
-    // El tamaño en bytes se calcula como:
-    // longitud de la cadena base64 / 4 * 3 (ajustando por el padding)
-    return (base64.length * 3) / 4 - (base64.endsWith('==') ? 2 : base64.endsWith('=') ? 1 : 0);
   }
 
 
@@ -233,8 +196,12 @@ export class AltaColegioComponent  {
     this.mostrarPassword = !this.mostrarPassword;
   }
 
-  private estructurarFormulario() {
-    // Extraemos los valores de cada grupo del formulario
+
+
+  private crearFormData(): FormData {
+    const formData = new FormData();
+
+    // Datos principales
     const datosPrincipales = this.wizardForm.get('datosPrincipales')?.value;
     const ubicacion = this.wizardForm.get('ubicacion')?.value;
     const contacto = this.wizardForm.get('contacto')?.value;
@@ -242,33 +209,36 @@ export class AltaColegioComponent  {
     const responsable = this.wizardForm.get('responsable')?.value;
     const acceso = this.wizardForm.get('acceso')?.value;
 
-    // Construimos el objeto con el formato deseado
-    const formulario = {
-      colegio: {
-        cuit: datosPrincipales.cuit,
-        nombre: datosPrincipales.nombre,
-        direccion_calle: ubicacion.direccion_calle,
-        direccion_numero: ubicacion.direccion_numero,
-        localidad: ubicacion.localidad,
-        provincia: ubicacion.provincia,
-        cp: ubicacion.cp,
-        telefono: contacto.telefono,
-        url: personalizacion.url,
-        id_zona: ubicacion.id_zona,
-        logo: personalizacion.logo
-      },
-      usuario: {
-        dni: acceso.dni,
-        password: acceso.password,
-        nombre: responsable.nombre,
-        apellido: responsable.apellido,
-        telefono: responsable.telefono,
-        celular: responsable.celular,
-        email: responsable.email
-      }
-    };
+    // Colegio (campos anidados)
+    formData.append('colegio[cuit]', datosPrincipales.cuit);
+    formData.append('colegio[nombre]', datosPrincipales.nombre);
+    formData.append('colegio[direccion_calle]', ubicacion.direccion_calle);
+    formData.append('colegio[direccion_numero]', ubicacion.direccion_numero);
+    formData.append('colegio[localidad]', ubicacion.localidad);
+    formData.append('colegio[provincia]', ubicacion.provincia);
+    formData.append('colegio[cp]', ubicacion.cp);
+    formData.append('colegio[telefono]', contacto.telefono);
+    formData.append('colegio[email]', contacto.email);
+    formData.append('colegio[url]', personalizacion.url);
+    formData.append('colegio[id_zona]', ubicacion.id_zona);
 
-    return formulario;
+
+    // Usuario (campos anidados)
+    formData.append('usuario[dni]', acceso.dni);
+    formData.append('usuario[password]', acceso.password);
+    formData.append('usuario[nombre]', responsable.nombre);
+    formData.append('usuario[apellido]', responsable.apellido);
+    formData.append('usuario[telefono]', responsable.telefono);
+    formData.append('usuario[celular]', responsable.celular);
+    formData.append('usuario[email]', responsable.email);
+
+
+    if (this.archivoSeleccionado) {
+      // Agregar logo si es un archivo
+      formData.append('foto', this.archivoSeleccionado);
+    }
+
+  return formData;
   }
 }
 

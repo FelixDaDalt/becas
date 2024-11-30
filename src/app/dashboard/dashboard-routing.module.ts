@@ -50,7 +50,7 @@ const routes: Routes = [
       canActivate:[RoleGuard],
       data: { roles: [0] },
       loadChildren: () => import('./paginas/alta/alta-red/alta-red.module').then(m => m.AltaRedModule)
-    },
+    }
   ]
   }
 ];

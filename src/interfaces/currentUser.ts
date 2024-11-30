@@ -11,6 +11,7 @@ export interface CurrentUser {
   tyc: boolean
   id_colegio_colegio: IdColegioColegio
   id_rol_role: IdRolRole
+  foto:string
 }
 
 export interface IdColegioColegio {

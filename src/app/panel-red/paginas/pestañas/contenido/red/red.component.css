@@ -1,0 +1,8 @@
+.img-transparent {
+  opacity: 0.7; /* Ajusta el nivel de transparencia (0 es completamente transparente, 1 es opaco) */
+  transition: opacity 0.3s ease; /* Transición suave al cambiar la opacidad */
+}
+
+.img-transparent:hover {
+  opacity: 1; /* Totalmente visible cuando el mouse pasa sobre la imagen */
+}

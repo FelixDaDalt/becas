@@ -18,6 +18,7 @@
     <!--reds Cards-->
     <ng-container *ngIf="(redes$|async) as redes">
 
+      <!--ADMINISTRADORES-->
       <ng-container *Roles="[0]">
         <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.redes.length > 0; else sinDatos">
             <div class="col" *ngFor="let red of redes.redes">
@@ -48,8 +49,16 @@
                           <i class="bi bi-trash-fill text-primary"></i>
                         </button>
 
-                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                        type="button"
+                        (click)="editar(red)">
                           <i class="bi bi-pencil-fill text-primary"></i>
+                        </button>
+
+                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                        type="button"
+                        (click)="editarMiembros(red)">
+                          <i class="bi bi-building-fill-add text-primary"></i>
                         </button>
 
 
@@ -64,7 +73,7 @@
                         <button
                         class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                         type="button"
-
+                        (click)="verRed(red.id)"
                         >
                           <i class="text-primary bi bi-eye-fill"></i>
                         </button>
@@ -77,10 +86,11 @@
         </div>
       </ng-container>
 
+      <!--RESTO USUARIOS-->
       <ng-container *Roles="[1,2,3]">
-        <h4 class="text-primary">Patrocinador</h4>
+        <h4 class="text-primary">Redes que Patrocino</h4>
         <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.misRedes.length > 0; else sinDatos" >
-          <div class="col" *ngFor="let red of redes.redes">
+          <div class="col" *ngFor="let red of redes.misRedes">
             <div class="card sh-20 hover-img-scale-up hover-reveal">
               <!-- <span class="badge position-absolute top-0 end-0 m-2"
               style="cursor: pointer;z-index: 9999;"
@@ -101,31 +111,19 @@
                     </div>
 
                     <div class="col-auto me-auto pt-2">
-                      <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
-                      type="button"
-                      (click)="confirmarEliminar(red)">
-                        <i class="bi bi-trash-fill text-primary"></i>
+                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button" *Roles="[1,2]">
+                        <i class="bi bi-pencil-fill text-primary" (click)="editar(red)" ></i>
                       </button>
 
-                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
-                        <i class="bi bi-pencil-fill text-primary"></i>
-                      </button>
-
-
-                      <!-- <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                       type="button"
-                      (click)="suspenderred(red.id)"
-                      >
-                        <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-                      </button> -->
+                      (click)="editarMiembros(red)" *Roles="[1]">
+                        <i class="bi bi-building-fill-add text-primary"></i>
+                      </button>
 
                       <button
                       class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button"
-
-                      >
+                      type="button" (click)="verRed(red.id)">
                         <i class="text-primary bi bi-eye-fill"></i>
                       </button>
                     </div>
@@ -136,9 +134,9 @@
           </div>
         </div>
         <hr>
-        <h4 class="text-primary">Vinculado</h4>
+        <h4 class="text-primary">Redes como Miembro</h4>
         <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.vinculado.length > 0; else sinDatos">
-          <div class="col" *ngFor="let red of redes.redes">
+          <div class="col" *ngFor="let red of redes.vinculado">
             <div class="card sh-20 hover-img-scale-up hover-reveal">
               <!-- <span class="badge position-absolute top-0 end-0 m-2"
               style="cursor: pointer;z-index: 9999;"
@@ -160,30 +158,8 @@
 
                     <div class="col-auto me-auto pt-2">
                       <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
-                      type="button"
-                      (click)="confirmarEliminar(red)">
-                        <i class="bi bi-trash-fill text-primary"></i>
-                      </button>
-
-                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
-                        <i class="bi bi-pencil-fill text-primary"></i>
-                      </button>
-
-
-                      <!-- <button
                       class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button"
-                      (click)="suspenderred(red.id)"
-                      >
-                        <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-                      </button> -->
-
-                      <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button"
-
-                      >
+                      type="button">
                         <i class="text-primary bi bi-eye-fill"></i>
                       </button>
                     </div>

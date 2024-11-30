@@ -26,9 +26,9 @@ export class DasboardComponent{
 
         // Redirige según el rol y la URL actual
         if (rol == 0 && !ruta.includes('dashboard/')) {
-          this.router.navigate(['colegios'], { relativeTo: this.activeRoute });
+          this.router.navigate(['redes'], { relativeTo: this.activeRoute });
         } else if (!ruta.includes('dashboard/')) {
-          this.router.navigate(['colegio'], { relativeTo: this.activeRoute });
+          this.router.navigate(['redes'], { relativeTo: this.activeRoute });
         }
       });
   }

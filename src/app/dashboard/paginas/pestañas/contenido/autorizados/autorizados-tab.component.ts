@@ -6,6 +6,7 @@ import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { AutorizadoService } from 'src/servicios/autorizado.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
 
 
@@ -64,6 +65,16 @@ export class AutorizadosTabComponent{
   private eliminarUsuario(idUsuario:number){
     this.adminService.eliminarUsuario(idUsuario).subscribe(respuesta=>{
       this.autorizadoService.obtenerAutorizados()
+    })
+  }
+
+  editar(Autorizado:Usuario){
+    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idUsuario = Autorizado.id
+    modalEditar.componentInstance.idRol = Autorizado.id_rol
+    modalEditar.result.then(r=>{
+      if(r)
+        this.autorizadoService.obtenerAutorizados()
     })
   }
 

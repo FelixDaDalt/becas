@@ -10,6 +10,7 @@ import { ErrorInterceptor } from 'src/interceptors/error.interceptor';
 import { TokenInterceptor } from 'src/interceptors/tokenInterceptor';
 import { CargandoInterceptor } from 'src/interceptors/cargando.interceptor';
 import { RoleDirective } from 'src/directiva/role.directiva';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RoleDirective } from 'src/directiva/role.directiva';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    EstructuraModule
+    EstructuraModule,
+    NgSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

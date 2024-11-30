@@ -1,0 +1,250 @@
+
+<div class="modal-body p-2 m-0">
+
+
+  <div class="card">
+
+      <img src="/assets/img/background/blue.jpg" class="card-img-top" alt="card image" style="height: 75px;">
+      <div class="card-img-overlay d-flex flex-column justify-content-between">
+        <div>
+          <h1 class="display-4 text-white"><strong>Editar Colegio</strong></h1>
+        </div>
+      </div>
+
+    <div class="card-body wizard">
+
+        <div class="card-header border-0 pb-0">
+          <ul class="nav nav-tabs justify-content-center">
+            <li *ngFor="let step of steps; let i = index"
+                class="nav-item" (click)="currentStep = i" [class.active]="currentStep === i"> <!-- (click)="currentStep = i"  -->
+              <a class="nav-link text-center" [class.active]="currentStep === i">
+                <div class="mb-1 title d-none d-sm-block">{{ step.nombre }}</div>
+                <div class="text-small description d-none d-md-block">{{step.descripcion}}</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <form [formGroup]="wizardForm">
+          <!-- Paso 1: Datos principales -->
+          <div *ngIf="currentStep === 0" formGroupName="datosPrincipales">
+            <h5 class="pb-2">Datos Únicos</h5>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-card-checklist"></i></span>
+                    <input class="form-control form-control-sm" formControlName="cuit" placeholder="Ingrese CUIT" (blur)="comprobarCuit()">
+                  </div>
+                  <span class="ms-5 text-primary">Cuit</span>
+                  <app-error-formulario [control]="wizardForm.get('datosPrincipales.cuit')" [checkDisponibilidad]="true"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-buildings"></i></span>
+                    <input class="form-control form-control-sm" formControlName="nombre" placeholder="Ingrese nombre" >
+                  </div>
+                  <span class="ms-5 text-primary">Nombre</span>
+                  <app-error-formulario [control]="wizardForm.get('datosPrincipales.nombre')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 2: Ubicación -->
+          <div *ngIf="currentStep === 1" formGroupName="ubicacion">
+            <h5>Ubicación</h5>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-house"></i></span>
+                    <input class="form-control form-control-sm" formControlName="direccion_calle" placeholder="Ingrese calle">
+                  </div>
+                  <span class="ms-5 text-primary">Calle</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.direccion_calle')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-sort-numeric-up"></i></span>
+                    <input class="form-control form-control-sm" formControlName="direccion_numero" placeholder="Ingrese número">
+                  </div>
+                  <span class="ms-5 text-primary">Número</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.direccion_numero')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-geo-alt"></i></span>
+                    <input class="form-control form-control-sm" formControlName="localidad" placeholder="Ingrese localidad">
+                  </div>
+                  <span class="ms-5 text-primary">Localidad</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.localidad')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-geo"></i></span>
+                    <input class="form-control form-control-sm" formControlName="provincia" placeholder="Ingrese provincia">
+                  </div>
+                  <span class="ms-5 text-primary">Provincia</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.provincia')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-postage"></i></span>
+                    <input class="form-control form-control-sm" formControlName="cp" placeholder="Ingrese código postal">
+                  </div>
+                  <span class="ms-5 text-primary">Código Postal</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.cp')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-box"></i></span>
+                    <ng-select
+                      class="form-control form-control-sm"
+                      [items]="localidades$ | async"
+                      bindLabel="nombre"
+                      bindValue="id"
+                      groupBy="nombre_zona"
+                      placeholder="Seleccione una localidad"
+                      formControlName="id_zona">
+                      <ng-template ng-optgroup-tmp let-item="item">
+                        <span>{{ item.nombre_zona }}</span>
+                      </ng-template>
+                      <ng-template ng-option-tmp let-localidad="item">
+                        <span>{{ localidad.nombre }}</span>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <span class="ms-5 text-primary">Zona</span>
+                  <app-error-formulario [control]="wizardForm.get('ubicacion.id_zona')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 3: Datos de contacto -->
+          <div *ngIf="currentStep === 2" formGroupName="contacto">
+            <h5>Contacto</h5>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-telephone"></i></span>
+                    <input class="form-control form-control-sm" formControlName="telefono" placeholder="Ingrese Telefono">
+                  </div>
+                  <span class="ms-5 text-primary">Telefono</span>
+                  <app-error-formulario [control]="wizardForm.get('contacto.telefono')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-envelope-at"></i></span>
+                    <input class="form-control form-control-sm" formControlName="email" placeholder="Ingrese Email">
+                  </div>
+                  <span class="ms-5 text-primary">Email</span>
+                  <app-error-formulario [control]="wizardForm.get('contacto.email')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Paso 4: Personalización -->
+          <div *ngIf="currentStep === 3" formGroupName="personalizacion">
+            <h5>Personalización</h5>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-globe"></i></span>
+                    <input class="form-control form-control-sm" formControlName="url" placeholder="Ingrese url" (blur)="comprobarUrl()">
+                  </div>
+                  <span class="ms-5 text-primary">Url</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.url')" [checkDisponibilidad]="true"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 mb-5">
+
+                <div class="col-12 mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-image"></i></span>
+                    <input
+                      class="form-control form-control-sm"
+                      type="file"
+                      (change)="seleccionFoto($event)"
+                      accept="image/*"
+                    />
+                  </div>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.foto')"></app-error-formulario>
+                </div>
+              </div>
+
+              <!-- <div class="col-12 mb-4" *ngIf="logoPreview">
+                <h6 class="text-primary">Previsualización del Logo:</h6>
+                <div class="row row-cols-1 row-cols-md-3 g-2 mb-5" *ngIf="logoPreview">
+                  <div class="col">
+                    <div class="card card-logo sh-20 hover-img-scale-up hover-reveal">
+                      <img [src]="logoPreview" class="card-img h-100 scale colegio-logo" alt="card image" />
+                      <div class="card-img-overlay d-flex align-items-end reveal-content">
+                        <div class="row g-0">
+                          <div class="col pe-2">
+                            <span class="stretched-link">
+                              <h5 class="heading text-white mb-1 fw-bold text-shadow">{{wizardForm.get('datosPrincipales.nombre')?.value}}</h5>
+                            </span>
+
+                            <div class="d-inline-block">
+                              <div class="text-white"><span>{{wizardForm.get('ubicacion.direccion_calle')?.value}} {{wizardForm.get('ubicacion.direccion_numero')?.value}} - {{wizardForm.get('ubicacion.localidad')?.value}}</span></div>
+                            </div>
+
+                            <div class="col-auto me-auto pt-2">
+                              <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1" type="button">
+                                <i class="bi bi-person-fill-add text-primary"></i>
+                              </button>
+
+                              <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                                <i class="bi bi-pencil-fill text-primary"></i>
+                              </button>
+
+                              <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button">
+                                <i class="bi bi-lock-fill text-primary"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+        </form>
+
+    </div>
+
+      <div class="card-footer text-center border-0 pt-1">
+        <button (click)="goToPreviousStep()" [disabled]="currentStep === 0" class="btn btn-primary me-2">Volver</button>
+        <button *ngIf="currentStep < 3" (click)="goToNextStep()" class="btn btn-primary">Siguiente</button>
+        <app-boton-cargando *ngIf="currentStep === 3" (action)="submitForm()" label="Guardar"></app-boton-cargando>
+        <button (click)="cerrar()" class="btn btn-outline-secondary ms-2">Cancelar</button>
+      </div>
+    </div>
+
+</div>

@@ -10,7 +10,7 @@
       <div class="card mb-3">
         <div class="row g-0 sh-10">
           <div class="col-auto h-100">
-            <img *ngIf="detalle.colegio.logo" [src]="'data:image/png;base64,'+ detalle.colegio.logo"
+            <img *ngIf="detalle.colegio.foto" [src]="'http://localhost:3002' + detalle.colegio.foto"
               alt="alternate text" class="card-img card-img-horizontal sw-8 ms-2" />
           </div>
           <div class="col">
@@ -173,8 +173,7 @@
               <div class="card-body">
                 <div class="row g-0 sh-6">
                   <div class="col-auto">
-                    <div class="card-img rounded-xl sh-6 sw-6 bg-primary text-white d-flex align-items-center justify-content-center">
-                      CD</div>
+                    <img [src]="'http://localhost:3002'+responsable.foto" class="card-img rounded-xl sh-6 sw-6" alt="thumb" />
                   </div>
                   <div class="col">
                     <div
@@ -198,7 +197,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               <a class="dropdown-item" (click)="verUsuario(responsable.id)">Ver</a>
-                              <a class="dropdown-item" href="#">Editar</a>
+                              <a class="dropdown-item" (click)="editar(responsable)">Editar</a>
                               <a class="dropdown-item" (click)="confirmarEliminar(responsable)">Eliminar</a>
                             </div>
                           </div>
@@ -255,8 +254,7 @@
               <div class="card-body">
                 <div class="row g-0 sh-6">
                   <div class="col-auto">
-                    <div class="card-img rounded-xl sh-6 sw-6 bg-primary text-white d-flex align-items-center justify-content-center">
-                      CD</div>
+                    <img [src]="'http://localhost:3002'+delegado.foto" class="card-img rounded-xl sh-6 sw-6" alt="thumb" />
                   </div>
                   <div class="col">
                     <div
@@ -280,7 +278,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                               <a class="dropdown-item" (click)="verUsuario(delegado.id)">Ver</a>
-                              <a class="dropdown-item" href="#">Editar</a>
+                              <a class="dropdown-item" (click)="editar(delegado)">Editar</a>
                               <a class="dropdown-item" (click)="confirmarEliminar(delegado)">Eliminar</a>
                             </div>
                           </div>
@@ -337,8 +335,7 @@
                 <div class="card-body">
                   <div class="row g-0 sh-6">
                     <div class="col-auto">
-                      <div class="card-img rounded-xl sh-6 sw-6 bg-primary text-white d-flex align-items-center justify-content-center">
-                        CD</div>
+                      <img [src]="'http://localhost:3002'+autorizado.foto" class="card-img rounded-xl sh-6 sw-6" alt="thumb" />
                     </div>
                     <div class="col">
                       <div
@@ -362,7 +359,7 @@
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" (click)="verUsuario(autorizado.id)">Ver</a>
-                                <a class="dropdown-item" href="#">Editar</a>
+                                <a class="dropdown-item" (click)="editar(autorizado)">Editar</a>
                                 <a class="dropdown-item" (click)="confirmarEliminar(autorizado)">Eliminar</a>
                               </div>
                             </div>
@@ -381,39 +378,88 @@
 
       <!-- Redes -->
       <div class="tab-pane fade" id="redesTab" role="tabpanel">
-        <h2 class="small-title">About</h2>
-        <div class="card">
-          <div class="card-body">
-            <div class="mb-5">
-              <p class="text-small text-muted mb-2">ME</p>
-              <p>
-                Jujubes brownie marshmallow apple pie donut ice cream jelly-o jelly-o gummi bears. Tootsie roll chocolate
-                bar dragée bonbon cheesecake
-                icing. Danish wafer donut cookie caramels gummies topping.
-              </p>
+        <h2 class="small-title">Redes</h2>
+
+        <!-- Buscador -->
+        <div class="row mb-3 g-2">
+          <div class="col mb-1">
+            <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
+              <input class="form-control" placeholder="Search" />
+              <span class="search-magnifier-icon">
+                <i data-acorn-icon="search"></i>
+              </span>
+              <span class="search-delete-icon d-none">
+                <i data-acorn-icon="close"></i>
+              </span>
             </div>
-            <div class="mb-5">
-              <p class="text-small text-muted mb-2">INTERESTS</p>
-              <p>
-                Chocolate cake biscuit donut cotton candy soufflé cake macaroon. Halvah chocolate cotton candy sweet roll
-                jelly-o candy danish dragée.
-                Apple pie cotton candy tiramisu biscuit cake muffin tootsie roll bear claw cake. Cupcake cake fruitcake.
-              </p>
-            </div>
-            <div>
-              <p class="text-small text-muted mb-2">CONTACT</p>
-              <a href="#" class="d-block body-link mb-1">
-                <i data-acorn-icon="screen" class="me-2" data-acorn-size="17"></i>
-                <span class="align-middle">blainecottrell.com</span>
-              </a>
-              <a href="#" class="d-block body-link">
-                <i data-acorn-icon="email" class="me-2" data-acorn-size="17"></i>
-                <span class="align-middle">contact</span>
-              </a>
+          </div>
+          <div class="col-auto text-end mb-1">
+            <div class="dropdown-as-select d-inline-block" data-childselector="span">
+              <button class="btn p-0 shadow" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                <span class="btn btn-foreground-alternate dropdown-toggle sw-13">All</span>
+              </button>
+              <div class="dropdown-menu shadow dropdown-menu-end">
+                <a class="dropdown-item active" href="#">All</a>
+                <a class="dropdown-item" href="#">Active</a>
+                <a class="dropdown-item" href="#">Inactive</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <!-- Buscador -->
+
+        <!-- Listado Miembro-->
+        <h2 class="small-title">Patrocinador en:</h2>
+        <div class="row g-3" *ngIf="detalle.anfitrion.length>0;else sinDatos">
+          <div class="col-6" *ngFor="let item of detalle.anfitrion">
+            <div class="card">
+              <div class="row g-0 sh-10">
+                <div class="col-auto h-100">
+                  <img [src]="'http://localhost:3002' + item.foto" alt="alternate text" class="card-img card-img-horizontal sw-11 h-100" />
+                </div>
+                <div class="col">
+                  <div class="card-body d-flex flex-column pt-0 pb-0 h-100 justify-content-center">
+                    <div class="d-flex flex-column text-primary">
+                      <div>{{item.nombre}}</div>
+                      <div class="text-small text-muted text-truncate">
+                        {{item.caracteristicas}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listado Miembro-->
+
+        <!-- Listado Miembro-->
+        <h2 class="small-title mt-4">Miembro en:</h2>
+        <div class="row g-3" *ngIf="detalle.miembro.length>0;else sinDatos">
+          <div class="col-6" *ngFor="let item of detalle.miembro">
+            <div class="card">
+              <div class="row g-0 sh-10">
+                <div class="col-auto h-100">
+                  <img [src]="'http://localhost:3002' + item.foto" alt="alternate text" class="card-img card-img-horizontal sw-11 h-100" />
+                </div>
+                <div class="col">
+                  <div class="card-body d-flex flex-column pt-0 pb-0 h-100 justify-content-center">
+                    <div class="d-flex flex-column text-primary">
+                      <div>{{item.nombre}}</div>
+                      <div class="text-small text-muted text-truncate">
+                        {{item.caracteristicas}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Listado Miembro-->
+    </div>
       <!-- Redes -->
 
       <!-- Registros -->

@@ -32,7 +32,8 @@ export const environment = {
       obtener:'/colegio/obtener',
       suspender:'/colegio/suspender',
       detalle:'/colegio/detalle',
-      borrar:'/colegio/borrar'
+      borrar:'/colegio/borrar',
+      editar:'/colegio/editar'
     },
     admin:{
       alta:'/admin/alta',
@@ -43,6 +44,8 @@ export const environment = {
       tyc_alta: '/admin/tyc/alta',
       tyc_historial: '/admin/tyc/historial',
       comprobar:'/admin/comprobar',
+      editar:'/admin/editar',
+      me:'/admin/me',
     },
     usuario:{
       tyc:'/usuario/tyc',
@@ -51,15 +54,23 @@ export const environment = {
       suspender:'/usuario/suspender',
       resetearPass:'/usuario/resetearPass',
       obtener:'/usuario/detalle',
-      borrar:'/usuario/borrar'
+      borrar:'/usuario/borrar',
+      editar:'/usuario/editar',
+      me:'/usuario/me'
     },
     registro:{
       listado:'/registro/listado',
+      listadoAdmin:'/registro/listadoAdmin',
     },
     red:{
       alta:'/red/alta',
       listado:'/red/listado',
-      borrar:'/red/borrar'
+      borrar:'/red/borrar',
+      editarDatos:'/red/editarDatos',
+      obtener:'/red/obtener',
+      colegiosDisponibles:'/red/colegiosDisponibles',
+      borrarMiembro:'/red/borrarMiembro',
+      editarMiembros:'/red/editarMiembros'
     }
   }
 

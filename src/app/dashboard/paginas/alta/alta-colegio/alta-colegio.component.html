@@ -181,11 +181,18 @@
 
               <div class="col-12 mb-5">
 
+                <div class="col-12 mb-3">
                   <div class="input-group">
                     <span class="input-group-text bg-white"><i class="text-primary bi bi-image"></i></span>
-                    <input type="file" class="form-control form-control-sm" (change)="onFileSelected($event)" accept="image/*">
+                    <input
+                      class="form-control form-control-sm"
+                      type="file"
+                      (change)="seleccionFoto($event)"
+                      accept="image/*"
+                    />
                   </div>
-                  <app-error-formulario [control]="wizardForm.get('personalizacion.logo')"></app-error-formulario>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.foto')"></app-error-formulario>
+                </div>
 
               </div>
 
@@ -319,7 +326,7 @@
       <div class="card-footer text-center border-0 pt-1">
         <button (click)="goToPreviousStep()" [disabled]="currentStep === 0" class="btn btn-outline-primary me-2">Volver</button>
         <button *ngIf="currentStep < 5" (click)="goToNextStep()" class="btn btn-outline-primary">Siguiente</button>
-        <app-boton-cargando *ngIf="currentStep === 5" (click)="submitForm()" label="Enviar"></app-boton-cargando>
+        <app-boton-cargando *ngIf="currentStep === 5" (action)="submitForm()" label="Enviar"></app-boton-cargando>
       </div>
     </div>
 

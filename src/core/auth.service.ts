@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { CurrentUser } from 'src/interfaces/currentUser';
+import { usuarioService } from 'src/servicios/usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthService {
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient, private router: Router) {
     const storedUser = localStorage.getItem('user');  // Corregir aquí: solo parseamos el usuario, no el token
     this.currentUserSubject = new BehaviorSubject<CurrentUser | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable().pipe(shareReplay(1));
@@ -53,7 +55,6 @@ export class AuthService {
           this.setSession(token, expiration, user);
           this.isAuthenticatedSubject.next(true);
         }
-
         return user;
       })
     );
@@ -74,13 +75,13 @@ export class AuthService {
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
-    rol == 0?this.router.navigate(['/admin/login']):this.router.navigate(['login'])
+    rol == 0?this.router.navigate(['admin','login']):this.router.navigate(['login'])
 
   }
 
   isAuthenticated(): boolean {
     const isAuth = this.checkAuthentication();
-    this.isAuthenticatedSubject.next(isAuth); // Emite el estado actual
+    this.isAuthenticatedSubject.next(isAuth);
     return isAuth;
   }
 

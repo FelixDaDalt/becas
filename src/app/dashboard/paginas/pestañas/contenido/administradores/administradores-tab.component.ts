@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { administrador } from 'src/interfaces/usuario';
+import { administrador, Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
+import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 
 
 @Component({
@@ -58,6 +59,16 @@ export class AdministradoresTabComponent implements OnInit{
 
   private eliminarAdmin(idAdmin:number){
     this.adminService.eliminarAdmin(idAdmin)
+  }
+
+  editar(Administrador:administrador){
+    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idUsuario = Administrador.id
+    modalEditar.componentInstance.idRol = Administrador.id_rol
+    modalEditar.result.then(r=>{
+      if(r)
+        this.adminService.obtenerAdministradores()
+    })
   }
 
 }
