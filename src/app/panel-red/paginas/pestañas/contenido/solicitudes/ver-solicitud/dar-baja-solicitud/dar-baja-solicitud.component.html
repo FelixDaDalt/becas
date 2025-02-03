@@ -1,0 +1,19 @@
+<div class="resolver-solicitud">
+  <form [formGroup]="resolverForm">
+
+  <div class="form-group mb-3">
+    <label for="comentario" class="form-label">Comentario</label>
+    <textarea
+      formControlName="baja_comentario"
+      id="comentario"
+      class="form-control"
+      rows="4"
+      placeholder="Ingrese un comentario opcional..."
+    ></textarea>
+    <app-error-formulario [control]="resolverForm.get('baja_comentario')"></app-error-formulario>
+  </div>
+</form>
+  <app-boton-cargando (action)="guardar()" label="Dar de baja"></app-boton-cargando>
+
+</div>
+

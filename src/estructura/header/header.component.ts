@@ -5,13 +5,15 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { shareReplay } from 'rxjs';
+import { shareReplay, tap } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { usuarioService } from 'src/servicios/usuario.service';
 import { CambioPassComponent } from 'src/standalone/cambio-pass/cambio-pass.component';
 import { Usuario } from 'src/interfaces/usuario';
+import { environment } from 'src/environments/environment';
+import { NotificacionService } from 'src/servicios/notificacion.service';
 
 @Component({
   selector: 'app-header',
@@ -23,13 +25,17 @@ export class HeaderComponent implements AfterViewInit {
   @ViewChild('navElement', { static: false }) navElement!: ElementRef;
 
   user$ = this.usuarioService.me$.pipe(shareReplay(1));
+  apiFile=environment.fileUrl
+  notificaciones$=this.notificacionesService.notificacion$.pipe(tap(r=>console.log(r)))
 
   constructor(private usuarioService: usuarioService,
     private router: Router,
     private modalService:NgbModal,
-    private authService:AuthService) {
+    private authService:AuthService,
+    private notificacionesService:NotificacionService ) {
     (window as any).navegar = this.navegar.bind(this);
-    this.usuarioService.obtenerMe()
+      this.usuarioService.obtenerMe()
+      this.notificacionesService.obtenerNotificaciones()
   }
 
   ngAfterViewInit(): void {
@@ -67,5 +73,17 @@ export class HeaderComponent implements AfterViewInit {
 
    logout() {
     this.authService.logout();
+  }
+
+  verMiSolicitud(solicitud:any){
+    this.router.navigate(['dashboard/panel-red/mis-solicitudes/ver-solicitud'],{queryParams:{
+      idRed:solicitud.id_red,idSolicitud:solicitud.id
+    }})
+  }
+
+  verSolicitud(solicitud:any){
+    this.router.navigate(['dashboard/panel-red/solicitudes-recibidas/ver-solicitud'],{queryParams:{
+      idRed:solicitud.id_red,idSolicitud:solicitud.id
+    }})
   }
 }

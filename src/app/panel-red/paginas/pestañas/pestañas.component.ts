@@ -9,6 +9,27 @@ import { RedService } from 'src/servicios/red.service';
   templateUrl: './pestañas.component.html',
   styleUrls: ['./pestañas.component.css']
 })
-export class PestañasRedComponent {
+export class PestañasRedComponent implements OnInit{
+  private queryParamsSubscription: Subscription | undefined;
+  idRed?:number
+  constructor(private router: Router, private redService:RedService,private route:ActivatedRoute,) {}
 
+  ngOnInit(): void {
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
+      this.idRed = params['idRed'];
+  })
+}
+
+  navegarA(ruta: string): void {
+    if(this.idRed)
+    this.redService.obtenerMeRed(this.idRed)
+
+    // Navegar a la ruta especificada con queryParamsHandling 'merge'
+    this.router.navigate([ruta], {relativeTo:this.route, queryParamsHandling: 'merge' });
+  }
+
+   isActive(ruta: string): boolean {
+    // Verifica si la ruta actual coincide con la ruta pasada
+    return this.router.url.includes(ruta);
+  }
 }

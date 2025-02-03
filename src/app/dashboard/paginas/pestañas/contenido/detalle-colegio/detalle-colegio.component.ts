@@ -13,6 +13,7 @@ import { DelegadoService } from 'src/servicios/delegado.service';
 import { ResponsableService } from 'src/servicios/responsable.service';
 import { RegistroService } from 'src/servicios/registro.service';
 import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-detalle-colegio',
@@ -20,7 +21,7 @@ import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-
   styleUrls: ['./detalle-colegio.component.css']
 })
 export class DetalleColegioComponent implements OnInit, OnDestroy {
-
+  apiFile=environment.fileUrl
   detalle$ = this.colegioService.colegioDetalle$.pipe(tap(r=>console.log(r)))
   registros$ = this.registroService.registros$
   private queryParamsSubscription: Subscription | undefined;

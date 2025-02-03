@@ -1,6 +1,6 @@
 
 <div id="nav" class="nav-container d-flex" #navElement >
-  <div class="nav-content d-flex">
+  <div class="nav-content d-flex" >
     <!-- Logo Start -->
     <div class="logo position-relative">
       <a [routerLink]=''>
@@ -16,10 +16,10 @@
 
 
     <!-- User Menu Start -->
-    <div class="user-container d-flex">
+    <div class="user-container d-flex" *ngIf="user$ | async as user">
       <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img class="profile" alt="profile" [src]="'http://localhost:3002'+(user$ | async)?.foto" />
-        <div class="name">{{(user$ | async)?.apellido}},{{(user$ | async)?.nombre}}</div>
+        <img class="profile" alt="profile" [src]="apiFile+user.foto" />
+        <div class="name">{{user.apellido}},{{user.nombre}}</div>
       </a>
       <div class="dropdown-menu dropdown-menu-end user-menu wide">
         <div class="row mb-1 ms-0 me-0">
@@ -36,7 +36,7 @@
                 </a>
               </li>
               <li>
-                <a (click)="cambiarPass(user)" *ngIf="(user$ | async) as user">
+                <a (click)="cambiarPass(user)">
                   <i class="bi bi-key-fill me-2"></i>
                   <span class="align-middle">Contraseña</span>
                 </a>
@@ -85,42 +85,77 @@
           </a>
         </li>
         <li class="list-inline-item">
-          <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" class="notification-button">
+          <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" class="notification-button" >
             <div class="position-relative d-inline-flex">
               <i data-acorn-icon="bell" data-acorn-size="18"></i>
-              <span class="position-absolute notification-dot rounded-xl"></span>
+
+              <!-- Badge más pequeño -->
+              <ng-container *ngIf="notificaciones$ | async as notificaciones">
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 3px 6px; min-width: 16px;" *ngIf="notificaciones.total > 0" >
+                    {{notificaciones.total}}
+                  </span>
+              </ng-container>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
-            <div class="scroll">
-              <ul class="list-unstyled border-last-none">
-                <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                  <img src="img/profile/profile-1.webp" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                  <div class="align-self-center">
-                    <a href="#">Joisse Kaycee just sent a new comment!</a>
+            <ng-container *ngIf="notificaciones$ | async as notificaciones">
+              <div class="scroll-container"> <!-- Contenedor con scroll -->
+                <ng-container *ngIf="notificaciones.total > 0;else sinNotificaciones">
+                <!-- 🔵 Mis Solicitudes -->
+                <div *ngIf="notificaciones.misSolicitudes.length > 0" class="mb-2">
+                  <h6 class="text-primary fw-bold border-bottom pb-2 small">📌 Mis Solicitudes</h6>
+                  <ul class="list-unstyled border-last-none">
+                    <li *ngFor="let miSolicitud of notificaciones.misSolicitudes"
+                        class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+
+                      <!-- 📷 Imagen -->
+                      <img [src]="apiFile + miSolicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+
+                      <!-- 📝 Información -->
+                      <div>
+                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small">
+                          <strong>{{ miSolicitud.nombre }}</strong> ha resuelto una solicitud
+                          <span class="text-muted">{{ miSolicitud.reso_fecha_hora | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- 🔴 Solicitudes Recibidas -->
+                <div *ngIf="notificaciones.solicitudes.length > 0" class="mb-2">
+                  <h6 class="text-danger fw-bold border-bottom pb-2 small">📌 Solicitudes Recibidas</h6>
+                  <ul class="list-unstyled border-last-none">
+                    <li *ngFor="let solicitud of notificaciones.solicitudes"
+                        class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+
+                      <!-- 📷 Imagen -->
+                      <img [src]="apiFile + solicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+
+                      <!-- 📝 Información -->
+                      <div>
+                        <a (click)="verSolicitud(solicitud)"  class="text-dark small">
+                          <strong>{{ solicitud.nombre }}</strong>
+                          <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-danger': solicitud.desestimado}">
+                            {{ solicitud.desestimado ? 'ha desestimado una solicitud' : 'te ha solicitado una beca' }}
+                          </span>
+                          <span class="text-muted">{{ solicitud.fecha_hora | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                </ng-container>
+
+                <ng-template #sinNotificaciones>
+                  <div>
+                    <h6 class="text-primary fw-bold small pb-0 mb-0">Sin Notificaciones</h6>
                   </div>
-                </li>
-                <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                  <img src="img/profile/profile-2.webp" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                  <div class="align-self-center">
-                    <a href="#">New order received! It is total $147,20.</a>
-                  </div>
-                </li>
-                <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                  <img src="img/profile/profile-3.webp" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                  <div class="align-self-center">
-                    <a href="#">3 items just added to wish list by a user!</a>
-                  </div>
-                </li>
-                <li class="pb-3 pb-3 border-bottom border-separator-light d-flex">
-                  <img src="img/profile/profile-6.webp" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                  <div class="align-self-center">
-                    <a href="#">Kirby Peters just sent a new message!</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
+                </ng-template>
+              </div>
+            </ng-container>
           </div>
+
         </li>
       </ul>
 

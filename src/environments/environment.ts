@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3002',
+  fileUrl: 'http://localhost:3002',
   featureFlag: false,
   endpoint: {
     zona: {
@@ -69,9 +70,27 @@ export const environment = {
       editarDatos:'/red/editarDatos',
       obtener:'/red/obtener',
       colegiosDisponibles:'/red/colegiosDisponibles',
+
       borrarMiembro:'/red/borrarMiembro',
-      editarMiembros:'/red/editarMiembros'
-    }
+      editarMiembros:'/red/editarMiembros',
+      obtenerMiembros:'/red/obtenerMiembros',
+      meRed:'/red/me'
+    },
+    beca:{
+      listado:'/beca/listado',
+      alta:'/beca/alta',
+      solicitar:'/beca/solicitar',
+      solicitudes:'/beca/solicitudes',
+      solicitud_detalle:'/beca/solicitud-detalle',
+      mis_solicitudes:'/beca/mis-solicitudes',
+      mi_solicitud_detalle:'/beca/mi-solicitud-detalle',
+      resolver:'/beca/resolver',
+      desestimar:'/beca/desestimar',
+      dar_baja:'/beca/dar-baja'
+    },
+    notificaciones:{
+      listado:'/notificacion/listado'
+    },
   }
 
 };

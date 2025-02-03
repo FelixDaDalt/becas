@@ -5,6 +5,7 @@ import { PanelRedRoutingModule } from './panel-red-routing.module';
 import { EstructuraModule } from "../../estructura/estructura.module";
 import { breadcrumb } from "../../standalone/breadcrumb/breadcrumb.component";
 import { MiColegioColumnaComponent } from './mi-colegio-columna/mi-colegio-columna.component';
+import { FormatDniCuitPipe } from "../../pipes/formatoDniCuit.pipe";
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { MiColegioColumnaComponent } from './mi-colegio-columna/mi-colegio-colum
     CommonModule,
     PanelRedRoutingModule,
     EstructuraModule,
-    breadcrumb
+    breadcrumb,
+    FormatDniCuitPipe
 ]
 })
 export class PanelRedModule { }

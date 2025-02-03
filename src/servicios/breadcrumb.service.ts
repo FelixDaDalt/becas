@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, Params, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -13,12 +13,14 @@ interface Breadcrumb {
 })
 export class BreadcrumbService {
   private breadcrumbs$ = new BehaviorSubject<Breadcrumb[]>([]);
+  private currentQueryParams: Params = {}; // Almacenar queryParams actuales
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
-        // Elimina los queryParams de la URL actual
+        this.currentQueryParams = this.route.snapshot.queryParams; // Captura los queryParams actuales
+
         const cleanUrl = this.router.url.split('?')[0];
         const breadcrumbs = this.createBreadcrumbs(cleanUrl);
         this.breadcrumbs$.next(breadcrumbs);
@@ -29,16 +31,19 @@ export class BreadcrumbService {
     return this.breadcrumbs$.asObservable();
   }
 
+  get queryParams(): Params {
+    return this.currentQueryParams;
+  }
+
   private createBreadcrumbs(url: string): Breadcrumb[] {
     const breadcrumbs: Breadcrumb[] = [];
-    const segments = url.split('/').filter(segment => segment); // Divide la URL en segmentos
+    const segments = url.split('/').filter(segment => segment);
 
     let accumulatedUrl = '';
 
     segments.forEach(segment => {
-      accumulatedUrl += `/${segment}`; // Construye la URL acumulativa
+      accumulatedUrl += `/${segment}`;
 
-      // Convierte el segmento en un texto legible (ej. reemplaza guiones y capitaliza)
       const label = this.formatLabel(segment);
 
       breadcrumbs.push({ label, url: accumulatedUrl });
@@ -48,10 +53,9 @@ export class BreadcrumbService {
   }
 
   private formatLabel(segment: string): string {
-    // Personaliza el formato del texto para los breadcrumbs
     return segment
-      .replace(/-/g, ' ') // Reemplaza guiones por espacios
-      .replace(/\b\w/g, char => char.toUpperCase()); // Capitaliza la primera letra de cada palabra
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, char => char.toUpperCase());
   }
 }
 

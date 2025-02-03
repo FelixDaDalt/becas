@@ -1,15 +1,23 @@
-<div class="card">
+<div class="card" *ngIf="miRed$ | async as miRed">
   <div class="card-body mb-n5">
-    <div class="d-flex align-items-center flex-column mb-1">
+    <div class="d-flex align-items-center flex-column mb-1" *ngIf="(user$ | async)?.id_colegio_colegio as colegio">
       <div class="mb-2 d-flex align-items-center flex-column">
         <div class="sw-13 position-relative mb-3">
-          <img [src]="'http://localhost:3002/uploads/colegio/default.png'" class="img-fluid rounded-xl" alt="thumb" />
+          <img [src]="apiFile+colegio.foto" class="img-fluid rounded-xl" alt="thumb" />
         </div>
-        <div class="h5 mb-0">Colegio Idra</div>
-        <div class="text-muted">Cuit: 23-32079491-9</div>
-        <span class="badge badge-sm bg-warning mt-2">
-          <i class="pe-1 bi bi-star-fill"></i>Patrocinador
-       </span>
+        <div class="h5 mb-0">{{colegio.nombre}}</div>
+        <div class="text-muted">Cuit: {{colegio.cuit | formatDniCuit:'cuit'}}</div>
+        <span class="badge badge-sm bg-warning mt-2"
+              [ngClass]="{
+                'bg-warning': miRed.misDatos.anfitrion,
+                'bg-info': !miRed.misDatos.anfitrion
+              }">
+              <i class="pe-1" [ngClass]="{
+                'bi bi-star-fill': miRed.misDatos.anfitrion,
+                'bi bi-bookmark-star-fill': !miRed.misDatos.anfitrion
+              }">
+              </i>{{miRed.misDatos.anfitrion?'Patrocinador':'Miembro'}}
+        </span>
       </div>
 
     </div>
@@ -21,8 +29,8 @@
 
       <div class="row g-0 align-items-center mb-2 sh-6">
         <div class="col-auto">
-          <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
-            <i data-acorn-icon="pepper" class="text-white"></i>
+          <div class="bg-primary sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+            <span class="text-white">{{miRed.misDatos.bp}}</span>
           </div>
         </div>
         <div class="col ps-3">
@@ -31,13 +39,13 @@
               <div class="sh-3 d-flex align-items-center lh-1-25">Publicadas</div>
             </div>
             <div class="col-auto">
-              <div class="cta-3 text-primary sh-3 d-flex align-items-center">4</div>
+              <div class="cta-3 text-primary sh-3 d-flex align-items-center"></div>
             </div>
           </div>
           <div class="row g-0">
             <div class="col sh-1">
               <div class="progress progress-xs">
-                <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+miRed.estadisticas.bp+'%'"></div>
               </div>
             </div>
           </div>
@@ -45,8 +53,8 @@
       </div>
       <div class="row g-0 align-items-center mb-2 sh-6">
         <div class="col-auto">
-          <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
-            <i data-acorn-icon="user" class="text-white"></i>
+          <div class="bg-info sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+            <span class="text-white">{{miRed.misDatos.db}}</span>
           </div>
         </div>
         <div class="col ps-3">
@@ -55,13 +63,13 @@
               <div class="sh-3 d-flex align-items-center lh-1-25">Derecho</div>
             </div>
             <div class="col-auto">
-              <div class="cta-3 text-primary sh-3 d-flex align-items-center">4</div>
+              <div class="cta-3 text-info sh-3 d-flex align-items-center"></div>
             </div>
           </div>
           <div class="row g-0">
             <div class="col sh-1">
               <div class="progress progress-xs">
-                <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                <div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+miRed.estadisticas.db+'%'"></div>
               </div>
             </div>
           </div>
@@ -69,8 +77,8 @@
       </div>
       <div class="row g-0 align-items-center mb-2 sh-6">
         <div class="col-auto">
-          <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
-            <i data-acorn-icon="building" class="text-white"></i>
+          <div class="bg-secondary sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+            <span class="text-white">{{miRed.misDatos.dbu}}</span>
           </div>
         </div>
         <div class="col ps-3">
@@ -79,13 +87,13 @@
               <div class="sh-3 d-flex align-items-center lh-1-25">Utilizadas</div>
             </div>
             <div class="col-auto">
-              <div class="cta-3 text-primary sh-3 d-flex align-items-center">1</div>
+              <div class="cta-3 text-secondary sh-3 d-flex align-items-center">{{miRed.estadisticas.dbu | number:'1.2-2'}} %</div>
             </div>
           </div>
           <div class="row g-0">
             <div class="col sh-1">
               <div class="progress progress-xs">
-                <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;"></div>
+                <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+miRed.estadisticas.dbu+'%'"></div>
               </div>
             </div>
           </div>
@@ -93,8 +101,8 @@
       </div>
       <div class="row g-0 align-items-center mb-2 sh-6">
         <div class="col-auto">
-          <div class="bg-gradient-light sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
-            <i data-acorn-icon="electricity" class="text-white"></i>
+          <div class="bg-tertiary sh-5 sw-5 rounded-xl d-flex justify-content-center align-items-center">
+            <span class="text-white">{{miRed.misDatos.dbd}}</span>
           </div>
         </div>
         <div class="col ps-3">
@@ -103,13 +111,13 @@
               <div class="sh-3 d-flex align-items-center lh-1-25">Disponibles</div>
             </div>
             <div class="col-auto">
-              <div class="cta-3 text-primary sh-3 d-flex align-items-center">3</div>
+              <div class="cta-3 text-tertiary sh-3 d-flex align-items-center">{{miRed.estadisticas.dbd | number:'1.2-2'}} %</div>
             </div>
           </div>
           <div class="row g-0">
             <div class="col sh-1">
               <div class="progress progress-xs">
-                <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+                <div class="progress-bar bg-tertiary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" [style]="'width:'+miRed.estadisticas.dbd+'%'"></div>
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of, shareReplay, take } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { usuarioService } from 'src/servicios/usuario.service';
@@ -16,7 +17,7 @@ import { usuarioService } from 'src/servicios/usuario.service';
 export class PerfilUsuarioComponent implements OnInit{
   @Input() idUsuario?:number
   admin?=false
-
+  apiFile=environment.fileUrl
   usuario$?:Observable<Usuario | undefined> = of(undefined)
 
   constructor(private usuarioService:usuarioService,

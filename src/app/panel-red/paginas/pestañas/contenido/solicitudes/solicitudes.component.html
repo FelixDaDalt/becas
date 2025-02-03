@@ -1,1 +1,89 @@
-<p>solicitudes works!</p>
+<div class="row">
+  <!-- Labels Start -->
+  <div class="col-12 mb-5">
+    <section class="scroll-section" id="labels">
+      <!-- Menú desplegable -->
+      <div class="d-flex justify-content-start align-items-center mb-2">
+        <div class="d-flex align-items-center">
+          <button
+            class="btn btn-icon btn-icon-only btn-sm btn-background-alternate shadow me-2 d-flex align-items-center justify-content-center"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            aria-haspopup="true"
+            style="height: 36px; width: 36px;"
+          >
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <h2 class="small-title" style="height: auto;">Solicitudes Recibidas: <span class="fw-bold">{{estados[active].nombre}}</span></h2>
+
+          <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end shadow">
+            <a
+              *ngFor="let estado of estados; let i = index"
+              class="dropdown-item"
+              [ngClass]="{'active': i == active}"
+              (click)="filtrar(estado.id)"
+            >
+              {{ estado.nombre }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Encabezados -->
+      <div class="card mb-2 bg-transparent no-shadow d-none d-md-block sh-3">
+        <div class="card-body pt-0 pb-0 h-100">
+          <div class="row g-0 h-100 align-items-center">
+            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">ESTADO</div>
+            <div class="col-6 col-md-3 text-alternate text-medium text-muted text-small">FECHA</div>
+            <div class="col-6 col-md-3 text-alternate text-medium text-muted text-small">USUARIO</div>
+            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">DEL COLEGIO</div>
+            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">ALUMNO</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Datos -->
+      <div class="scroll-out" *ngIf="listado$ | async as listado">
+        <ng-container *ngIf="listado.length>0;else sinDatos">
+          <div class="scroll-by-count" data-count="10">
+            <div class="card mb-2 sh-19 sh-md-8" *ngFor="let solicitud of listado">
+              <div class="card-body pt-0 pb-0 h-100">
+                <div class="row g-0 h-100 align-items-center" style="cursor: pointer;" (click)="verSolicitud(solicitud)">
+                  <div class="col-6 col-md-2 text-alternate">
+                    <span
+                      class="badge text-uppercase"
+                      [ngClass]="{
+                        'bg-outline-primary': solicitud.estado.id === 0,
+                        'bg-outline-secondary': solicitud.estado.id === 1,
+                        'bg-outline-success': solicitud.estado.id === 5,
+                        'bg-outline-danger': solicitud.estado.id === 2,
+                        'bg-outline-warning': solicitud.estado.id === 3,
+                        'bg-outline-dark': solicitud.estado.id === 4
+                      }"
+                    >
+                      {{ solicitud.estado.nombre }}
+                    </span>
+                  </div>
+                  <div class="col-6 col-md-3 text-alternate">{{ solicitud.fecha | date: 'dd/MM/yyyy HH:mm' }} hs</div>
+                  <div class="col-6 col-md-3 text-alternate text-truncate">
+                    {{ solicitud.solicitante.usuario }}
+                  </div>
+                  <div class="col-6 col-md-2 text-alternate text-truncate" >{{ solicitud.solicitante.colegio }}</div>
+                  <div class="col-6 col-md-2 text-alternate text-truncate" >{{ solicitud.solicitante.alumno }}</div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<ng-template #sinDatos>
+  <app-sin-datos [mensaje]="''"></app-sin-datos>
+</ng-template>

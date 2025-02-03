@@ -1,38 +1,52 @@
-<app-header></app-header>
-<main>
-  <div class ="container">
-
-    <!-- Title and Top Buttons Start -->
-    <app-breadcrumb></app-breadcrumb>
-    <!-- Title and Top Buttons End -->
-
-    <div class="row gx-4 gy-5">
-      <!-- Columna Izquierda -->
-      <div class="col-12 col-xl-4 col-xxl-3">
-        <app-mi-colegio-columna></app-mi-colegio-columna>
-      </div>
-      <!-- Columna Izquierda End -->
+<div class="row gx-4 gy-5">
+  <!-- Columna Izquierda -->
+  <div class="col-12 col-xl-4 col-xxl-3">
+    <app-mi-colegio-columna [idRed]="idRed"></app-mi-colegio-columna>
+  </div>
+  <!-- Columna Izquierda End -->
 
 
-    <!-- Columna Derecha -->
-    <div class="col-12 col-xl-8 col-xxl-9">
-      <div class="card w-100 sh-25 sh-sm-19">
-        <img src="http://localhost:3002/uploads/redes/default.png" class="card-img h-100 img-transparent" alt="card image" />
-        <div class="card-img-overlay d-flex p-4 pt-4 flex-column justify-content-between bg-transparent">
-          <div class="row  mb-3">
-            <div class="col-8 ms-2">
-              <div class="cta-1 text-primary fw-bold">Red Idra 2</div>
-              <div class="cta-2 text-black fw-lighter">Descripcion de la Red</div>
-              <div class="cta-4 text-primary">Anfitrion:</div>
+  <!-- Columna Derecha -->
+  <div class="col-12 col-xl-8 col-xxl-9" *ngIf="(red$ | async) as red">
+    <div class="card w-100 sh-25 sh-sm-30 border border-1 border-ligth rounded rounded-1">
+      <img [src]="apiFile+red.foto" class="card-img h-100"
+        alt="card image" />
+      <div class="card-img-overlay d-flex p-4 pt-4 flex-column justify-content-between">
+        <div class="row pb-2">
+          <div class="col-8 ms-2">
+            <div class="cta-descripcion border border-1 border-ligth rounded rounded-1">
+              <h4 class="cta-titulo">
+                <i class="bi bi-diagram-3 text-primary"></i> {{ red.nombre }}
+              </h4>
+              <div class="cta-item">
+                <span class="text-primary fw-bold">{{ red.caracteristicas }}</span>
+              </div>
+
+              <div class="position-absolute e-4 t-n2 z-index-1">
+                <h4 class="d-flex align-items-center">
+                  <span class="badge bg-quaternary me-2">
+                    <span class="fw-bold">{{ red.porcentaje }} %</span>
+                  </span>
+                  <span class="badge bg-warning">
+                    <i class="bi bi-star-fill me-2"></i>
+                    <span class="fw-bold">{{red.Anfitrion.nombre}}</span>
+                  </span>
+
+
+                </h4>
+              </div>
+              <div class="cta-item-date">
+                <span class="text-dark fw-bold pt-1">{{ red.fecha_hora| date:"EEEE d 'de' MMMM 'a las' HH:mm 'hs'" }}</span>
+              </div>
             </div>
           </div>
-          <!--Carga de Paginas-->
-          <router-outlet></router-outlet>
-          <!--Carga de Paginas-->
         </div>
+        <!--Carga de Paginas-->
+        <router-outlet></router-outlet>
+        <!--Carga de Paginas-->
       </div>
     </div>
-    <!-- Columna Derecha -->
-    </div>
+  </div>
+  <!-- Columna Derecha -->
 </div>
-</main>
+

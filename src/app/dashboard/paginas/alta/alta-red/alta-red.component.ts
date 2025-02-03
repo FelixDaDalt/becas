@@ -7,6 +7,7 @@ import { ZonasService } from 'src/servicios/zonas.service';
 import { ColegioService } from 'src/servicios/colegio.service';
 import { RedService } from 'src/servicios/red.service';
 import { Colegio } from 'src/interfaces/colegio';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-alta-red',
@@ -14,6 +15,7 @@ import { Colegio } from 'src/interfaces/colegio';
   styleUrls: ['./alta-red.component.css']
 })
 export class AltaRedComponent  {
+  apiFile=environment.fileUrl
   public archivoSeleccionado: File | null = null;
   wizardForm: FormGroup;
   currentStep = 0;

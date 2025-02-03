@@ -1,0 +1,188 @@
+<div class="row">
+  <!-- Labels Start -->
+  <div class="col-12 mb-2">
+    <div class="container" *ngIf="detalle$ | async as detalle">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-start py-4 pb-2 pt-2">
+          <h4 class="mb-0 text-white">
+            <i class="bi bi-file-earmark-text-fill me-2"></i> Detalle de Solicitud: <span class="ms-2">{{detalle.id}}</span>
+          </h4>
+        </div>
+        <div class="card-body p-4">
+          <!-- INFORMACION -->
+          <div class="row g-4 pb-4">
+            <!-- Columna izquierda -->
+            <div class="col-md-5 text-center">
+              <!-- Foto del solicitante -->
+              <div class="mb-3">
+                <img [src]="apiFile+detalle.solicitante.usuario.foto" alt="Foto del solicitante"
+                  class="rounded-circle shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+              </div>
+              <h5 class="text-primary mb-1">
+                {{detalle.solicitante.usuario.nombre}} {{detalle.solicitante.usuario.apellido}}
+              </h5>
+              <p class="text-muted"><i class="bi bi-envelope-fill me-2"></i>{{detalle.solicitante.usuario.email || 'No Definido'}}</p>
+              <p class="text-muted"><i class="bi bi-telephone-fill me-2"></i>{{detalle.solicitante.usuario.telefono || 'No Definido'}}</p>
+              <p class="text-muted"><i class="bi bi-phone-fill me-2"></i>{{detalle.solicitante.usuario.celular || 'No Definido'}}</p>
+            </div>
+
+
+            <div class="col-md-7">
+              <div class="row g-3">
+
+                <!-- Información del colegio -->
+                 <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <img
+                      [src]="apiFile + detalle.solicitud.colegio.foto"
+                      alt="Foto del colegio"
+                      class="rounded-circle me-3"
+                      style="width: 28px; height: 28px; object-fit: cover;">
+                    <div>
+                      <h6 class="mb-1 fw-bold">Solicitado al colegio</h6>
+                      <p class="text-muted mb-0"><strong>Nombre:</strong> {{detalle.solicitud.colegio.nombre}}</p>
+                      <p class="text-muted mb-0"><strong>Zona:</strong> {{detalle.solicitud.colegio.provincia}}, {{detalle.solicitud.colegio.localidad}}</p>
+                      <p class="text-muted mb-0"><strong>Dirección:</strong> {{detalle.solicitud.colegio.direccion_calle}}, {{detalle.solicitud.colegio.direccion_numero}}</p>
+                      <p class="text-muted mb-0"><strong>CUIT:</strong> {{detalle.solicitud.colegio.cuit | formatDniCuit:'cuit'}}</p>
+                      <p class="text-muted mb-0"><strong>Email:</strong> {{detalle.solicitud.colegio.email}}</p>
+                      <p class="text-muted mb-0"><strong>Teléfono:</strong> {{detalle.solicitud.colegio.telefono}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Información del alumno -->
+                <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-person-circle text-info me-3 fs-4"></i>
+                    <div>
+                      <h6 class="mb-1 fw-bold">Información del Alumno</h6>
+                      <p class="text-muted mb-0">
+                        <strong>Nombre:</strong> {{detalle.alumno.nombre}}, {{detalle.alumno.apellido}}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <strong>DNI:</strong> {{detalle.alumno.dni | formatDniCuit:'dni'}}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <strong>Fecha de Nacimiento:</strong> {{detalle.alumno.nacimiento | date:'dd-MM-yyyy'}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Detalle de la solicitud -->
+                <div class="col-12">
+                  <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-calendar-event text-warning me-3 fs-4"></i>
+                    <div>
+                      <h6 class="mb-1 fw-bold">Detalle de la Solicitud</h6>
+                      <p class="text-muted mb-0"><strong>Fecha:</strong> {{detalle.fecha | date:'dd-MM-yyyy'}}</p>
+                      <p class="text-muted mb-0"><strong>Detalle Adicional:</strong> {{detalle.detalle || 'Sin detalle'}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Estados -->
+                <div class="col-12">
+                  <div class="d-flex flex-wrap align-items-center">
+                    <p class="text-muted mb-0 me-3">
+                      <strong>Estado:</strong>
+                      <span class="badge bg-info text-white ms-2">{{detalle.estado.nombre}}</span>
+                    </p>
+                    <p class="text-muted mb-0">
+                      <strong>Resolución:</strong>
+                      <span class="badge bg-info text-white ms-2">{{detalle.resolucion.nombre}}</span>
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- DESESTIMAR -->
+          <div class="row g-4 justify-content-center" *ngIf="detalle.estado.id == 0">
+            <hr>
+            <div class="col-auto">
+              <ng-container *ngIf="!this.resolucion">
+                <button class="btn btn-info btn-sm me-2" type="button"  *Roles="[1,2,3]" (click)="desestimar()">
+                  <i class="bi bi-plus-circle me-2"></i>Desestimar
+                </button>
+              </ng-container>
+
+              <button class="btn btn-quaternary btn-sm" type="button" *ngIf="this.resolucion" (click)="desestimar()">
+                <i class="bi bi-plus-circle me-2"></i>Cancelar
+              </button>
+            </div>
+            <app-desestimar-solicitud *ngIf="this.resolucion" [idSolicitud]="idSolicitud" [idRed]="idRed"></app-desestimar-solicitud>
+          </div>
+
+          <!-- CON RESOLUCION -->
+          <div class="row g-4 justify-content-center" *ngIf="detalle.resolucion.conResolucion">
+            <hr>
+            <div class="col-12">
+              <div class="row align-items-start">
+                <!-- Columna para la foto -->
+                <div class="col-md-5 text-center">
+                  <img [src]="apiFile+detalle.resolucion.detalle.usuario.foto"
+                    alt="Foto del Usuario"
+                    class="rounded-circle shadow-sm"
+                    style="width: 64px; height: 64px; object-fit: cover;">
+                    <h5 class="text-primary mb-1">
+                      {{detalle.resolucion.detalle.usuario.nombre}} {{detalle.resolucion.detalle.usuario.apellido}}
+                    </h5>
+                    <p class="text-muted"><i class="bi bi-envelope-fill me-2"></i>{{detalle.resolucion.detalle.usuario.email || 'No Definido'}}</p>
+                </div>
+                <!-- Columna para los detalles -->
+                <div class="col-md-7">
+                  <h6 class="mb-1 fw-bold">Información</h6>
+                  <p class="text-muted mb-0">
+                    <strong>Fecha:</strong> {{detalle.resolucion.detalle.fecha | date:'dd-MM-yyyy'}}
+                  </p>
+                  <p class="text-muted mb-0">
+                    <strong>Comentario:</strong> {{detalle.resolucion.detalle.comentario || 'Sin comentario'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DADO DE BAJA -->
+          <div class="row g-4 justify-content-center" *ngIf="detalle.baja">
+            <hr>
+            <div class="col-12">
+              <div class="row align-items-start">
+                <!-- Columna para la foto -->
+                <div class="col-md-5 text-center">
+                  <img [src]="apiFile+detalle.detalle_baja?.usuario?.foto"
+                    alt="Foto del Usuario"
+                    class="rounded-circle shadow-sm"
+                    style="width: 64px; height: 64px; object-fit: cover;">
+                    <h5 class="text-primary mb-1">
+                      {{detalle.detalle_baja?.usuario?.nombre}} {{detalle.detalle_baja?.usuario?.apellido}}
+                    </h5>
+                    <p class="text-muted"><i class="bi bi-envelope-fill me-2"></i>{{detalle.detalle_baja?.usuario?.email || 'No Definido'}}</p>
+                </div>
+                <!-- Columna para los detalles -->
+                <div class="col-md-7">
+                  <h6 class="mb-1 fw-bold">Información de la Baja</h6>
+                  <p class="text-muted mb-0">
+                    <strong>Fecha:</strong> {{detalle.detalle_baja?.fecha | date:'dd-MM-yyyy'}}
+                  </p>
+                  <p class="text-muted mb-0">
+                    <strong>Comentario:</strong> {{detalle.detalle_baja?.comentario || 'Sin comentario'}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

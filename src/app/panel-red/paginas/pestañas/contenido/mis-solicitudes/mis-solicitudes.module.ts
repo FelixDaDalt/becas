@@ -4,21 +4,32 @@ import { RoleDirective } from 'src/directiva/role.directiva';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
 import { RouterModule } from '@angular/router';
 import { MisSolicitudesComponent } from './mis-solicitudes.component';
+import { MisSolicitudRoutingModule } from './solicitud-routing.module';
+import { VerSolicitudComponent } from './ver-solicitud/ver-solicitud.component';
+import { FormatDniCuitPipe } from "../../../../../../pipes/formatoDniCuit.pipe";
+import { DesestimarSolicitudComponent } from './ver-solicitud/desestimar-solicitud/desestimar-solicitud.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
+import { BotonCargandoComponent } from "../../../../../../standalone/boton-cargando/boton-cargando.component";
 
 
 
 
 @NgModule({
   declarations: [
-    MisSolicitudesComponent
+    MisSolicitudesComponent,
+    VerSolicitudComponent,
+    DesestimarSolicitudComponent
   ],
   imports: [
     RoleDirective,
     CommonModule,
     SinDatosComponent,
-    RouterModule.forChild([
-      { path: '', component: MisSolicitudesComponent}
-    ])
-  ]
+    MisSolicitudRoutingModule,
+    FormatDniCuitPipe,
+    ReactiveFormsModule,
+    ErrorFormularioComponent,
+    BotonCargandoComponent
+]
 })
 export class MisSolicitudesModule { }

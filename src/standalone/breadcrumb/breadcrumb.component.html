@@ -8,7 +8,9 @@
 
           <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let last = last">
             <ng-container *ngIf="!last">
-            <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+              <a [routerLink]="breadcrumb.url" [queryParams]="queryParams">
+                {{ breadcrumb.label }}
+              </a>
             </ng-container>
 
             <ng-container *ngIf="last">

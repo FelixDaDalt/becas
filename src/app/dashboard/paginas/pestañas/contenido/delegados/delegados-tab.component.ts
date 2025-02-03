@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/core/auth.service';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { DelegadoService } from 'src/servicios/delegado.service';
@@ -16,7 +17,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
   styleUrls: ['./delegados-tab.component.css']
 })
 export class DelegadosTabComponent{
-
+  apiFile=environment.fileUrl
   cachedelegados = false;
   delegados$=this.delegadoService.delegados$
 

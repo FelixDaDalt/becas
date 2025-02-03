@@ -6,6 +6,7 @@ import { AdminService } from 'src/servicios/admin.service';
 import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
 import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-
   styleUrls: ['./administradores-tab.component.css']
 })
 export class AdministradoresTabComponent implements OnInit{
-
+  apiFile=environment.fileUrl
   administradores$=this.adminService.administradores$
   administradoresCache = false
 

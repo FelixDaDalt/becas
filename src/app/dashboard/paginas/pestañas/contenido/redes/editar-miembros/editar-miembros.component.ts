@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Colegio } from 'src/interfaces/colegio';
 import { Red } from 'src/interfaces/red';
 import { RedService } from 'src/servicios/red.service';
@@ -18,7 +19,7 @@ export interface colegiosRed{
   styleUrls: ['./editar-miembros.component.css']
 })
 export class EditarMiembrosComponent implements OnInit{
-
+  apiFile=environment.fileUrl
   @Input()red?:Red
   miembros = this.redService.colegioDisponibles$.pipe(tap(colegiosRed=>{
     if(colegiosRed){

@@ -5,6 +5,7 @@ import { Colegio } from 'src/interfaces/colegio';
 import { ColegioService } from 'src/servicios/colegio.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
 import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { EditarColegioComponent } from './editar-colegio/editar-colegio.componen
   styleUrls: ['./colegios-tab.component.css']
 })
 export class ColegiosTabComponent{
-
+  apiFile=environment.fileUrl
   colegioCache = false
   colegios$ = this.colegioService.colegios$
 

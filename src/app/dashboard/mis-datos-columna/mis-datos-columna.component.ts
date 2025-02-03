@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { shareReplay, tap } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
 import { usuarioService } from 'src/servicios/usuario.service';
 import { CambioPassComponent } from 'src/standalone/cambio-pass/cambio-pass.component';
@@ -14,7 +15,7 @@ import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-
   styleUrls: ['./mis-datos-columna.component.css']
 })
 export class MisDatosColumnaComponent{
-
+    apiFile = environment.fileUrl
     user$ = this.usuarioService.me$.pipe(shareReplay(1))
 
     constructor(private usuarioService:usuarioService,

@@ -107,7 +107,7 @@
 
 
                     <div class="d-inline-block">
-                      <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                      <div class="text-white"><span>{{red.porcentaje}}%</span></div>
                     </div>
 
                     <div class="col-auto me-auto pt-2">
@@ -153,15 +153,18 @@
 
 
                     <div class="d-inline-block">
-                      <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                      <div class="text-white">Anfitrion: <span>{{red.Anfitrion.nombre}}</span></div>
+                      <div class="text-white"><span>{{red.porcentaje}}%</span></div>
                     </div>
 
                     <div class="col-auto me-auto pt-2">
                       <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button">
-                        <i class="text-primary bi bi-eye-fill"></i>
-                      </button>
+                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
+                        type="button"
+                        (click)="verRed(red.id)"
+                        >
+                          <i class="text-primary bi bi-eye-fill"></i>
+                        </button>
                     </div>
                   </div>
                 </div>

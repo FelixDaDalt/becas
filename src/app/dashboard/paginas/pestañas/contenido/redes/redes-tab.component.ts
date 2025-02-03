@@ -9,7 +9,6 @@ import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component
 import { AltaRedComponent } from '../../../alta/alta-red/alta-red.component';
 import { EditarRedComponent } from './editar-red/editar-red.component';
 import { EditarMiembrosComponent } from './editar-miembros/editar-miembros.component';
-import { PanelRedModule } from 'src/app/panel-red/panel-red.module';
 
 @Component({
   selector: 'app-redes-tab',
@@ -20,7 +19,7 @@ export class RedesTabComponent{
 
   redCache = false
   redes$ = this.redService.redes$
-  apiUrl = environment.apiUrl
+  apiUrl = environment.fileUrl
   constructor(private redService:RedService,
     private activeRoute: ActivatedRoute,
     private router: Router,
@@ -61,17 +60,7 @@ export class RedesTabComponent{
   }
 
   verRed(idRed:number){
-
-    this.router.resetConfig([
-      {
-        path: 'panel-red',
-        loadChildren: () => import('src/app/panel-red/panel-red.module').then(m => m.PanelRedModule),
-      },
-      { path: '**', redirectTo: 'login', pathMatch: 'full' },
-    ]);
-
-    // Navegar a la ruta absoluta
-    this.router.navigate(['/panel-red']);
+    this.router.navigate(['../panel-red'], { queryParams: { idRed: idRed }, relativeTo:this.activeRoute})
   }
 
 }

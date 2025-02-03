@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/core/auth.service';
+import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
 import { AdminService } from 'src/servicios/admin.service';
 import { AutorizadoService } from 'src/servicios/autorizado.service';
@@ -16,7 +17,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
   styleUrls: ['./autorizados-tab.component.css']
 })
 export class AutorizadosTabComponent{
-
+  apiFile=environment.fileUrl
   cacheautorizados = false;
   autorizados$=this.autorizadoService.autorizados$
 

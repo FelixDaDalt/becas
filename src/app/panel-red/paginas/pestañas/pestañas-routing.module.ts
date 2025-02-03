@@ -14,12 +14,16 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/becas/becas.module').then(m => m.BecasModule)
     },
     {
-      path:'solicitudes',
+      path:'solicitudes-recibidas',
       loadChildren: () => import('./contenido/solicitudes/solicitudes.module').then(m => m.SolicitudesModule)
     },
     {
       path:'mis-solicitudes',
       loadChildren: () => import('./contenido/mis-solicitudes/mis-solicitudes.module').then(m => m.MisSolicitudesModule)
+    },
+    {
+      path:'miembros',
+      loadChildren: () => import('./contenido/miembros/miembros.module').then(m => m.MiembrosModule)
     },
     {
       path:'',

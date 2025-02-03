@@ -58,6 +58,11 @@ const routes: Routes = [
       canActivate: [RoleGuard],
       data: { roles: [0,1,2] },
       loadChildren: () => import('./contenido/registro/registro-tab.module').then(m => m.RegistroTabModule)
+    },
+    {
+      path:'',
+      redirectTo:'redes',
+      pathMatch:'full'
     }]
   }
 ];

@@ -1,8 +1,37 @@
-.img-transparent {
-  opacity: 0.5; /* Ajusta el nivel de transparencia (0 es completamente transparente, 1 es opaco) */
-  transition: opacity 0.3s ease; /* Transición suave al cambiar la opacidad */
+.cta-descripcion {
+  position: relative;
+  background-color: rgba(141, 141, 141, 0.1); /* Fondo oscuro semitransparente */
+  border-radius: 12px; /* Bordes suaves */
+  padding: 20px;
+  color: #f8f9fa; /* Blanco de Bootstrap */
+  max-width: 400px; /* Ancho limitado para que no ocupe todo el espacio */
+  backdrop-filter: blur(2px); /* Efecto de desenfoque en el fondo */
 }
 
-.img-transparent:hover {
-  opacity: 1; /* Totalmente visible cuando el mouse pasa sobre la imagen */
+.cta-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre el icono y el texto */
 }
+
+.cta-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.cta-item-date {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+}
+
+.card .card-img-overlay {
+  background: rgba(0, 0, 0, 0);
+  border-radius: var(--border-radius-lg);
+}
+
+
+

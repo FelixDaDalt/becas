@@ -29,7 +29,7 @@
               'bg-danger': colegio.suspendido,
               'bg-success': !colegio.suspendido
             }">{{colegio.suspendido?'Suspendido':'Activo'}}</span>
-            <img *ngIf="colegio.foto" [src]="'http://localhost:3002' + colegio.foto" class="card-img h-100 scale colegio-logo" alt="card image" />
+            <img *ngIf="colegio.foto" [src]="apiFile + colegio.foto" class="card-img h-100 scale colegio-logo" alt="card image" />
             <div class="card-img-overlay d-flex align-items-end reveal-content">
               <div class="row g-0">
                 <div class="col pe-2">

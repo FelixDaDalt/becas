@@ -1,32 +1,20 @@
+<div class="row gx-4 gy-5">
+  <!-- Columna Izquierda -->
+  <div class="col-12 col-xl-4 col-xxl-3">
+    <app-mis-datos-columna></app-mis-datos-columna>
+  </div>
+  <!-- Columna Izquierda End -->
 
 
-<app-header></app-header>
-<main>
-  <div class ="container">
+  <!-- Columna Derecha -->
+  <div class="col-12 col-xl-8 col-xxl-9">
 
-    <!-- Title and Top Buttons Start -->
-    <app-breadcrumb></app-breadcrumb>
-    <!-- Title and Top Buttons End -->
-
-    <div class="row gx-4 gy-5">
-      <!-- Columna Izquierda -->
-      <div class="col-12 col-xl-4 col-xxl-3">
-        <app-mis-datos-columna></app-mis-datos-columna>
-      </div>
-      <!-- Columna Izquierda End -->
-
-
-    <!-- Columna Derecha -->
-    <div class="col-12 col-xl-8 col-xxl-9">
-
-      <!--Carga de Paginas-->
-      <router-outlet></router-outlet>
-      <!--Carga de Paginas-->
-    </div>
-    <!-- Columna Derecha -->
-    </div>
+    <!--Carga de Paginas-->
+    <router-outlet></router-outlet>
+    <!--Carga de Paginas-->
+  </div>
+  <!-- Columna Derecha -->
 </div>
-</main>
 
 
 

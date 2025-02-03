@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, shareReplay, take, tap } from 'rxjs';
 import { colegiosRed } from 'src/app/dashboard/paginas/pestañas/contenido/redes/editar-miembros/editar-miembros.component';
 
 import { environment } from 'src/environments/environment';
+import { Miembro } from 'src/interfaces/miembros';
 import { listadoRedes, Red } from 'src/interfaces/red';
 
 
@@ -20,6 +21,12 @@ export class RedService {
 
   private colegioDisponiblesSubject = new BehaviorSubject<colegiosRed | null>(null);
   colegioDisponibles$ = this.colegioDisponiblesSubject.asObservable().pipe(shareReplay(1));
+
+  private miembrosSubject = new BehaviorSubject<Miembro[]>([]);
+  miembros$ = this.miembrosSubject.asObservable().pipe(shareReplay(1));
+
+  private meRedSubject = new BehaviorSubject<any>(null);
+  meRed$ = this.meRedSubject.asObservable().pipe(shareReplay(1));
 
   constructor(
     private http: HttpClient,
@@ -80,13 +87,13 @@ export class RedService {
       );
   }
 
-  private getRed(idRed:number) {
+  private getRed(idRed:number): Observable <Red|null> {
     return this.http
       .get(`${environment.apiUrl}${environment.endpoint.red.obtener}?idRed=${idRed}`)
       .pipe(map((respuesta: any) => respuesta.data));
   }
 
-  obtenerRed(idRed:number) {
+  obtenerRed(idRed:number): Observable <Red|null> {
     return this.getRed(idRed)
       .pipe(take(1))
   }
@@ -119,5 +126,30 @@ export class RedService {
       tap((respuesta:any)=>this.toast.success(respuesta.mensaje)),
       take(1)
     )
+  }
+
+  private getMiembros(idRed:number) {
+    return this.http
+    .get(`${environment.apiUrl}${environment.endpoint.red.obtenerMiembros}?idRed=${idRed}`)
+    .pipe(map((respuesta: any) => respuesta.data));
+  }
+
+  obtenerMiembros(idRed:number) {
+    this.getMiembros(idRed).pipe(take(1)).subscribe((miembros) => {
+     this.miembrosSubject.next(miembros);
+   });
+  }
+
+  private getRedMe(idRed:number){
+    return this.http
+    .get(`${environment.apiUrl}${environment.endpoint.red.meRed}?idRed=${idRed}`)
+    .pipe(map((respuesta: any) => respuesta.data),tap(r=>console.log(r)));
+  }
+
+
+  obtenerMeRed(idRed:number){
+    this.getRedMe(idRed).pipe(take(1)).subscribe((meRed) => {
+      this.meRedSubject.next(meRed);
+    });
   }
 }
