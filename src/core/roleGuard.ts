@@ -29,7 +29,6 @@ export class RoleGuard implements CanActivate {
 
     // Obtener el rol del usuario logueado
     const userRole = this.authService.getUserRole();
-
     // Verificar si el rol del usuario está dentro de los roles permitidos
     if (expectedRoles.includes(userRole)) {
       return true;

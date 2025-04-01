@@ -75,7 +75,11 @@ export class AuthService {
     localStorage.removeItem('user');
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
-    rol == 0?this.router.navigate(['admin','login']):this.router.navigate(['login'])
+    if(rol>0){
+      this.router.navigate(['login'])
+    }else{
+      this.router.navigate(['admin','login'])
+    }
 
   }
 
@@ -95,7 +99,7 @@ export class AuthService {
 
   getUserRole(): number {
     const user = this.getUser();
-    return user?.id_rol || 0;
+    return user?.id_rol ;
   }
 
   userHasRole(rolesPermitidos: number[]): boolean {

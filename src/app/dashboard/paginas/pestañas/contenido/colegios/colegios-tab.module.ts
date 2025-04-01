@@ -5,9 +5,11 @@ import { ColegiosTabComponent } from './colegios-tab.component';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
 import { BotonCargandoComponent } from "../../../../../../standalone/boton-cargando/boton-cargando.component";
 import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
 
@@ -22,7 +24,10 @@ import { EditarColegioComponent } from './editar-colegio/editar-colegio.componen
     ]),
     BotonCargandoComponent,
     ErrorFormularioComponent,
-    NgSelectModule
+    NgSelectModule,
+    NgbTooltipModule,
+    FilterPipeModule,
+    FormsModule
 ]
 })
 export class ColegiosTabModule { }

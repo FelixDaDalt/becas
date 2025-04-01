@@ -113,9 +113,20 @@
 
                       <!-- 📝 Información -->
                       <div>
-                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small">
-                          <strong>{{ miSolicitud.nombre }}</strong> ha resuelto una solicitud
-                          <span class="text-muted">{{ miSolicitud.reso_fecha_hora | date:'dd/MM/yyyy HH:mm' }}</span>
+                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="!miSolicitud.vencida && !miSolicitud.porVencer">
+                          <strong>{{ miSolicitud.colegio }}</strong> <span class="text-success"> ha resuelto tu solicitud.</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </a>
+                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.vencida">
+                          <strong>Solicitud a {{ miSolicitud.colegio }}</strong> <span class="text-danger"> se ha vencido.</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                        </a>
+                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.porVencer && !miSolicitud.vencida">
+                          <strong>Solicitud a {{ miSolicitud.colegio }}</strong> <span class="text-warning"> esta por vencer.</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
                         </a>
                       </div>
                     </li>
@@ -134,12 +145,33 @@
 
                       <!-- 📝 Información -->
                       <div>
-                        <a (click)="verSolicitud(solicitud)"  class="text-dark small">
-                          <strong>{{ solicitud.nombre }}</strong>
-                          <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-danger': solicitud.desestimado}">
-                            {{ solicitud.desestimado ? 'ha desestimado una solicitud' : 'te ha solicitado una beca' }}
+                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="!solicitud.vencida && !solicitud.porVencer">
+                          <strong>{{ solicitud.colegio }}</strong>
+                          <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-info': solicitud.desestimado}">
+                            {{ solicitud.desestimado ? ' ha desestimado una solicitud' : ' te ha solicitado una beca' }}
                           </span>
-                          <span class="text-muted">{{ solicitud.fecha_hora | date:'dd/MM/yyyy HH:mm' }}</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">
+                            {{ solicitud.fecha| date:'dd/MM/yyyy HH:mm' }}
+                          </span>
+                        </a>
+
+                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="solicitud.vencida">
+                          <strong>Solicitud de {{ solicitud.colegio }}</strong>
+                          <span class="text-danger"> se ha vencido.</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">
+                            {{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}
+                          </span>
+                        </a>
+
+                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="solicitud.porVencer && !solicitud.vencida">
+                          <strong>Solicitud de {{ solicitud.colegio }}</strong>
+                          <span class="text-warning"> esta por vencer.</span>
+                          <br />
+                          <span class="text-muted d-block mt-1">
+                            {{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}
+                          </span>
                         </a>
                       </div>
                     </li>

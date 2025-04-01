@@ -25,7 +25,6 @@ export class FormatDniCuitPipe implements PipeTransform {
 
   private formatDni(dni: string): string {
     if (dni.length < 7 || dni.length > 8) return dni; // Valida longitud del DNI
-    const partes = dni.length === 8 ? [dni.substring(0, 2), dni.substring(2)] : [dni.charAt(0), dni.substring(1)];
-    return partes.join('.').replace(/(\d{2})(\d+)/, '$1.$2');
+    return dni.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
 }

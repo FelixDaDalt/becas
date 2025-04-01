@@ -2,18 +2,15 @@
   <!--Search input-->
   <div class="text-center">
     <div class="input-group input-group-sm mb-3">
-      <!-- Alta -->
-      <button class="btn btn-info btn-sm me-2" type="button" *Roles="[0]"><i class="bi bi-plus-circle me-2"></i>Publicar</button>
-      <!-- Alta -->
-      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1"  [(ngModel)]="busqueda" (ngModelChange)="updateFilter()">
       <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
     </div>
 
   </div>
 
   <ng-container *ngIf="miembros$ | async as miembros">
-    <ng-container *ngIf="miembros.length > 0; else sinDatos">
-      <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let miembro of miembros">
+    <ng-container *ngIf="(miembros| filterBy:filter).length > 0; else sinDatos">
+      <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let miembro of miembros || [] | filterBy:filter">
         <div class="card h-100">
           <span class="badge badge-sm position-absolute e-0 t-n2 z-index-1"
                 [ngClass]="{
@@ -25,6 +22,9 @@
                   'bi bi-bookmark-star-fill': !miembro.anfitrion
                 }">
                 </i>{{miembro.anfitrion?'Patrocinador':'Miembro'}}
+          </span>
+          <span class="badge badge-sm bg-danger position-absolute e-0 t-n2 z-index-1" *ngIf="miembro.borrado">
+                COLEGIO BORRADO
           </span>
 
             <div class="card-body border-last-none h-100 p-0 ps-2 pt-2 pb-2">
@@ -51,5 +51,5 @@
 </div>
 
 <ng-template #sinDatos>
-  <app-sin-datos></app-sin-datos>
+  <app-sin-datos mensaje=""></app-sin-datos>
 </ng-template>

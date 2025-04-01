@@ -19,7 +19,7 @@ export class ResolverSolicitudComponent implements OnInit{
     this.resolverForm = this.fb.group({
       id_solicitud: [null, [Validators.required]], // Número requerido
       id_resolucion: [null, [Validators.required]], // Número positivo
-      res_comentario: [null, [Validators.required]], // Cadena no vacía
+      res_comentario: [null], // Cadena no vacía
     })
 
   }

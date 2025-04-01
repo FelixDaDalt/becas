@@ -22,8 +22,8 @@ import { environment } from 'src/environments/environment';
 })
 export class DetalleColegioComponent implements OnInit, OnDestroy {
   apiFile=environment.fileUrl
-  detalle$ = this.colegioService.colegioDetalle$.pipe(tap(r=>console.log(r)))
-  registros$ = this.registroService.registros$
+  detalle$ = this.colegioService.colegioDetalle$.pipe(shareReplay(1))
+  registros$ = this.registroService.registros$.pipe(shareReplay(1))
   private queryParamsSubscription: Subscription | undefined;
   idColegio = null
 

@@ -4,6 +4,7 @@
   <div class="form-group mb-3">
     <label for="resolucion" class="form-label">Resolución</label>
     <select id="resolucion" class="form-select" formControlName="id_resolucion">
+      <option [ngValue]='null' selected disabled>Seleccionar</option>
       <option [ngValue]='2'>Rechazado</option>
       <option [ngValue]='1'>Aprobado</option>
     </select>

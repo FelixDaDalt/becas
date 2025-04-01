@@ -1,6 +1,6 @@
 <div class="text-center">
   <div class="input-group input-group-sm mb-3">
-    <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+    <input type="text" name="busqueda" [(ngModel)]="busqueda" (ngModelChange)="updateFilter()" placeholder="Buscar Registro..." class="form-control form-control-sm">
     <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
   </div>
 </div>
@@ -10,10 +10,10 @@
 
   <section class="scroll-section" id="basicItems" style="height: 100vh; overflow-y: auto;" *ngIf="registroAdmin">
     <!-- Iteración de registros -->
-    <ng-container *ngIf="(registro?.administrador || []).length > 0; else sinDatos">
+    <ng-container *ngIf="(registro?.administrador || [] | filterBy: filter).length > 0; else sinDatos">
       <div
         class="card mb-3 p-3 shadow-sm border-start border-3"
-        *ngFor="let registro of registro?.administrador"
+        *ngFor="let registro of registro?.administrador || [] | filterBy: filter"
         [class.border-primary]="registro.accion === 'Alta' || registro.accion === 'Activar' || registro.accion === 'Aceptar'"
         [class.border-warning]="registro.accion === 'Password'"
         [class.border-danger]="registro.accion === 'Borrar' || registro.accion === 'Suspender'"
@@ -23,10 +23,12 @@
           <div class="col-12 mb-2">
             <h6 class="mb-0 text-uppercase fw-bold">
               <i class="bi bi-arrow-right-circle me-2"></i>
-              {{ registro.realizadoPor }}
+              {{ registro.realizadoPor }} :
+              {{registro.administrador?.apellido}}, {{registro.administrador?.nombre}}
+              {{registro.usuario?.apellido}}, {{registro.usuario?.nombre}}
             </h6>
             <small class="text-muted">
-              <i class="bi bi-clock me-2"></i>{{ registro.fechaHora | date: 'dd/MM/yyyy, hh:mm a' }}
+              <i class="bi bi-clock me-2"></i>{{ registro.fechaHora| date: 'dd/MM/yyyy, hh:mm a' }}
             </small>
           </div>
 
@@ -35,8 +37,6 @@
             <p class="mb-0">
               <span class="text-secondary">Realizó la acción: </span>
               <span class="fw-bold text-info">{{ registro.accion }}</span>
-              sobre
-              <span class="fw-semibold text-primary">{{ registro.entidad }}</span>.
             </p>
             <p class="text-muted small">Descripcion: {{ registro.descripcion }}</p>
           </div>

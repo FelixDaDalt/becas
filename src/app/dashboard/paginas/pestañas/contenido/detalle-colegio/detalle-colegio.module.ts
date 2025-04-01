@@ -7,6 +7,7 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
 import { RolClassDirective } from 'src/directiva/class.directiva';
 import { RoleDirective } from 'src/directiva/role.directiva';
 import { RegistroColegioComponent } from './registro-colegio/registro-colegio.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RegistroColegioComponent } from './registro-colegio/registro-colegio.co
     SinDatosComponent,
     RolClassDirective,
     RoleDirective,
-    RegistroColegioComponent
+    RegistroColegioComponent,
+    NgbTooltipModule
 ]
 })
 export class DetalleColegioModule { }

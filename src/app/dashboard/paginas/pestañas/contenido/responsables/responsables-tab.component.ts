@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { shareReplay, tap } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
@@ -19,7 +20,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
 export class ResponsablesTabComponent{
   apiFile=environment.fileUrl
   cacheresponsables = false;
-  responsables$=this.responsableService.responsables$
+  responsables$=this.responsableService.responsables$.pipe(shareReplay(1))
 
   constructor(
     private responsableService:ResponsableService,
@@ -48,7 +49,6 @@ export class ResponsablesTabComponent{
 
   alta(){
     const user = this.authService.getUser()
-    console.log(user)
     if(user && user.id_rol == 0){
       this.router.navigate(['../alta-responsable'], {relativeTo: this.activeRoute })
     }else if(user && user.id_rol == 1){
@@ -85,5 +85,27 @@ export class ResponsablesTabComponent{
       if(r)
         this.responsableService.obtenerResponsables()
     })
+  }
+
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { dni: this.busqueda },
+        { nombre: this.busqueda },
+        { apellido: this.busqueda },
+        { telefono: this.busqueda },
+        { celular: this.busqueda },
+        {
+          id_colegio_colegio: {
+            $or: [
+              { cuit: this.busqueda },
+              { nombre: this.busqueda },
+            ]
+          }
+        }
+      ]
+    };
   }
 }

@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { shareReplay } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
@@ -19,7 +20,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
 export class DelegadosTabComponent{
   apiFile=environment.fileUrl
   cachedelegados = false;
-  delegados$=this.delegadoService.delegados$
+  delegados$=this.delegadoService.delegados$.pipe(shareReplay(1))
 
   constructor(
     private delegadoService:DelegadoService,
@@ -79,4 +80,17 @@ export class DelegadosTabComponent{
     })
   }
 
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { dni: this.busqueda },
+        { nombre: this.busqueda },
+        { apellido: this.busqueda },
+        { telefono: this.busqueda },
+        { celular: this.busqueda }
+      ]
+    };
+  }
 }

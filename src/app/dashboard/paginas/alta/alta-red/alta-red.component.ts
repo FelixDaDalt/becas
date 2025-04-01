@@ -25,7 +25,7 @@ export class AltaRedComponent  {
     {nombre:'2-Integrantes',descripcion:'Colegios'}
   ]
 
-  colegios$=this.colegioService.colegios$.pipe(tap(r=>console.log(r)))
+  colegios$=this.colegioService.colegios$.pipe(shareReplay(1))
   colegiosSeleccionados:Colegio[] = []
 
   constructor(private fb: FormBuilder,
@@ -70,7 +70,6 @@ export class AltaRedComponent  {
   submitForm() {
     if (this.wizardForm.valid) {
       const formData = this.crearFormData();
-      console.log(formData)
       this.redService.altaRed(formData).subscribe(respuesta=>{
         this.router.navigate(['../redes'],{relativeTo:this.activeRoute});
       })
@@ -123,11 +122,14 @@ export class AltaRedComponent  {
 
     if (input.files && input.files.length > 0) {
       this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
-      console.log('Archivo seleccionado:', this.archivoSeleccionado);
     } else {
       this.archivoSeleccionado = null;
-      console.log('No se seleccionó ningún archivo');
     }
+  }
+
+
+  cancelar(){
+    this.router.navigate(['../'],{relativeTo:this.activeRoute})
   }
 }
 

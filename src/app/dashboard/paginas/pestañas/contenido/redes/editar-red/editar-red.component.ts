@@ -53,10 +53,8 @@ export class EditarRedComponent implements OnInit {
 
       if (input.files && input.files.length > 0) {
         this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
-        console.log('Archivo seleccionado:', this.archivoSeleccionado);
       } else {
         this.archivoSeleccionado = null;
-        console.log('No se seleccionó ningún archivo');
       }
     }
 

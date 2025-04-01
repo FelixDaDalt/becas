@@ -112,4 +112,8 @@ export class AltaAdministradorComponent {
 
     return formulario;
   }
+
+  cancelar(){
+    this.router.navigate(['../'],{relativeTo:this.activeRoute})
+  }
 }

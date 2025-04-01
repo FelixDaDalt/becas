@@ -87,7 +87,7 @@ export class AdminService {
 
 
   reiniciarPassword(tipo: string, id: number | string) {
-    this.http.get<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.usuario.resetearPass}?${tipo}=${id}`)
+    this.http.put<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.usuario.resetearPass}?${tipo}=${id}`,null)
     .pipe(
       take(1),
     ).subscribe((respuesta:any)=>{

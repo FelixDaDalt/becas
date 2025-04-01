@@ -49,9 +49,12 @@ export class TerminosComponent implements OnDestroy{
   }
 
   recibirTyc(tycHistorial:tyc){
-    const tyc = toDoc(tycHistorial.contenido);
-    this.formulario.setValue({
-      editorContent: tyc
-    });
+    if(tycHistorial){
+      const tyc = toDoc(tycHistorial.contenido);
+      this.formulario.setValue({
+        editorContent: tyc
+      });
+    }
+
   }
 }

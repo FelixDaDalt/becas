@@ -20,6 +20,7 @@ import { breadcrumb } from "../../standalone/breadcrumb/breadcrumb.component";
     EstructuraModule,
     RoleDirective,
     breadcrumb
-]
+  ],
+  exports:[MisDatosColumnaComponent]
 })
 export class DasboardModule { }

@@ -9,19 +9,20 @@
             <!-- Alta -->
             <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()" *Roles="[0]"><i class="bi bi-plus-circle me-2"></i>Alta</button>
             <!-- Alta -->
-            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" [(ngModel)]="busqueda" (ngModelChange)="updateFilter()">
             <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
           </div>
 
         </div>
+
 
     <!--reds Cards-->
     <ng-container *ngIf="(redes$|async) as redes">
 
       <!--ADMINISTRADORES-->
       <ng-container *Roles="[0]">
-        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.redes.length > 0; else sinDatos">
-            <div class="col" *ngFor="let red of redes.redes">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="(redes.redes | filterBy: filter).length > 0; else sinDatosAdmin">
+            <div class="col" *ngFor="let red of redes.redes || [] | filterBy:filter">
               <div class="card sh-20 hover-img-scale-up hover-reveal">
                 <!-- <span class="badge position-absolute top-0 end-0 m-2"
                 style="cursor: pointer;z-index: 9999;"
@@ -38,12 +39,15 @@
 
 
                       <div class="d-inline-block">
-                        <div class="text-white"><span>{{red.Anfitrion.nombre}}</span></div>
+                        <div class="text-white"><span>{{red.Anfitrion?.nombre || 'Sin Anfitrion'}}</span></div>
                       </div>
 
                       <div class="col-auto me-auto pt-2">
                         <button
                         class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
+                        ngbTooltip="Eliminar Red"
+                        container="body"
+                        placement="bottom"
                         type="button"
                         (click)="confirmarEliminar(red)">
                           <i class="bi bi-trash-fill text-primary"></i>
@@ -51,12 +55,18 @@
 
                         <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                         type="button"
+                        ngbTooltip="Editar Red"
+                        container="body"
+                        placement="bottom"
                         (click)="editar(red)">
                           <i class="bi bi-pencil-fill text-primary"></i>
                         </button>
 
                         <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                         type="button"
+                        ngbTooltip="Editar Miembros"
+                        container="body"
+                        placement="bottom"
                         (click)="editarMiembros(red)">
                           <i class="bi bi-building-fill-add text-primary"></i>
                         </button>
@@ -73,6 +83,9 @@
                         <button
                         class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
                         type="button"
+                        ngbTooltip="Ver Red"
+                        container="body"
+                        placement="bottom"
                         (click)="verRed(red.id)"
                         >
                           <i class="text-primary bi bi-eye-fill"></i>
@@ -89,87 +102,101 @@
       <!--RESTO USUARIOS-->
       <ng-container *Roles="[1,2,3]">
         <h4 class="text-primary">Redes que Patrocino</h4>
-        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.misRedes.length > 0; else sinDatos" >
-          <div class="col" *ngFor="let red of redes.misRedes">
-            <div class="card sh-20 hover-img-scale-up hover-reveal">
-              <!-- <span class="badge position-absolute top-0 end-0 m-2"
-              style="cursor: pointer;z-index: 9999;"
-              [ngClass]="{
-                'bg-danger': red.suspendido,
-                'bg-success': !red.suspendido
-              }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
-              <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
-              <div class="card-img-overlay d-flex align-items-end reveal-content">
-                <div class="row g-0">
-                  <div class="col pe-2">
+        <div class="card">
+          <div class="card-body" *ngIf="(redes.misRedes| filterBy: filter).length > 0; else sinDatos" >
+            <table class="table table-striped table-hover table-bordered align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Logo</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Porcentaje</th>
+                  <th scope="col">Caracteristicas</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let red of redes.misRedes || [] | filterBy: filter">
+                  <td style="width: 80px;">
+                    <img *ngIf="red.foto" [src]="apiUrl + red.foto" alt="Logo" class="img-fluid rounded" style="max-height: 60px;">
+                  </td>
+                  <td class="fw-bold">{{ red.nombre }}</td>
+                  <td>{{ red.porcentaje }}%</td>
+                  <td>{{ red.caracteristicas}}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      *Roles="[1,2]"
+                      ngbTooltip="Editar Red"
+                      container="body"
+                      placement="top"
+                      (click)="editar(red)">
+                      <i class="bi bi-pencil-fill"></i>
+                    </button>
 
-                      <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      ngbTooltip="Editar Miembros"
+                      container="body"
+                      placement="top"
+                      *Roles="[1]"
+                      (click)="editarMiembros(red)">
+                      <i class="bi bi-building-fill-add"></i>
+                    </button>
 
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      ngbTooltip="Ver Red"
+                      container="body"
+                      placement="top"
+                      (click)="verRed(red.id)">
+                      <i class="bi bi-eye-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-                    <div class="d-inline-block">
-                      <div class="text-white"><span>{{red.porcentaje}}%</span></div>
-                    </div>
-
-                    <div class="col-auto me-auto pt-2">
-                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2" type="button" *Roles="[1,2]">
-                        <i class="bi bi-pencil-fill text-primary" (click)="editar(red)" ></i>
-                      </button>
-
-                      <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button"
-                      (click)="editarMiembros(red)" *Roles="[1]">
-                        <i class="bi bi-building-fill-add text-primary"></i>
-                      </button>
-
-                      <button
-                      class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                      type="button" (click)="verRed(red.id)">
-                        <i class="text-primary bi bi-eye-fill"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <hr>
         <h4 class="text-primary">Redes como Miembro</h4>
-        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="redes.vinculado.length > 0; else sinDatos">
-          <div class="col" *ngFor="let red of redes.vinculado">
-            <div class="card sh-20 hover-img-scale-up hover-reveal">
-              <!-- <span class="badge position-absolute top-0 end-0 m-2"
-              style="cursor: pointer;z-index: 9999;"
-              [ngClass]="{
-                'bg-danger': red.suspendido,
-                'bg-success': !red.suspendido
-              }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
-              <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
-              <div class="card-img-overlay d-flex align-items-end reveal-content">
-                <div class="row g-0">
-                  <div class="col pe-2">
+        <div class="card">
+          <div class="card-body" *ngIf="(redes.vinculado | filterBy: filter).length > 0; else sinDatos">
 
-                      <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+            <table class="table table-striped table-hover table-bordered align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Logo</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Anfitrión</th>
+                  <th scope="col">Porcentaje</th>
+                  <th scope="col">Caracteristicas</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let red of (redes.vinculado || [] | filterBy: filter)">
+                  <td style="width: 80px;">
+                    <img *ngIf="red.foto" [src]="apiUrl + red.foto" alt="Logo" class="img-fluid rounded" style="max-height: 60px;">
+                  </td>
+                  <td class="fw-bold">{{ red.nombre }}</td>
+                  <td>{{ red.Anfitrion?.nombre || 'Sin Anfitrión' }}</td>
+                  <td>{{ red.porcentaje }}%</td>
+                  <td>{{ red.caracteristicas }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary"
+                      ngbTooltip="Ver Red"
+                      container="body"
+                      placement="top"
+                      (click)="verRed(red.id)">
+                      <i class="bi bi-eye-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-
-                    <div class="d-inline-block">
-                      <div class="text-white">Anfitrion: <span>{{red.Anfitrion.nombre}}</span></div>
-                      <div class="text-white"><span>{{red.porcentaje}}%</span></div>
-                    </div>
-
-                    <div class="col-auto me-auto pt-2">
-                      <button
-                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                        type="button"
-                        (click)="verRed(red.id)"
-                        >
-                          <i class="text-primary bi bi-eye-fill"></i>
-                        </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </ng-container>
@@ -182,5 +209,9 @@
 
 <ng-template #sinDatos>
   <app-sin-datos [mensaje]="''"></app-sin-datos>
+</ng-template>
+
+<ng-template #sinDatosAdmin>
+  <app-sin-datos></app-sin-datos>
 </ng-template>
 

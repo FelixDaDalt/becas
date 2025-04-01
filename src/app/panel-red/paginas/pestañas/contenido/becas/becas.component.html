@@ -5,7 +5,7 @@
       <!-- Alta -->
       <button class="btn btn-info btn-sm me-2" type="button" *Roles="[1,2]" (click)="alta()"><i class="bi bi-plus-circle me-2"></i>Publicar</button>
       <!-- Alta -->
-      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" [(ngModel)]="busqueda" (ngModelChange)="updateFilter()">
       <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
     </div>
 
@@ -14,15 +14,20 @@
   <!-- Responsive Horizontal Start -->
   <div class="col-12 mb-5">
     <ng-container *ngIf="listado$ | async as becas; else sinDatos">
-      <ng-container *ngIf="becas.length>0;else sinDatos">
+      <ng-container *ngIf="(becas | filterBy: filter).length>0;else sinDatos">
         <section class="scroll-section" id="responsiveHorizontal">
 
           <div class="scroll-out">
             <div class="scroll-by-count" data-count="10">
-              <div class="card mb-2" *ngFor="let beca of becas" [ngStyle]="{'background-color': idColegio == beca.colegio.id ? '#FFFCF3' : ''}">
+              <div class="card mb-2" *ngFor="let beca of becas || [] | filterBy: filter"
+              [ngStyle]="{
+                'background-color': beca.colegio.borrado ? '#FFF3F3' :
+                (idColegio == beca.colegio.id ? '#FFFCF3' : '')
+              }">
                 <div class="row g-0 sh-10" >
                   <div class="col-auto h-100">
                     <span class="badge rounded-pill bg-warning me-1 position-absolute s-n2 t-0" *ngIf="idColegio ==  beca.colegio.id">publicada</span>
+                    <span class="badge rounded-pill bg-danger me-1 position-absolute s-n2 t-0" *ngIf="beca.colegio.borrado">COLEGIO BORRADO</span>
                     <img [src]="apiFile+beca.colegio.foto" alt="alternate text" class="card-img card-img-horizontal sw-11" />
                   </div>
                   <div class="col">
@@ -100,5 +105,5 @@
 </div>
 
 <ng-template #sinDatos>
-  <app-sin-datos></app-sin-datos>
+  <app-sin-datos mensaje=""></app-sin-datos>
 </ng-template>

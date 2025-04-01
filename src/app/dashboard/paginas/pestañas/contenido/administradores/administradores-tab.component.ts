@@ -7,6 +7,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
 import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { environment } from 'src/environments/environment';
+import { shareReplay } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AdministradoresTabComponent implements OnInit{
   apiFile=environment.fileUrl
-  administradores$=this.adminService.administradores$
+  administradores$=this.adminService.administradores$.pipe(shareReplay(1))
   administradoresCache = false
 
   constructor(private adminService:AdminService,
@@ -70,6 +71,20 @@ export class AdministradoresTabComponent implements OnInit{
       if(r)
         this.adminService.obtenerAdministradores()
     })
+  }
+
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { dni: this.busqueda },
+        { nombre: this.busqueda },
+        { apellido: this.busqueda },
+        { telefono: this.busqueda },
+        { celular: this.busqueda }
+      ]
+    };
   }
 
 }

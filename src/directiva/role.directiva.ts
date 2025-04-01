@@ -1,11 +1,12 @@
 // role.directive.ts
-import { Directive, ElementRef, Input, Optional, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Optional, Output, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 
 
 @Directive({
   selector: '[Roles]',
-  standalone: true
+  standalone: true,
 })
 export class RoleDirective {
   private allowedRoles: number[] = [];
@@ -27,6 +28,8 @@ export class RoleDirective {
     this.evaluateAccess();
   }
 
+  @Output() accessGranted = new BehaviorSubject<boolean>(false);  // Evento para emitir el acceso
+
   constructor(
     @Optional() private templateRef: TemplateRef<any>,
     @Optional() private viewContainer: ViewContainerRef,
@@ -37,6 +40,9 @@ export class RoleDirective {
   private evaluateAccess(): void {
     this.authService.currentUser.subscribe(usuario => {
       const hasAccess = usuario && this.allowedRoles.includes(usuario.id_rol);
+
+      if(hasAccess)
+        this.accessGranted.next(hasAccess);
 
       if (this.isTemplateMode && this.templateRef && this.viewContainer) {
         // Modo plantilla

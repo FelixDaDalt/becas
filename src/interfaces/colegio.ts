@@ -14,7 +14,7 @@ export interface Colegio {
   telefono: string;
   url: string;
   email?: string | null;
-  zona_localidad?:zona_localidad
+  id_zona_zona_localidad?:zona_localidad
   usuarios?: Usuario[];
   suspendido?: boolean
   terminos?:boolean

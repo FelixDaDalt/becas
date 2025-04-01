@@ -5,7 +5,8 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
 import { RoleDirective } from 'src/directiva/role.directiva';
 import { RegistroTabComponent } from './registro-tab.component';
 import { RegistroColegioComponent } from "../detalle-colegio/registro-colegio/registro-colegio.component";
-
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { RegistroColegioComponent } from "../detalle-colegio/registro-colegio/re
     RouterModule.forChild([
         { path: '', component: RegistroTabComponent }
     ]),
-    RegistroColegioComponent
+    RegistroColegioComponent,
+    FilterPipeModule,
+    FormsModule
 ]
 })
 export class RegistroTabModule { }

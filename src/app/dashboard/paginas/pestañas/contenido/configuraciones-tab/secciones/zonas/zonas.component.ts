@@ -17,7 +17,7 @@ export class ZonasComponent {
     tap(zonas => {
       const zonaSeleccionada = this.localidadForm.get('id_zona')?.value
       if(zonas && zonaSeleccionada){
-        this.localidades = zonas.find(zona => zona.id == zonaSeleccionada)?.zona_localidad || []
+        this.localidades = zonas.find(zona => zona.id == zonaSeleccionada)?.zona_localidads || []
       }
     }))
 
@@ -38,7 +38,7 @@ export class ZonasComponent {
   seleccionarZona(zonaSeleccionada:zona){
     this.localidadNombre = zonaSeleccionada.nombre
     this.localidadForm.get('id_zona')?.patchValue(zonaSeleccionada.id);
-    this.localidades = zonaSeleccionada.zona_localidad || []
+    this.localidades = zonaSeleccionada.zona_localidads || []
   }
 
   guardarZona(){

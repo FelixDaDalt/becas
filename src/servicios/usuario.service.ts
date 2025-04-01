@@ -49,12 +49,13 @@ export class usuarioService {
     `${environment.apiUrl}${environment.endpoint.admin.editar}`: `${environment.apiUrl}${environment.endpoint.usuario.editar}`
 
     const idUsuarioLogueado = this.authService.getUser().id
+    const idUsuario = usuario.get('usuario[id]')
 
     return this.http.put(endpoint,usuario).pipe(
       take(1),
       tap((respuesta: any) => {
         this.toast.success(respuesta.mensaje)
-        if(idUsuarioLogueado==usuario.id)
+        if(idUsuarioLogueado==idUsuario)
           this.obtenerMe()
       })
   )}
@@ -65,6 +66,7 @@ export class usuarioService {
     return this.http.get(endpoint).pipe(
       take(1),
       map((respuesta: any) => respuesta.data))
+
   }
 
   obtenerMe(){

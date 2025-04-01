@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './becas.component.html',
   styleUrls: ['./becas.component.css']
 })
-export class BecasComponent implements OnDestroy{
+export class BecasComponent implements OnInit, OnDestroy{
 
   miRed$ = this.redService.meRed$.pipe(shareReplay(1)).subscribe(
     red=>{
@@ -22,12 +22,11 @@ export class BecasComponent implements OnDestroy{
         this.cantidadPublicadas = red.misDatos.bp
         this.derechoDisponible = red.misDatos.dbd
         this.idColegio = red.misDatos.id_colegio
-        if(this.idRed)
-          this.becaService.obtenerBecas(this.idRed)
       }
 
     }
   )
+  private queryParamsSubscription: Subscription | undefined;
 
   listado$ = this.becaService.becas$.pipe(shareReplay(1))
   apiFile=environment.fileUrl
@@ -39,10 +38,18 @@ export class BecasComponent implements OnDestroy{
 
   constructor(private modalService:NgbModal,
   private redService:RedService,
-  private becaService:BecaService){
+  private becaService:BecaService,
+  private route:ActivatedRoute){
 
   }
 
+  ngOnInit(): void {
+    this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
+      this.idRed = params['idRed'];
+      if(this.idRed)
+        this.becaService.obtenerBecas(this.idRed)
+  })
+}
 
   ngOnDestroy(): void {
     if(this.miRed$)
@@ -77,6 +84,28 @@ export class BecasComponent implements OnDestroy{
           this.redService.obtenerMeRed(this.idRed)
       })
     }
-
   }
+
+filter: any;
+busqueda: string = '';
+updateFilter() {
+  this.filter = {
+    $or: [
+      { usuario: {
+        $or: [{ nombre: this.busqueda }, { apellido: this.busqueda }, { id: this.busqueda }]
+      }
+    },
+    { colegio: {
+        $or: [
+          { nombre: this.busqueda },
+          { cuit: this.busqueda },
+          { id: this.busqueda },
+          { localidad: this.busqueda },
+          { provincia: this.busqueda }
+        ]
+      }
+    }
+    ]
+  };
+}
 }

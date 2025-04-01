@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class MiColegioColumnaComponent implements OnInit{
 
   @Input() idRed:number | null = null
-  user$ = this.usuarioService.me$.pipe(shareReplay(1), tap(r=>console.log(r)));
+  user$ = this.usuarioService.me$.pipe(shareReplay(1));
   miRed$ = this.redService.meRed$.pipe(shareReplay(1),tap(r=>console.log(r)))
   apiFile=environment.fileUrl
   constructor(private usuarioService:usuarioService, private redService:RedService){

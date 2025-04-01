@@ -6,6 +6,8 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
 import { RouterModule } from '@angular/router';
 import { MiembrosComponent } from './miembros.component';
 import { FormatDniCuitPipe } from "../../../../../../pipes/formatoDniCuit.pipe";
+import { FormsModule } from '@angular/forms';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
 
@@ -21,7 +23,9 @@ import { FormatDniCuitPipe } from "../../../../../../pipes/formatoDniCuit.pipe";
     RouterModule.forChild([
         { path: '', component: MiembrosComponent }
     ]),
-    FormatDniCuitPipe
+    FormatDniCuitPipe,
+    FormsModule,
+    FilterPipeModule
 ]
 })
 export class MiembrosModule { }

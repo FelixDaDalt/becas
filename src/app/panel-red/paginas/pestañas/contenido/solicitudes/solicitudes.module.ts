@@ -8,10 +8,11 @@ import { VerSolicitudComponent } from './ver-solicitud/ver-solicitud.component';
 import { SolicitudRoutingModule } from './solicitud-routing.module';
 import { FormatDniCuitPipe } from "../../../../../../pipes/formatoDniCuit.pipe";
 import { ResolverSolicitudComponent } from './ver-solicitud/resolver-solicitud/resolver-solicitud.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
 import { BotonCargandoComponent } from "../../../../../../standalone/boton-cargando/boton-cargando.component";
 import { DarBajaSolicitudComponent } from './ver-solicitud/dar-baja-solicitud/dar-baja-solicitud.component';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
 
@@ -30,7 +31,9 @@ import { DarBajaSolicitudComponent } from './ver-solicitud/dar-baja-solicitud/da
     FormatDniCuitPipe,
     ReactiveFormsModule,
     ErrorFormularioComponent,
-    BotonCargandoComponent
+    BotonCargandoComponent,
+    FilterPipeModule,
+    FormsModule
 ]
 })
 export class SolicitudesModule { }

@@ -40,7 +40,9 @@
                       <div class="col-12 mb-2">
                         <h6 class="mb-0 text-uppercase fw-bold">
                           <i class="bi bi-arrow-right-circle me-2"></i>
-                          {{ registro.realizadoPor }}
+                          {{ registro.realizadoPor }} :               {{registro.administrador?.apellido}}, {{registro.administrador?.nombre}}
+                          {{registro.usuario?.apellido}}, {{registro.usuario?.nombre}}
+
                         </h6>
                         <small class="text-muted">
                           <i class="bi bi-clock me-2"></i>{{ registro.fechaHora | date: 'dd/MM/yyyy, hh:mm a' }}
@@ -52,8 +54,6 @@
                         <p class="mb-0">
                           <span class="text-secondary">Realizó la acción: </span>
                           <span class="fw-bold text-info">{{ registro.accion }}</span>
-                          sobre
-                          <span class="fw-semibold text-primary">{{ registro.entidad }}</span>.
                         </p>
                         <p class="text-muted small">Descripcion: {{ registro.descripcion }}</p>
                       </div>
@@ -118,7 +118,8 @@
                       <div class="col-12 mb-2">
                         <h6 class="mb-0 text-uppercase fw-bold">
                           <i class="bi bi-arrow-right-circle me-2"></i>
-                          {{ registro.realizadoPor }}
+                          {{ registro.realizadoPor }}:              {{registro.administrador?.apellido}}, {{registro.administrador?.nombre}}
+                          {{registro.usuario?.apellido}}, {{registro.usuario?.nombre}}
                         </h6>
                         <small class="text-muted">
                           <i class="bi bi-clock me-2"></i>{{ registro.fechaHora | date: 'dd/MM/yyyy, hh:mm a' }}
@@ -130,8 +131,6 @@
                         <p class="mb-0">
                           <span class="text-secondary">Realizó la acción: </span>
                           <span class="fw-bold text-info">{{ registro.accion }}</span>
-                          sobre
-                          <span class="fw-semibold text-primary">{{ registro.entidad }}</span>.
                         </p>
                         <p class="text-muted small">Descripcion: {{ registro.descripcion }}</p>
                       </div>
@@ -195,7 +194,8 @@
                       <div class="col-12 mb-2">
                         <h6 class="mb-0 text-uppercase fw-bold">
                           <i class="bi bi-arrow-right-circle me-2"></i>
-                          {{ registro.realizadoPor }}
+                          {{ registro.realizadoPor }}:              {{registro.administrador?.apellido}}, {{registro.administrador?.nombre}}
+                          {{registro.usuario?.apellido}}, {{registro.usuario?.nombre}}
                         </h6>
                         <small class="text-muted">
                           <i class="bi bi-clock me-2"></i>{{ registro.fechaHora | date: 'dd/MM/yyyy, hh:mm a' }}
@@ -207,8 +207,6 @@
                         <p class="mb-0">
                           <span class="text-secondary">Realizó la acción: </span>
                           <span class="fw-bold text-info">{{ registro.accion }}</span>
-                          sobre
-                          <span class="fw-semibold text-primary">{{ registro.entidad }}</span>.
                         </p>
                         <p class="text-muted small">Descripcion: {{ registro.descripcion }}</p>
                       </div>
@@ -272,7 +270,8 @@
                       <div class="col-12 mb-2">
                         <h6 class="mb-0 text-uppercase fw-bold">
                           <i class="bi bi-arrow-right-circle me-2"></i>
-                          {{ registro.realizadoPor }}
+                          {{ registro.realizadoPor }}:              {{registro.administrador?.apellido}}, {{registro.administrador?.nombre}}
+                          {{registro.usuario?.apellido}}, {{registro.usuario?.nombre}}
                         </h6>
                         <small class="text-muted">
                           <i class="bi bi-clock me-2"></i>{{ registro.fechaHora | date: 'dd/MM/yyyy, hh:mm a' }}
@@ -284,8 +283,6 @@
                         <p class="mb-0">
                           <span class="text-secondary">Realizó la acción: </span>
                           <span class="fw-bold text-info">{{ registro.accion }}</span>
-                          sobre
-                          <span class="fw-semibold text-primary">{{ registro.entidad }}</span>.
                         </p>
                         <p class="text-muted small">Descripcion: {{ registro.descripcion }}</p>
                       </div>

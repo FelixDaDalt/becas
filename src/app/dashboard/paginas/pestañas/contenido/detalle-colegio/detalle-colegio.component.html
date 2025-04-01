@@ -55,16 +55,16 @@
           <div class="row g-0 align-items-center mb-2">
             <div class="col-auto">
               <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
-                <i class="bi bi-telephone text-primary"></i>
+                <i class="bi bi-geo-alt text-primary"></i>
               </div>
             </div>
             <div class="col ps-3">
               <div class="row g-0">
                 <div class="col">
-                  <div class="sh-5 d-flex align-items-center lh-1-25">Zona</div>
+                  <div class="sh-5 d-flex align-items-center lh-1-25">Localidad</div>
                 </div>
                 <div class="col-auto">
-                  <div class="sh-5 d-flex align-items-center">{{detalle.colegio.zona_localidad?.nombre}}, {{detalle.colegio.zona_localidad?.zona?.nombre}}</div>
+                  <div class="sh-5 d-flex align-items-center">{{detalle.colegio.localidad}}, {{detalle.colegio.id_zona_zona_localidad?.id_zona_zona?.nombre}}, ({{detalle.colegio.cp}})</div>
                 </div>
               </div>
             </div>
@@ -186,8 +186,19 @@
                         </span>
                       </div>
                       <div class="d-flex">
-                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(responsable.id)"><i class="bi bi-key-fill"></i></button>
-                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(responsable.id)">
+                        <button type="button"
+                          class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                          ngbTooltip="Reiniciar Contraseña"
+                          container="body"
+                          placement="bottom"
+                          (click)="reiniciarPassword(responsable.id)"><i class="bi bi-key-fill"></i></button>
+
+                        <button type="button"
+                          class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                          ngbTooltip="Suspender Ingreso"
+                          container="body"
+                          placement="bottom"
+                          (click)="suspender(responsable.id)">
                           <i [ngClass]="responsable.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                         </button>
                         <div class="btn-group">
@@ -267,8 +278,18 @@
                         </span>
                       </div>
                       <div class="d-flex">
-                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(delegado.id)"><i class="bi bi-key-fill"></i></button>
-                        <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(delegado.id)">
+                        <button type="button"
+                          class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                          ngbTooltip="Reiniciar Contraseña"
+                          container="body"
+                          placement="bottom"
+                          (click)="reiniciarPassword(delegado.id)"><i class="bi bi-key-fill"></i></button>
+                        <button type="button"
+                          class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                          ngbTooltip="Suspender Ingreso"
+                          container="body"
+                          placement="bottom"
+                          (click)="suspender(delegado.id)">
                           <i [ngClass]="delegado.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                         </button>
                         <div class="btn-group">
@@ -348,8 +369,18 @@
                           </span>
                         </div>
                         <div class="d-flex">
-                          <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="reiniciarPassword(autorizado.id)"><i class="bi bi-key-fill"></i></button>
-                          <button type="button" class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1" (click)="suspender(autorizado.id)">
+                          <button type="button"
+                            class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                            ngbTooltip="Reiniciar Contraseña"
+                            container="body"
+                            placement="bottom"
+                            (click)="reiniciarPassword(autorizado.id)"><i class="bi bi-key-fill"></i></button>
+                          <button type="button"
+                            class="btn btn-outline-primary btn-icon-only btn-icon btn-sm ms-1"
+                            ngbTooltip="Suspender Ingreso"
+                            container="body"
+                            placement="bottom"
+                            (click)="suspender(autorizado.id)">
                             <i [ngClass]="autorizado.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                           </button>
                           <div class="btn-group">
@@ -475,36 +506,43 @@
   <!-- Right Side End -->
 
   <!-- Menu -->
+
   <div class="col-12 col-xl-3 col-xxl-3" *Roles="[0]">
-    <div class="nav flex-column" role="tablist">
-      <a class="nav-link active px-0 border-bottom border-separator-light" data-bs-toggle="tab" href="#detallesTab"
+    <!-- Encabezado del menú -->
+    <div class="bg-primary text-white text-center p-2 rounded mb-1">
+      <h6 class="mb-0 fw-bold text-white">Secciónes</h6>
+    </div>
+
+    <div class="nav flex-column bg-light p-2 rounded shadow-sm" role="tablist">
+      <a class="nav-link active px-3 py-2 border-bottom border-separator-light" data-bs-toggle="tab" href="#detallesTab"
         role="tab">
         <i class="bi bi-buildings me-2"></i>
         <span class="align-middle">Detalles</span>
       </a>
-      <a class="nav-link px-0 border-bottom border-separator-light" data-bs-toggle="tab" href="#responsablesTab" role="tab">
+      <a class="nav-link px-3 py-2 border-bottom border-separator-light" data-bs-toggle="tab" href="#responsablesTab" role="tab">
         <i class="bi bi-person-vcard-fill me-2"></i>
         <span class="align-middle">Responsables</span>
       </a>
-      <a class="nav-link px-0 border-bottom border-separator-light" data-bs-toggle="tab" href="#delegadosTab"
+      <a class="nav-link px-3 py-2 border-bottom border-separator-light" data-bs-toggle="tab" href="#delegadosTab"
         role="tab">
         <i class="bi bi-person-lines-fill me-2"></i>
         <span class="align-middle">Delegados</span>
       </a>
-      <a class="nav-link px-0 border-bottom border-separator-light" data-bs-toggle="tab" href="#autorizadosTab" role="tab">
+      <a class="nav-link px-3 py-2 border-bottom border-separator-light" data-bs-toggle="tab" href="#autorizadosTab" role="tab">
         <i class="bi bi-person-fill-check me-2"></i>
         <span class="align-middle">Autorizados</span>
       </a>
-      <a class="nav-link px-0" data-bs-toggle="tab" href="#redesTab" role="tab">
+      <a class="nav-link px-3 py-2 border-bottom border-separator-light" data-bs-toggle="tab" href="#redesTab" role="tab">
         <i class="bi bi-diagram-3-fill me-2"></i>
         <span class="align-middle">Redes</span>
       </a>
-      <a class="nav-link px-0" data-bs-toggle="tab" href="#registrosTab" role="tab">
+      <a class="nav-link px-3 py-2" data-bs-toggle="tab" href="#registrosTab" role="tab">
         <i class="bi bi-list-task me-2"></i>
         <span class="align-middle">Registros</span>
       </a>
     </div>
   </div>
+
   <!-- Menu -->
 </div>
 

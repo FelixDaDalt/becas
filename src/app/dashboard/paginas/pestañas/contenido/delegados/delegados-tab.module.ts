@@ -4,6 +4,9 @@ import { RouterModule } from '@angular/router';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
 import { RoleDirective } from 'src/directiva/role.directiva';
 import { DelegadosTabComponent } from './delegados-tab.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +18,10 @@ import { DelegadosTabComponent } from './delegados-tab.component';
     SinDatosComponent,
     RouterModule.forChild([
       { path: '', component: DelegadosTabComponent }
-    ])
+    ]),
+    NgbTooltipModule,
+    FilterPipeModule,
+    FormsModule
   ]
 })
 export class DelegadosTabModule { }

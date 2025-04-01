@@ -26,7 +26,7 @@ export class AltaColegioComponent  {
     {nombre:'6-Responsable',descripcion:'Acceso'}
   ]
   mostrarPassword=false
-  zonas$=this.zonaService.zonas$.pipe(shareReplay(1),tap(r=>console.log(r)))
+  zonas$=this.zonaService.zonas$.pipe(shareReplay(1))
   localidades$ = this.zonas$.pipe(
     map(zonas => {
       // Crear un mapeo de id_zona a nombre de zona
@@ -37,7 +37,7 @@ export class AltaColegioComponent  {
 
       // Transformar las localidades en una lista plana con nombre de zona
       return zonas.flatMap(zona =>
-        zona.zona_localidad?.map(localidad => ({
+        zona.zona_localidads?.map(localidad => ({
           ...localidad,
           nombre_zona: zonaMap[localidad.id_zona?localidad.id_zona:'Sin Zona']
         }))
@@ -128,10 +128,8 @@ export class AltaColegioComponent  {
 
     if (input.files && input.files.length > 0) {
       this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
-      console.log('Archivo seleccionado:', this.archivoSeleccionado);
     } else {
       this.archivoSeleccionado = null;
-      console.log('No se seleccionó ningún archivo');
     }
   }
 
@@ -144,7 +142,6 @@ export class AltaColegioComponent  {
         take(1)
       ).subscribe(
         disponible => {
-          console.log(disponible)
           if (!disponible) {
             this.wizardForm.get('acceso.dni')?.setErrors({ noDisponible: true });
           }
@@ -239,6 +236,11 @@ export class AltaColegioComponent  {
     }
 
   return formData;
+  }
+
+
+  cancelar(){
+    this.router.navigate(['../'],{relativeTo:this.activeRoute})
   }
 }
 

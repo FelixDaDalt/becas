@@ -26,9 +26,10 @@ export class EditarColegioComponent implements OnInit {
       {nombre:'3-Colegio',descripcion:'Contacto'},
       {nombre:'4-Colegio',descripcion:'Perzonalización'}
     ]
-    zonas$=this.zonaService.zonas$.pipe(shareReplay(1),tap(r=>console.log(r)))
+    zonas$=this.zonaService.zonas$.pipe(shareReplay(1))
     localidades$ = this.zonas$.pipe(
       map(zonas => {
+        console.log(zonas)
         // Crear un mapeo de id_zona a nombre de zona
         const zonaMap = zonas.reduce((acc:any, zona:any) => {
           acc[zona.id] = zona.nombre;
@@ -37,7 +38,7 @@ export class EditarColegioComponent implements OnInit {
 
         // Transformar las localidades en una lista plana con nombre de zona
         return zonas.flatMap(zona =>
-          zona.zona_localidad?.map(localidad => ({
+          zona.zona_localidads?.map(localidad => ({
             ...localidad,
             nombre_zona: zonaMap[localidad.id_zona?localidad.id_zona:'Sin Zona']
           }))
@@ -111,7 +112,6 @@ export class EditarColegioComponent implements OnInit {
           url: this.colegio.url
         })
 
-        console.log(this.wizardForm.value)
       }
 
     }
@@ -218,10 +218,8 @@ export class EditarColegioComponent implements OnInit {
 
       if (input.files && input.files.length > 0) {
         this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
-        console.log('Archivo seleccionado:', this.archivoSeleccionado);
       } else {
         this.archivoSeleccionado = null;
-        console.log('No se seleccionó ningún archivo');
       }
     }
 

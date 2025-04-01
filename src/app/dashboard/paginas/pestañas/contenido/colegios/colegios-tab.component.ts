@@ -6,6 +6,7 @@ import { ColegioService } from 'src/servicios/colegio.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
 import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
 import { environment } from 'src/environments/environment';
+import { shareReplay, tap } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { environment } from 'src/environments/environment';
 export class ColegiosTabComponent{
   apiFile=environment.fileUrl
   colegioCache = false
-  colegios$ = this.colegioService.colegios$
+  colegios$ = this.colegioService.colegios$.pipe(shareReplay(1))
 
   constructor(private colegioService:ColegioService,
     private activeRoute: ActivatedRoute,
@@ -62,6 +63,25 @@ export class ColegiosTabComponent{
   editarColegio(colegio:Colegio){
     const editarModal = this.modalService.open(EditarColegioComponent,{backdrop:'static', size:'lg'})
     editarModal.componentInstance.colegio = colegio
+  }
+
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { cuit: this.busqueda },
+        { nombre: this.busqueda },
+        { direccion_calle: this.busqueda },
+        { direccion_numero: this.busqueda },
+        { localidad: this.busqueda },
+        { provincia: this.busqueda },
+        { cp: this.busqueda },
+        { telefono: this.busqueda },
+        { url: this.busqueda },
+        { email: this.busqueda }
+      ]
+    };
   }
 
 }

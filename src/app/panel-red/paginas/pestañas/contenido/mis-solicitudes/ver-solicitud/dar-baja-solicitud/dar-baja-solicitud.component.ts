@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BecaService } from 'src/servicios/beca.service';
 
 @Component({
-  selector: 'app-desestimar-solicitud',
-  templateUrl: './desestimar-solicitud.component.html',
-  styleUrls: ['./desestimar-solicitud.component.css']
+  selector: 'app-dar-baja-solicitud',
+  templateUrl: './dar-baja-solicitud.component.html',
+  styleUrls: ['./dar-baja-solicitud.component.css']
 })
-export class DesestimarSolicitudComponent implements OnInit{
+export class DarBajaSolicitudComponent implements OnInit{
 
   resolverForm:FormGroup
 
@@ -17,7 +17,7 @@ export class DesestimarSolicitudComponent implements OnInit{
   constructor(private fb:FormBuilder, private becaService:BecaService){
     this.resolverForm = this.fb.group({
       id_solicitud: [null, [Validators.required]], // Número requerido
-      res_comentario: [null, [Validators.required]], // Cadena no vacía
+      baja_comentario: [null, [Validators.required]], // Cadena no vacía
     })
 
   }
@@ -28,7 +28,7 @@ export class DesestimarSolicitudComponent implements OnInit{
 
   guardar(){
     if (this.resolverForm.valid && this.idRed) {
-      this.becaService.desestimar(this.idRed,this.resolverForm.value)
+      this.becaService.darBaja(this.idRed,this.resolverForm.value,true)
     }else{
       this.resolverForm.markAllAsTouched()
     }

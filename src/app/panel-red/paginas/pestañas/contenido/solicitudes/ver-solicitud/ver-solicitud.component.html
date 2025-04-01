@@ -29,6 +29,7 @@
             <!-- Información del Alumno -->
             <div class="col-md-7">
               <div class="row g-3">
+
                 <!-- Información del colegio -->
                 <div class="col-12">
                   <div class="d-flex align-items-center mb-3">
@@ -39,7 +40,8 @@
                       style="width: 28px; height: 28px; object-fit: cover;">
                     <div>
                       <h6 class="mb-1 fw-bold">Colegio Solicitante</h6>
-                      <p class="text-muted mb-0"><strong>Nombre:</strong> {{detalle.solicitante.colegio.nombre}}</p>
+                      <p class="text-muted mb-0" (click)="verColegio(detalle.solicitante.colegio.id)" *Roles="[0]"><strong>Nombre:</strong> {{detalle.solicitante.colegio.nombre}}</p>
+                      <p class="text-muted mb-0" *Roles="[1,2,3]"><strong>Nombre:</strong> {{detalle.solicitante.colegio.nombre}}</p>
                       <p class="text-muted mb-0"><strong>Zona:</strong> {{detalle.solicitante.colegio.provincia}}, {{detalle.solicitante.colegio.localidad}}</p>
                       <p class="text-muted mb-0"><strong>Dirección:</strong> {{detalle.solicitante.colegio.direccion_calle}}, {{detalle.solicitante.colegio.direccion_numero}}</p>
                       <p class="text-muted mb-0"><strong>CUIT:</strong> {{detalle.solicitante.colegio.cuit | formatDniCuit:'cuit'}}</p>
@@ -80,16 +82,57 @@
                   </div>
                 </div>
 
+                                <!--Colegio Solicitado SOLO ADMIN-->
+                                <ng-container *Roles="[0]">
+                                  <!-- Información del colegio -->
+                                  <div class="col-12">
+                                    <div class="d-flex align-items-center mb-3">
+                                      <img [src]="apiFile + detalle.solicitado.colegio.foto" alt="Foto del colegio" class="rounded-circle me-3"
+                                        style="width: 28px; height: 28px; object-fit: cover;">
+                                      <div>
+                                        <h6 class="mb-1 fw-bold">Colegio Solicitado</h6>
+                                        <p class="text-muted mb-0" (click)="verColegio(detalle.solicitado.colegio.id)"><strong>Nombre:</strong> {{detalle.solicitado.colegio.nombre}}</p>
+                                        <p class="text-muted mb-0"><strong>Zona:</strong> {{detalle.solicitado.colegio.provincia}},
+                                          {{detalle.solicitado.colegio.localidad}}</p>
+                                        <p class="text-muted mb-0"><strong>Dirección:</strong> {{detalle.solicitado.colegio.direccion_calle}},
+                                          {{detalle.solicitado.colegio.direccion_numero}}</p>
+                                        <p class="text-muted mb-0"><strong>CUIT:</strong> {{detalle.solicitado.colegio.cuit | formatDniCuit:'cuit'}}</p>
+                                        <p class="text-muted mb-0"><strong>Email:</strong> {{detalle.solicitado.colegio.email}}</p>
+                                        <p class="text-muted mb-0"><strong>Teléfono:</strong> {{detalle.solicitado.colegio.telefono}}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </ng-container>
+
                 <!-- Estados -->
                 <div class="col-12">
                                     <div class="d-flex flex-wrap align-items-center">
                                       <p class="text-muted mb-0 me-3">
                                         <strong>Estado:</strong>
-                                        <span class="badge bg-info text-white ms-2">{{detalle.estado.nombre}}</span>
+                                        <span
+                                          class="badge text-uppercase"
+                                          [ngClass]="{
+                                            'bg-primary': detalle.estado.id === 0,
+                                            'bg-secondary': detalle.estado.id === 1,
+                                            'bg-success': detalle.estado.id === 5,
+                                            'bg-danger': detalle.estado.id === 2,
+                                            'bg-warning': detalle.estado.id === 3,
+                                            'bg-dark': detalle.estado.id === 4
+                                          }"
+                                        >{{detalle.estado.nombre}}</span>
                                       </p>
                                       <p class="text-muted mb-0">
                                         <strong>Resolución:</strong>
-                                        <span class="badge bg-info text-white ms-2">{{detalle.resolucion.nombre}}</span>
+                                        <span
+                                        class="badge text-white ms-2"
+                                        [ngClass]="{
+                                          'bg-info': detalle.resolucion.id === 0,
+                                          'bg-success': detalle.resolucion.id === 1,
+                                          'bg-danger': detalle.resolucion.id === 2,
+                                          'bg-warning': detalle.resolucion.id === 3
+                                        }">
+                                        {{ detalle.resolucion.nombre }}
+                                      </span>
                                       </p>
                                     </div>
                 </div>

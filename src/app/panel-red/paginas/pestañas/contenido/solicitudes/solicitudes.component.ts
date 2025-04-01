@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { shareReplay, tap } from 'rxjs';
+import { shareReplay, Subscription, tap } from 'rxjs';
 import { BecaService } from 'src/servicios/beca.service';
 import { RedService } from 'src/servicios/red.service';
 
@@ -9,9 +9,12 @@ import { RedService } from 'src/servicios/red.service';
   templateUrl: './solicitudes.component.html',
   styleUrls: ['./solicitudes.component.css']
 })
-export class SolicitudesComponent implements OnDestroy {
-
+export class SolicitudesComponent implements OnDestroy, OnInit {
+  private queryParamsSubscription: Subscription | undefined;
   estados=[{
+    id:-1,
+    nombre:'Todas'
+  },{
     id:0,
     nombre:'Pendientes'
   },{
@@ -30,21 +33,18 @@ export class SolicitudesComponent implements OnDestroy {
     id:5,
     nombre:'Aprobadas'
   }]
-
-  active:number=0
+  active:number=-1
 
   miRed$ = this.redService.meRed$.pipe(shareReplay(1)).subscribe(
     red=>{
       if(red){
         this.idRed = red.misDatos.id_red
         this.idColegio = red.misDatos.id_colegio
-        if(this.idRed)
-          this.becaService.obtenerSolicitudes(this.idRed,0)
       }
     }
   )
 
-  listado$ = this.becaService.solicitudes$.pipe(shareReplay(1),tap(r=>console.log(r)))
+  listado$ = this.becaService.solicitudes$.pipe(shareReplay(1))
 
   idRed?:number
   idColegio?:number
@@ -55,6 +55,16 @@ export class SolicitudesComponent implements OnDestroy {
     private route:Router,
     private activeRoute:ActivatedRoute){
   }
+
+  ngOnInit(): void {
+    this.queryParamsSubscription = this.activeRoute.queryParams.subscribe(params => {
+      this.idRed = params['idRed'];
+      if(this.idRed)
+        this.becaService.obtenerSolicitudes(this.idRed,-1)
+  })
+}
+
+
 
   ngOnDestroy(): void {
     if(this.miRed$)
@@ -75,4 +85,24 @@ export class SolicitudesComponent implements OnDestroy {
       queryParamsHandling: 'merge' // Combinar con los parámetros existentes
     });
   }
+
+  filter: any;
+busqueda: string = '';
+updateFilter() {
+  this.filter = {
+    $or: [
+      {
+        solicitante: {
+          $or: [
+            { colegio: this.busqueda },
+            { usuario: this.busqueda },
+            { alumno: this.busqueda }
+          ]
+        }
+      },
+      { colegioSolicitado: this.busqueda }
+    ]
+  };
+}
+
 }

@@ -11,7 +11,8 @@ export class RegistroTabComponent{
 
 registros$ = this.registroService.registros$
 registroAdmin=false
-
+filter: any;
+busqueda: string = '';
 constructor(private registroService:RegistroService, private authService:AuthService){
   if(this.authService.userHasRole([1,2,3]))
   {
@@ -21,6 +22,27 @@ constructor(private registroService:RegistroService, private authService:AuthSer
   this.registroService.obtenerRegistrosAdmin()
   this.registroAdmin = true
 
+}
+
+updateFilter() {
+  this.filter = {
+    $or: [
+      { id: this.busqueda },
+      { descripcion: this.busqueda },
+      { fechaHora: this.busqueda },
+      { accion: this.busqueda },
+      { entidad: this.busqueda },
+      { realizadoPor: this.busqueda },
+      { ip: this.busqueda },
+      { navegador: this.busqueda },
+      { administrador:{
+        $or: [{ nombre: this.busqueda }, { apellido: this.busqueda },{id:this.busqueda}]
+      }},
+      { usuario: {
+        $or: [{ nombre: this.busqueda }, { apellido: this.busqueda }, {id:this.busqueda}]
+      }},
+    ]
+  };
 }
 
 }

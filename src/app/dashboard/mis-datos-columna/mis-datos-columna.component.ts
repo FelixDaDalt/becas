@@ -16,7 +16,7 @@ import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-
 })
 export class MisDatosColumnaComponent{
     apiFile = environment.fileUrl
-    user$ = this.usuarioService.me$.pipe(shareReplay(1))
+    user$ = this.usuarioService.me$
 
     constructor(private usuarioService:usuarioService,
       private modalService:NgbModal,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { Observable} from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import { CargandoService } from 'src/servicios/cargando.service';
 
 
@@ -13,13 +13,8 @@ export class CargandoInterceptor implements HttpInterceptor {
     this.cargandoService.setLoading(true); // Activar loading al iniciar la solicitud
 
     return next.handle(request).pipe(
-      tap({
-        next: () => {
-          this.cargandoService.setLoading(false); // Desactivar loading al completar la solicitud
-        },
-        error: () => {
-          this.cargandoService.setLoading(false); // Desactivar loading en caso de error
-        }
+      finalize(() => {
+        setTimeout(() => this.cargandoService.setLoading(false), 500) // Se ejecuta siempre al finalizar la solicitud
       })
     );
   }

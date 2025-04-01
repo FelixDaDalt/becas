@@ -12,7 +12,6 @@ export class ComprobarService {
 
   comprobarDni(dni:string) : Observable<boolean>{
     return this.http.get<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.admin.comprobar}?dni=${dni}`).pipe(
-      tap(r=>console.log(r)),
       map(
         (respuesta:any) => respuesta.disponible
       ),

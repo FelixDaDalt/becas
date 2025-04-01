@@ -13,3 +13,8 @@
 .text-white span{
   font-size: 12px;
 }
+
+.ngb-tooltip {
+  z-index: 9999999 !important; /* Asegura que esté por encima de todo */
+}
+

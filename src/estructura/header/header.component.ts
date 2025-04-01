@@ -14,6 +14,8 @@ import { CambioPassComponent } from 'src/standalone/cambio-pass/cambio-pass.comp
 import { Usuario } from 'src/interfaces/usuario';
 import { environment } from 'src/environments/environment';
 import { NotificacionService } from 'src/servicios/notificacion.service';
+import { RedService } from 'src/servicios/red.service';
+import { MiSolicitud, Solicitud } from 'src/interfaces/notificaciones';
 
 @Component({
   selector: 'app-header',
@@ -26,13 +28,14 @@ export class HeaderComponent implements AfterViewInit {
 
   user$ = this.usuarioService.me$.pipe(shareReplay(1));
   apiFile=environment.fileUrl
-  notificaciones$=this.notificacionesService.notificacion$.pipe(tap(r=>console.log(r)))
+  notificaciones$=this.notificacionesService.notificacion$.pipe(shareReplay(1),tap(r=>console.log(r)))
 
   constructor(private usuarioService: usuarioService,
     private router: Router,
     private modalService:NgbModal,
     private authService:AuthService,
-    private notificacionesService:NotificacionService ) {
+    private notificacionesService:NotificacionService,
+  private redService:RedService ) {
     (window as any).navegar = this.navegar.bind(this);
       this.usuarioService.obtenerMe()
       this.notificacionesService.obtenerNotificaciones()
@@ -75,13 +78,15 @@ export class HeaderComponent implements AfterViewInit {
     this.authService.logout();
   }
 
-  verMiSolicitud(solicitud:any){
+  verMiSolicitud(solicitud:MiSolicitud){
+    this.redService.obtenerMeRed(solicitud.id_red)
     this.router.navigate(['dashboard/panel-red/mis-solicitudes/ver-solicitud'],{queryParams:{
       idRed:solicitud.id_red,idSolicitud:solicitud.id
     }})
   }
 
-  verSolicitud(solicitud:any){
+  verSolicitud(solicitud:Solicitud){
+    this.redService.obtenerMeRed(solicitud.id_red)
     this.router.navigate(['dashboard/panel-red/solicitudes-recibidas/ver-solicitud'],{queryParams:{
       idRed:solicitud.id_red,idSolicitud:solicitud.id
     }})

@@ -1,3 +1,4 @@
+import { AuthService } from 'src/core/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
@@ -30,7 +31,8 @@ export class RedService {
 
   constructor(
     private http: HttpClient,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private authService:AuthService
   ) {}
 
   private getRedes() {
@@ -143,11 +145,12 @@ export class RedService {
   private getRedMe(idRed:number){
     return this.http
     .get(`${environment.apiUrl}${environment.endpoint.red.meRed}?idRed=${idRed}`)
-    .pipe(map((respuesta: any) => respuesta.data),tap(r=>console.log(r)));
+    .pipe(map((respuesta: any) => respuesta.data));
   }
 
 
   obtenerMeRed(idRed:number){
+    if(this.authService.getUserRole()!=0)
     this.getRedMe(idRed).pipe(take(1)).subscribe((meRed) => {
       this.meRedSubject.next(meRed);
     });

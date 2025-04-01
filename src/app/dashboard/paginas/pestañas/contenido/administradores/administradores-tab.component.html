@@ -5,14 +5,14 @@
     <!-- Alta -->
     <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()"><i class="bi bi-plus-circle me-2"></i>Alta</button>
     <!-- Alta -->
-    <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1">
+    <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" [(ngModel)]="busqueda" (ngModelChange)="updateFilter()">
     <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
   </div>
 </div>
 
 <ng-container *ngIf="(administradores$|async) as administradores">
-  <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-2" *ngIf="administradores.length > 0; else sinDatos">
-    <div class="col" *ngFor="let administrador of administradores">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-2" *ngIf="(administradores | filterBy: filter).length > 0; else sinDatos">
+    <div class="col" *ngFor="let administrador of administradores || [] | filterBy:filter">
       <div class="card">
         <div class="card-body">
           <div class="row g-0 sh-6">
@@ -28,10 +28,23 @@
                   </span>
                 </div>
                 <div class="d-flex">
-                  <button type="button" class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1" (click)="reiniciarPassword(administrador.id)"><i class="bi bi-key-fill"></i></button>
-                  <button type="button" class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1" (click)="suspender(administrador.id)">
+                  <button type="button"
+                    class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1"
+                    ngbTooltip="Reiniciar Contraseña"
+                    container="body"
+                    placement="bottom"
+                    (click)="reiniciarPassword(administrador.id)">
+                    <i class="bi bi-key-fill"></i>
+                  </button>
+                  <button type="button"
+                    class="btn btn-outline-primary btn-icon btn-icon-only btn-sm ms-1"
+                    ngbTooltip="Suspender Ingreso"
+                    container="body"
+                    placement="bottom"
+                    (click)="suspender(administrador.id)">
                     <i [ngClass]="administrador.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
                   </button>
+
                   <div class="btn-group">
                     <div class="dropdown">
                       <button class="btn btn-sm btn-icon btn-icon-only btn-outline-primary ms-1 mb-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

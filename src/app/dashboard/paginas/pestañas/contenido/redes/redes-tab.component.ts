@@ -18,7 +18,7 @@ import { EditarMiembrosComponent } from './editar-miembros/editar-miembros.compo
 export class RedesTabComponent{
 
   redCache = false
-  redes$ = this.redService.redes$
+  redes$ = this.redService.redes$.pipe(shareReplay(1))
   apiUrl = environment.fileUrl
   constructor(private redService:RedService,
     private activeRoute: ActivatedRoute,
@@ -48,7 +48,7 @@ export class RedesTabComponent{
 
   confirmarEliminar(red:Red){
     const modalEliminar = this.modalService.open(ConfirmarComponent,{backdrop:'static'})
-    modalEliminar.componentInstance.itemAEliminar = 'Red:'+ red.nombre + ', Anfitrion: '+ red.Anfitrion.nombre
+    modalEliminar.componentInstance.itemAEliminar = 'Red:'+ red.nombre + ', Anfitrion: '+ red.Anfitrion?.nombre
     modalEliminar.result.then(r=>{
       if(r)
         this.eliminarRed(red.id)
@@ -61,6 +61,26 @@ export class RedesTabComponent{
 
   verRed(idRed:number){
     this.router.navigate(['../panel-red'], { queryParams: { idRed: idRed }, relativeTo:this.activeRoute})
+  }
+
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { nombre: this.busqueda },
+        { porcentaje: this.busqueda },
+        { caracteristicas: this.busqueda },
+        {
+          Anfitrion: {
+            $or: [
+              { nombre: this.busqueda },
+              { cuit: this.busqueda }
+            ]
+          }
+        }
+      ]
+    };
   }
 
 }

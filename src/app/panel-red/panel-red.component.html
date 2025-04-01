@@ -1,7 +1,8 @@
 <div class="row gx-4 gy-5">
   <!-- Columna Izquierda -->
   <div class="col-12 col-xl-4 col-xxl-3">
-    <app-mi-colegio-columna [idRed]="idRed"></app-mi-colegio-columna>
+    <app-mi-colegio-columna [idRed]="idRed" *Roles="[1,2,3]"></app-mi-colegio-columna>
+    <app-mis-datos-columna *Roles="[0]"></app-mis-datos-columna>
   </div>
   <!-- Columna Izquierda End -->
 
@@ -29,7 +30,7 @@
                   </span>
                   <span class="badge bg-warning">
                     <i class="bi bi-star-fill me-2"></i>
-                    <span class="fw-bold">{{red.Anfitrion.nombre}}</span>
+                    <span class="fw-bold">{{red.Anfitrion?.nombre || 'Sin Anfitrion'}}</span>
                   </span>
 
 

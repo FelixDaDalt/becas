@@ -17,7 +17,6 @@ export class DarBajaSolicitudComponent implements OnInit{
   constructor(private fb:FormBuilder, private becaService:BecaService){
     this.resolverForm = this.fb.group({
       id_solicitud: [null, [Validators.required]], // Número requerido
-      id_resolucion: [3, [Validators.required]], // Número positivo
       baja_comentario: [null, [Validators.required]], // Cadena no vacía
     })
 
@@ -29,7 +28,7 @@ export class DarBajaSolicitudComponent implements OnInit{
 
   guardar(){
     if (this.resolverForm.valid && this.idRed) {
-      this.becaService.darBaja(this.idRed,this.resolverForm.value)
+      this.becaService.darBaja(this.idRed,this.resolverForm.value,false)
     }else{
       this.resolverForm.markAllAsTouched()
     }

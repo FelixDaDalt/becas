@@ -87,7 +87,11 @@ export const environment = {
       resolver:'/beca/resolver',
       desestimar:'/beca/desestimar',
       dar_baja:'/beca/dar-baja'
-    }
+    },
+    notificaciones:{
+      listado:'/notificacion/listado'
+    },
   }
+
 
 };

@@ -117,4 +117,9 @@ export class AltaAutorizadoComponent{
       }
     return formulario;
   }
+
+
+  cancelar(){
+    this.router.navigate(['../'],{relativeTo:this.activeRoute})
+  }
 }

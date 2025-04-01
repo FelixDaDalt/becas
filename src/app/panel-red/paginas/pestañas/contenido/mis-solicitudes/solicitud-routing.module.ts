@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'ver-solicitud',
     component: VerSolicitudComponent,
+  },
+  {
+    path: 'ver-solicitud',
+    component: VerSolicitudComponent,
   }
 ];
 

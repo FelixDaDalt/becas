@@ -8,6 +8,7 @@ export interface solicitud_detalle {
   alumno: Alumno
   baja:boolean
   detalle_baja?:Dettale_Baja
+  solicitado:Solicitado
 }
 export interface Dettale_Baja{
   usuario:Usuario,
@@ -36,6 +37,10 @@ export interface Resolucion_detalle{
 export interface Solicitante {
   colegio: Colegio
   usuario: Usuario
+}
+
+export interface Solicitado {
+  colegio: Colegio
 }
 
 export interface Colegio {

@@ -11,7 +11,7 @@ export interface Red{
   foto:string
   porcentaje:string
   caracteristicas:string
-  Anfitrion:colegio
+  Anfitrion?:colegio
 }
 
 interface colegio{

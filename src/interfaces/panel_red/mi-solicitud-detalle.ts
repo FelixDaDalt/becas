@@ -9,6 +9,7 @@ export interface mi_solicitud_detalle {
   alumno: Alumno
   baja:boolean
   detalle_baja?:Dettale_Baja
+
 }
 export interface Dettale_Baja{
   usuario:Usuario,
@@ -36,6 +37,7 @@ export interface Resolucion_detalle{
 
 export interface Solicitante {
   usuario: Usuario
+  pariente:string
 }
 
 export interface Colegio {

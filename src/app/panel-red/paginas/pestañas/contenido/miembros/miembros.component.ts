@@ -42,4 +42,30 @@ export class MiembrosComponent implements OnInit, OnDestroy{
     }
   }
 
+filter: any;
+busqueda: string = '';
+updateFilter(): void {
+  this.filter = {
+    $or: [
+      {
+        id_colegio_colegio: {
+          $or: [
+            { cuit: this.busqueda },
+            { nombre: this.busqueda },
+            { direccion_calle: this.busqueda },
+            { direccion_numero: this.busqueda },
+            { localidad: this.busqueda },
+            { provincia: this.busqueda },
+            { cp: this.busqueda },
+            { telefono: this.busqueda },
+            { url: this.busqueda },
+            { email: this.busqueda }
+          ]
+        }
+      }
+    ]
+  };
+}
+
+
 }

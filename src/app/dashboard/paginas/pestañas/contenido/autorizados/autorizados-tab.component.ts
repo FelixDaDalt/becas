@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { shareReplay } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 import { environment } from 'src/environments/environment';
 import { Usuario } from 'src/interfaces/usuario';
@@ -19,7 +20,7 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
 export class AutorizadosTabComponent{
   apiFile=environment.fileUrl
   cacheautorizados = false;
-  autorizados$=this.autorizadoService.autorizados$
+  autorizados$=this.autorizadoService.autorizados$.pipe(shareReplay(1))
 
   constructor(
     private autorizadoService:AutorizadoService,
@@ -77,6 +78,20 @@ export class AutorizadosTabComponent{
       if(r)
         this.autorizadoService.obtenerAutorizados()
     })
+  }
+
+  filter: any;
+  busqueda: string = '';
+  updateFilter() {
+    this.filter = {
+      $or: [
+        { dni: this.busqueda },
+        { nombre: this.busqueda },
+        { apellido: this.busqueda },
+        { telefono: this.busqueda },
+        { celular: this.busqueda }
+      ]
+    };
   }
 
 }

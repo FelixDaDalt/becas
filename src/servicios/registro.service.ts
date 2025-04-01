@@ -45,7 +45,6 @@ export class RegistroService {
   obtenerRegistrosAdmin(){
       this.getRegistrosAdmin().pipe(take(1)).subscribe(
         registros=>{
-          console.log(registros)
           this.registrosSubject.next(registros)
         })
   }

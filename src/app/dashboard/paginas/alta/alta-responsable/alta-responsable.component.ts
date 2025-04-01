@@ -128,4 +128,9 @@ export class AltaResponsableComponent implements OnInit{
       }
     return formulario;
   }
+
+
+  cancelar(){
+    this.router.navigate(['../'],{relativeTo:this.activeRoute})
+  }
 }

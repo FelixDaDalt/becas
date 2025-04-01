@@ -22,14 +22,11 @@ export class PestañasRedComponent implements OnInit{
 
   navegarA(ruta: string): void {
     if(this.idRed)
-    this.redService.obtenerMeRed(this.idRed)
-
-    // Navegar a la ruta especificada con queryParamsHandling 'merge'
-    this.router.navigate([ruta], {relativeTo:this.route, queryParamsHandling: 'merge' });
-  }
+      this.redService.obtenerMeRed(this.idRed)
+      this.router.navigate([ruta], {relativeTo:this.route, queryParamsHandling: 'merge' });
+    }
 
    isActive(ruta: string): boolean {
-    // Verifica si la ruta actual coincide con la ruta pasada
     return this.router.url.includes(ruta);
   }
 }

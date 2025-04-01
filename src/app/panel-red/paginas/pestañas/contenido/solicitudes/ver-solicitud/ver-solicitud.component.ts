@@ -17,7 +17,7 @@ export class VerSolicitudComponent implements OnInit{
     idRed?:number
     resolucion=false
     private queryParamsSubscription: Subscription | undefined;
-    detalle$ = this.becaService.solicitudDetalle$.pipe(tap(r=>console.log(r)),shareReplay(1))
+    detalle$ = this.becaService.solicitudDetalle$.pipe(shareReplay(1))
     apiFile=environment.fileUrl
 
     constructor(private becaService:BecaService,
@@ -47,5 +47,11 @@ export class VerSolicitudComponent implements OnInit{
 
     resolver(){
       this.resolucion = !this.resolucion
+    }
+
+    verColegio(idColegio:number){
+      this.router.navigate(['/dashboard/colegio'],{queryParams:{
+        id:idColegio
+      }})
     }
 }

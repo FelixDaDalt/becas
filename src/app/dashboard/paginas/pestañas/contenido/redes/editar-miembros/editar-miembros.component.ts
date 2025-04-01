@@ -23,7 +23,6 @@ export class EditarMiembrosComponent implements OnInit{
   @Input()red?:Red
   miembros = this.redService.colegioDisponibles$.pipe(tap(colegiosRed=>{
     if(colegiosRed){
-      console.log(colegiosRed)
       this.colegiosDisponibles = colegiosRed.disponibles
       this.colegiosMiembros = colegiosRed.miembros
     }

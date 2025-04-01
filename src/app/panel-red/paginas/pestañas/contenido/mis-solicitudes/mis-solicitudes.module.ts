@@ -8,9 +8,11 @@ import { MisSolicitudRoutingModule } from './solicitud-routing.module';
 import { VerSolicitudComponent } from './ver-solicitud/ver-solicitud.component';
 import { FormatDniCuitPipe } from "../../../../../../pipes/formatoDniCuit.pipe";
 import { DesestimarSolicitudComponent } from './ver-solicitud/desestimar-solicitud/desestimar-solicitud.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
 import { BotonCargandoComponent } from "../../../../../../standalone/boton-cargando/boton-cargando.component";
+import { DarBajaSolicitudComponent } from './ver-solicitud/dar-baja-solicitud/dar-baja-solicitud.component';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
 
@@ -19,7 +21,8 @@ import { BotonCargandoComponent } from "../../../../../../standalone/boton-carga
   declarations: [
     MisSolicitudesComponent,
     VerSolicitudComponent,
-    DesestimarSolicitudComponent
+    DesestimarSolicitudComponent,
+    DarBajaSolicitudComponent
   ],
   imports: [
     RoleDirective,
@@ -29,7 +32,9 @@ import { BotonCargandoComponent } from "../../../../../../standalone/boton-carga
     FormatDniCuitPipe,
     ReactiveFormsModule,
     ErrorFormularioComponent,
-    BotonCargandoComponent
+    BotonCargandoComponent,
+    FormsModule,
+    FilterPipeModule
 ]
 })
 export class MisSolicitudesModule { }

@@ -11,6 +11,9 @@ import { RedService } from 'src/servicios/red.service';
 })
 export class MisSolicitudesComponent {
 estados=[{
+  id:-1,
+  nombre:'Todas'
+},{
     id:0,
     nombre:'Pendientes'
   },{
@@ -30,7 +33,7 @@ estados=[{
     nombre:'Aprobadas'
   }]
 
-  active:number=0
+  active:number=-1
 
   miRed$ = this.redService.meRed$.pipe(shareReplay(1)).subscribe(
     red=>{
@@ -38,12 +41,12 @@ estados=[{
         this.idRed = red.misDatos.id_red
         this.idColegio = red.misDatos.id_colegio
         if(this.idRed)
-          this.becaService.obtenerMisSolicitudes(this.idRed,0)
+          this.becaService.obtenerMisSolicitudes(this.idRed,-1)
       }
     }
   )
 
-  listado$ = this.becaService.misSolicitudes$.pipe(shareReplay(1),tap(r=>console.log(r)))
+  listado$ = this.becaService.misSolicitudes$.pipe(shareReplay(1))
 
   idRed?:number
   idColegio?:number
@@ -74,4 +77,24 @@ estados=[{
       queryParamsHandling: 'merge' // Combinar con los parámetros existentes
     });
   }
+
+filter: any;
+busqueda: string = '';
+updateFilter() {
+  this.filter = {
+    $or: [
+      { solicitante: {
+        $or: [{ usuario: this.busqueda }]
+      }
+    },
+    { solicitud: {
+        $or: [
+          { colegio: this.busqueda },
+          { alumno: this.busqueda }
+        ]
+      }
+    }
+    ]
+  }
+}
 }

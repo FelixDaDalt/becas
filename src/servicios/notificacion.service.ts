@@ -25,7 +25,7 @@ export class NotificacionService implements OnDestroy {
   }
 
   private iniciarPolling() {
-    interval(60000)
+    interval(60000) // 1 minuto
       .pipe(
         switchMap(() => this.notificaciones()),
         takeUntil(this.destroy$)
