@@ -168,19 +168,8 @@
           <div *ngIf="currentStep === 3" formGroupName="personalizacion">
             <h5>Personalización</h5>
             <div class="row">
-              <div class="col-12 mb-4">
-                <label class="top-label">
-                  <div class="input-group">
-                    <span class="input-group-text bg-white"><i class="text-primary bi bi-globe"></i></span>
-                    <input class="form-control form-control-sm" formControlName="url" placeholder="Ingrese url" (blur)="comprobarUrl()">
-                  </div>
-                  <span class="ms-5 text-primary">Url</span>
-                  <app-error-formulario [control]="wizardForm.get('personalizacion.url')" [checkDisponibilidad]="true"></app-error-formulario>
-                </label>
-              </div>
 
               <div class="col-12 mb-5">
-
                 <div class="col-12 mb-3">
                   <div class="input-group">
                     <span class="input-group-text bg-white"><i class="text-primary bi bi-image"></i></span>

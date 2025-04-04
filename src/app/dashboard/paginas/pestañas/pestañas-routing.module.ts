@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PestañasComponent } from './pestañas.component';
 import { RoleGuard } from 'src/core/roleGuard';
 
+// ACA RUTAS DE LAS PESTAÑAS //
 const routes: Routes = [
   {
     path: '',
@@ -29,12 +30,12 @@ const routes: Routes = [
       data: { roles: [0,1] },
       loadChildren: () => import('./contenido/responsables/responsables-tab.module').then(m => m.ResponsablesTabModule)
     },
-    {
-      path:'delegados',
-      canActivate: [RoleGuard],
-      data: { roles: [1,2] },
-      loadChildren: () => import('./contenido/delegados/delegados-tab.module').then(m => m.DelegadosTabModule)
-    },
+    // {
+    //   path:'delegados',
+    //   canActivate: [RoleGuard],
+    //   data: { roles: [1,2] },
+    //   loadChildren: () => import('./contenido/delegados/delegados-tab.module').then(m => m.DelegadosTabModule)
+    // },
     {
       path:'autorizados',
       canActivate: [RoleGuard],

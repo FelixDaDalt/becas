@@ -12,12 +12,10 @@ export interface Colegio {
   provincia: string;
   cp: string;
   telefono: string;
-  url: string;
   email?: string | null;
   id_zona_zona_localidad?:zona_localidad
   usuarios?: Usuario[];
   suspendido?: boolean
-  terminos?:boolean
   anfitrion?:number
   foto?:string
   id_zona?:number

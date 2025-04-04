@@ -17,7 +17,7 @@ import { shareReplay, tap } from 'rxjs';
 export class ColegiosTabComponent{
   apiFile=environment.fileUrl
   colegioCache = false
-  colegios$ = this.colegioService.colegios$.pipe(shareReplay(1))
+  colegios$ = this.colegioService.colegios$.pipe(shareReplay(1),tap(r=>console.log(r)))
 
   constructor(private colegioService:ColegioService,
     private activeRoute: ActivatedRoute,
@@ -78,7 +78,6 @@ export class ColegiosTabComponent{
         { provincia: this.busqueda },
         { cp: this.busqueda },
         { telefono: this.busqueda },
-        { url: this.busqueda },
         { email: this.busqueda }
       ]
     };

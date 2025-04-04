@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, map, Observable, shareReplay, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Autorizado } from 'src/interfaces/autorizado';
 import { Usuario } from 'src/interfaces/usuario';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Usuario } from 'src/interfaces/usuario';
 })
 export class AutorizadoService {
 
-  private autorizadosSubject = new BehaviorSubject<Usuario[]>([])
+  private autorizadosSubject = new BehaviorSubject<Autorizado[]>([])
   autorizados$ = this.autorizadosSubject.asObservable().pipe(shareReplay(1))
 
   constructor(

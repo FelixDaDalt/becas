@@ -72,7 +72,6 @@ export class AltaColegioComponent  {
       }),
       // Paso 4: Personalización
       personalizacion: this.fb.group({
-        url: ['', Validators.required],
         logo: [null]
       }),
       // Paso 5: Responsable
@@ -153,23 +152,6 @@ export class AltaColegioComponent  {
     }
   }
 
-  comprobarUrl(){
-    const url = this.wizardForm.get('personalizacion.url')?.value
-    if(url){
-      this.colegioService.comprobarUrl(url).pipe(
-        take(1)
-      ).subscribe(
-        disponible => {
-          if (!disponible) {
-            this.wizardForm.get('personalizacion.url')?.setErrors({ noDisponible: true });
-          }
-          this.wizardForm.get('personalizacion.url')?.markAsTouched()
-        }
-      )
-    }else{
-      this.wizardForm.get('personalizacion.url')?.markAsTouched()
-    }
-  }
 
   comprobarCuit(){
     const cuit = this.wizardForm.get('datosPrincipales.cuit')?.value
@@ -216,7 +198,6 @@ export class AltaColegioComponent  {
     formData.append('colegio[cp]', ubicacion.cp);
     formData.append('colegio[telefono]', contacto.telefono);
     formData.append('colegio[email]', contacto.email);
-    formData.append('colegio[url]', personalizacion.url);
     formData.append('colegio[id_zona]', ubicacion.id_zona);
 
 

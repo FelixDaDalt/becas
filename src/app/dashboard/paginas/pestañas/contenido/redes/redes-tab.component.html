@@ -21,83 +21,64 @@
 
       <!--ADMINISTRADORES-->
       <ng-container *Roles="[0]">
-        <div class="row row-cols-1 row-cols-md-3 row-cols-xxl-3 g-2 mb-5" *ngIf="(redes.redes | filterBy: filter).length > 0; else sinDatosAdmin">
-            <div class="col" *ngFor="let red of redes.redes || [] | filterBy:filter">
-              <div class="card sh-20 hover-img-scale-up hover-reveal">
-                <!-- <span class="badge position-absolute top-0 end-0 m-2"
-                style="cursor: pointer;z-index: 9999;"
-                [ngClass]="{
-                  'bg-danger': red.suspendido,
-                  'bg-success': !red.suspendido
-                }">{{red.suspendido?'Suspendido':'Activo'}}</span> -->
-                <img *ngIf="red.foto" [src]="apiUrl+red.foto" class="card-img h-100 scale red-logo" alt="card image" />
-                <div class="card-img-overlay d-flex align-items-end reveal-content">
-                  <div class="row g-0">
-                    <div class="col pe-2">
+        <table class="table table-hover table-bordered table-striped" *ngIf="(redes.redes | filterBy: filter).length > 0; else sinDatosAdmin">
+          <thead class="table-primary">
+            <tr>
+              <th>Logo</th>
+              <th>Nombre</th>
+              <th>Anfitrión</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let red of redes.redes || [] | filterBy:filter">
+              <td class="text-center align-middle">
+                <img *ngIf="red.foto" [src]="apiUrl+red.foto" alt="Logo" style="height: 50px; object-fit: contain;" />
+              </td>
+              <td class="align-middle">{{ red.nombre }}</td>
+              <td class="align-middle">{{ red.Anfitrion?.nombre || 'Sin Anfitrion' }}</td>
+              <td class="text-center align-middle">
+                <button
+                  class="btn btn-icon btn-sm btn-light"
+                  ngbTooltip="Eliminar Red"
+                  container="body"
+                  placement="bottom"
+                  (click)="confirmarEliminar(red)">
+                  <i class="bi bi-trash-fill text-primary"></i>
+                </button>
 
-                        <h5 class="heading text-white mb-1 fw-bold text-shadow">{{red.nombre}}</h5>
+                <button
+                  class="btn btn-icon btn-sm btn-light ms-2"
+                  ngbTooltip="Editar Red"
+                  container="body"
+                  placement="bottom"
+                  (click)="editar(red)">
+                  <i class="bi bi-pencil-fill text-primary"></i>
+                </button>
 
+                <button
+                  class="btn btn-icon btn-sm btn-light ms-2"
+                  ngbTooltip="Editar Miembros"
+                  container="body"
+                  placement="bottom"
+                  (click)="editarMiembros(red)">
+                  <i class="bi bi-building-fill-add text-primary"></i>
+                </button>
 
-                      <div class="d-inline-block">
-                        <div class="text-white"><span>{{red.Anfitrion?.nombre || 'Sin Anfitrion'}}</span></div>
-                      </div>
-
-                      <div class="col-auto me-auto pt-2">
-                        <button
-                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1"
-                        ngbTooltip="Eliminar Red"
-                        container="body"
-                        placement="bottom"
-                        type="button"
-                        (click)="confirmarEliminar(red)">
-                          <i class="bi bi-trash-fill text-primary"></i>
-                        </button>
-
-                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                        type="button"
-                        ngbTooltip="Editar Red"
-                        container="body"
-                        placement="bottom"
-                        (click)="editar(red)">
-                          <i class="bi bi-pencil-fill text-primary"></i>
-                        </button>
-
-                        <button class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                        type="button"
-                        ngbTooltip="Editar Miembros"
-                        container="body"
-                        placement="bottom"
-                        (click)="editarMiembros(red)">
-                          <i class="bi bi-building-fill-add text-primary"></i>
-                        </button>
-
-
-                        <!-- <button
-                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                        type="button"
-                        (click)="suspenderred(red.id)"
-                        >
-                          <i class="text-primary" [ngClass]="red.suspendido == true ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-                        </button> -->
-
-                        <button
-                        class="btn btn-icon btn-sm btn-icon-only btn-foreground mb-1 ms-2"
-                        type="button"
-                        ngbTooltip="Ver Red"
-                        container="body"
-                        placement="bottom"
-                        (click)="verRed(red.id)"
-                        >
-                          <i class="text-primary bi bi-eye-fill"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
+                <button
+                  class="btn btn-icon btn-sm btn-light ms-2"
+                  ngbTooltip="Ver Red"
+                  container="body"
+                  placement="bottom"
+                  (click)="verRed(red.id)">
+                  <i class="bi bi-eye-fill text-primary"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </ng-container>
+
 
       <!--RESTO USUARIOS-->
       <ng-container *Roles="[1,2,3]">

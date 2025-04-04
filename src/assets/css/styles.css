@@ -103,6 +103,9 @@ Table of Contents
 * Root breakpoints and Sass functions.
 *
 */
+.btn[ngbdropdowntoggle]::after {
+  display: none !important;
+}
 
 
 a{

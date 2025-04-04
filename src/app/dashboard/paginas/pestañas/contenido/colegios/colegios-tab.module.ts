@@ -8,7 +8,7 @@ import { ErrorFormularioComponent } from "../../../../../../standalone/error-for
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
@@ -27,7 +27,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     NgSelectModule,
     NgbTooltipModule,
     FilterPipeModule,
-    FormsModule
+    FormsModule,
+    NgbDropdownModule
 ]
 })
 export class ColegiosTabModule { }

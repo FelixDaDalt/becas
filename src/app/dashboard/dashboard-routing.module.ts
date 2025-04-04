@@ -5,6 +5,8 @@ import { DasboardComponent } from './dasboard.component';
 import { RoleGuard } from 'src/core/roleGuard';
 import { SuspendidoGuard } from 'src/core/suspendidoGuard';
 
+// ACA LAS RUTAS PARA DAR DE ALTA //
+
 const routes: Routes = [
   {
     path: '',
@@ -33,12 +35,12 @@ const routes: Routes = [
       data: { roles: [0] },
       loadChildren: () => import('./paginas/alta/alta-responsable/alta-responsable.module').then(m => m.AltaResponsableModule)
     },
-    {
-      path:'alta-delegado',
-      canActivate:[RoleGuard],
-      data: { roles: [1] },
-      loadChildren: () => import('./paginas/alta/alta-delegado/alta-delegado.module').then(m => m.AltaDelegadoModule)
-    },
+    // {
+    //   path:'alta-delegado',
+    //   canActivate:[RoleGuard],
+    //   data: { roles: [1] },
+    //   loadChildren: () => import('./paginas/alta/alta-delegado/alta-delegado.module').then(m => m.AltaDelegadoModule)
+    // },
     {
       path:'alta-autorizado',
       canActivate:[RoleGuard],

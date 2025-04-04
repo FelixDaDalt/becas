@@ -18,7 +18,7 @@ import { EditarMiembrosComponent } from './editar-miembros/editar-miembros.compo
 export class RedesTabComponent{
 
   redCache = false
-  redes$ = this.redService.redes$.pipe(shareReplay(1))
+  redes$ = this.redService.redes$.pipe(shareReplay(1),tap(r=>console.log(r)))
   apiUrl = environment.fileUrl
   constructor(private redService:RedService,
     private activeRoute: ActivatedRoute,

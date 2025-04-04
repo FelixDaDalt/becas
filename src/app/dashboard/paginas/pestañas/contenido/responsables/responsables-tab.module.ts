@@ -4,7 +4,7 @@ import { ResponsablesTabComponent } from './responsables-tab.component';
 import { RouterModule } from '@angular/router';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
 import { RoleDirective } from 'src/directiva/role.directiva';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FormsModule } from '@angular/forms';
 
@@ -21,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     ]),
     NgbTooltipModule,
     FilterPipeModule,
-    FormsModule
+    FormsModule,
+    NgbDropdownModule
   ]
 })
 export class ResponsablesTabModule { }

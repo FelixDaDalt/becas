@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AdministradoresTabComponent } from './administradores-tab.component';
 import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FormsModule } from '@angular/forms';
 
@@ -19,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     ]),
     NgbTooltipModule,
     FilterPipeModule,
-    FormsModule
+    FormsModule,
+    NgbDropdownModule,
   ]
 })
 export class AdministradoresTabModule { }
