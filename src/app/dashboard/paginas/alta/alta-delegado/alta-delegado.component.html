@@ -1,4 +1,4 @@
-<h2 class="small-title"></h2>
+<!-- <h2 class="small-title"></h2>
 
 <div class="card">
   <img src="/assets/img/background/blue.jpg" class="card-img-top" alt="card image" style="height: 75px;">
@@ -12,7 +12,7 @@
       <div class="card-header border-0 pb-0">
         <ul class="nav nav-tabs justify-content-center">
           <li *ngFor="let step of steps; let i = index"
-              class="nav-item" (click)="currentStep = i" [class.active]="currentStep === i"> <!-- (click)="currentStep = i"  -->
+              class="nav-item" (click)="currentStep = i" [class.active]="currentStep === i">
             <a class="nav-link text-center" [class.active]="currentStep === i">
               <div class="mb-1 title d-none d-sm-block">{{ step.nombre }}</div>
               <div class="text-small description d-none d-md-block">{{step.descripcion}}</div>
@@ -23,7 +23,7 @@
       <div class="card-body">
         <form [formGroup]="wizardForm">
 
-          <!-- Paso 1: delegado -->
+
           <div *ngIf="currentStep === 0" formGroupName="delegado">
             <h5>Delegado</h5>
             <div class="row">
@@ -80,7 +80,7 @@
             </div>
           </div>
 
-          <!-- Paso 2: delegado  -->
+
           <div *ngIf="currentStep === 1" formGroupName="acceso">
             <h5>Acceso</h5>
             <div class="row">
@@ -120,4 +120,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

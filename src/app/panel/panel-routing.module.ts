@@ -19,6 +19,10 @@ const routes: Routes = [
       path:'panel-red',
       loadChildren: () => import('../panel-red/panel-red.module').then(m => m.PanelRedModule)
     },
+    {
+      path:'ver-colegio',
+      loadChildren: () => import('../ver-colegio/ver-colegio.module').then(m => m.VerColegioModule)
+    },
   ]
   }
 ];

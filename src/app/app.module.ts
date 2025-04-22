@@ -14,6 +14,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 registerLocaleData(localeEs, 'es');
@@ -30,7 +31,8 @@ registerLocaleData(localeEs, 'es');
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     EstructuraModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxDatatableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

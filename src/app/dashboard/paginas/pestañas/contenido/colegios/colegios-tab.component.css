@@ -1,20 +1,45 @@
-.colegio-logo {
-  object-fit: contain !important;
-}
-
-.text-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra suave */
-}
-
-.card:hover .card-img {
-  filter: blur(4px); /* Aplicar desenfoque a la imagen */
-}
-
-.text-white span{
-  font-size: 12px;
-}
 
 .ngb-tooltip {
   z-index: 9999999 !important; /* Asegura que esté por encima de todo */
 }
 
+
+.nombre-con-fondo {
+  position: relative;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.5); /* 👈 fondo semitransparente encima */
+  background-blend-mode: lighten; /* 👈 combina el color y la imagen */
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nombre-texto {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Nuevo: Badge Estado */
+.badge-estado {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 0.75rem;
+  padding: 3px 7px;
+  border-radius: 10px;
+  color: white;
+}

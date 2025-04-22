@@ -12,94 +12,87 @@
   </div>
 
   <!-- Responsive Horizontal Start -->
-  <div class="col-12 mb-5">
-    <ng-container *ngIf="listado$ | async as becas; else sinDatos">
-      <ng-container *ngIf="(becas | filterBy: filter).length>0;else sinDatos">
-        <section class="scroll-section" id="responsiveHorizontal">
 
-          <div class="scroll-out">
-            <div class="scroll-by-count" data-count="10">
-              <div class="card mb-2" *ngFor="let beca of becas || [] | filterBy: filter"
-              [ngStyle]="{
-                'background-color': beca.colegio.borrado ? '#FFF3F3' :
-                (idColegio == beca.colegio.id ? '#FFFCF3' : '')
-              }">
-                <div class="row g-0 sh-10" >
-                  <div class="col-auto h-100">
-                    <span class="badge rounded-pill bg-warning me-1 position-absolute s-n2 t-0" *ngIf="idColegio ==  beca.colegio.id">publicada</span>
-                    <span class="badge rounded-pill bg-danger me-1 position-absolute s-n2 t-0" *ngIf="beca.colegio.borrado">COLEGIO BORRADO</span>
-                    <img [src]="apiFile+beca.colegio.foto" alt="alternate text" class="card-img card-img-horizontal sw-11" />
+  <ng-container *ngIf="listado$ | async as becas; else sinDatos">
+    <ng-container *ngIf="(becas | filterBy: filter).length>0;else sinDatos">
+      <div class="card h-100 shadow-sm border-0 rounded-3 d-flex flex-column">
+        <div class="container my-4 ps-4 pe-4">
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-lg-3" *ngFor="let beca of becas | filterBy: filter">
+
+              <div class="card h-100 shadow-sm border-0 rounded-3"
+                [ngStyle]="{
+                  'background-color': beca.colegio.borrado ? '#FFF3F3' : (idColegio == beca.colegio.id ? '#FFFCF3' : 'white')
+                }">
+
+                <!-- Imagen -->
+                <div class="position-relative">
+                  <img [src]="apiFile + beca.colegio.foto" class="card-img-top rounded-top-3" alt="Colegio"
+                    style="height: 100px; object-fit: cover;">
+
+                  <!-- Publicada o Borrado -->
+                  <span class="badge bg-danger position-absolute top-0 end-0 m-2" *ngIf="beca.colegio.borrado">Borrado</span>
+
+                  <!-- Disponible / No disponible (nuevo) -->
+                  <span *ngIf="beca.disponible > 0" class="badge bg-success position-absolute top-0 start-0 m-2 text-uppercase">Disponible</span>
+                  <span *ngIf="beca.disponible <= 0" class="badge bg-danger position-absolute top-0 start-0 m-2 text-uppercase">Agotada</span>
+                </div>
+
+                <!-- Cuerpo -->
+                <div class="card-body d-flex flex-column p-2">
+                  <h6 class="card-title text-primary mb-1" style="font-size: 1rem; cursor: pointer;" (click)="verColegio(beca.colegio.id)" >{{ beca.colegio.nombre }}</h6>
+                  <p class="card-subtitle mb-2 text-muted small text-truncate"><i class="bi bi-person-vcard-fill me-1"></i> {{beca.usuario.apellido }}, {{ beca.usuario.nombre }}</p>
+
+                  <div class="mb-2 small">
+                    <div><strong>{{ beca.disponible}} solicitudes disponibles</strong> · <p class="text-muted"><i class="bi bi-clock me-2"></i>{{ beca.fecha_hora | date: "dd/MM HH:mm 'hs'" }}</p></div>
                   </div>
-                  <div class="col">
-                    <div class="card-body pt-2 pb-0 h-100">
-                      <div class="row g-0 h-100 align-content-center">
-                        <!-- Colegio y usuario -->
-                        <a
-                          href="#"
-                          class="col-12 col-sm-4 col-lg-4 d-flex flex-column mb-lg-0 pe-lg-3"
-                        >
-                          <div class="lh-1">{{beca.colegio.nombre}}</div>
-                          <div class="text-small text-muted text-truncate">
-                            {{beca.usuario.apellido}}, {{beca.usuario.nombre}}
-                          </div>
-                        </a>
 
-                        <!-- Fecha y hora -->
-                        <div
-                          class="col-12 col-sm-3 col-lg-3 d-flex flex-column mb-lg-0 align-items-lg-end pe-lg-3"
-                        >
-                          <div class="lh-1 text-alternate small-text">
-                            {{beca.fecha_hora |  date: "dd/MM HH:mm 'hs'" }}
-                          </div>
-                          <div class="text-muted text-small">Actualizado</div>
-                        </div>
-
-                        <!-- Cantidad -->
-                        <div
-                          class="col-5 col-sm-2 col-lg-2 d-flex flex-column mb-lg-0 align-items-lg-end pe-lg-3"
-                        >
-                          <div class="lh-1 text-alternate small-text">{{beca.disponible}}</div>
-                          <div class="text-muted text-small">Disponible</div>
-                        </div>
-
-                        <!-- Disponible -->
-                        <div
-                          class="col-5 col-sm-2 col-lg-2 d-flex flex-column mb-lg-0 align-items-lg-end"
-                        >
-                          <div class="text-muted text-small">
-                            <span class="badge bg-outline-tertiary text-uppercase" *ngIf="beca.disponible>0">Disponible</span>
-                            <span class="badge bg-outline-danger text-uppercase" *ngIf="beca.disponible<=0">No Disponible</span>
-                          </div>
-                        </div>
-
-                        <!-- Botón Solicitar (condicional) -->
-                        <div
-                          class="col-2 col-sm-1 col-lg-1 d-flex flex-column align-items-lg-end"
-                          *ngIf="idColegio != beca.colegio.id"
-                        >
-                        <ng-container *Roles="[1,2,3]">
-                          <button *ngIf=" derechoDisponible"
-                            class="btn btn-icon btn-icon-only btn-primary mb-1"
+                  <div class="mt-auto" *ngIf="idColegio != beca.colegio.id; else suPublicacion">
+                    <ng-container *Roles="[1,2,3]">
+                      <ng-container *ngIf="derechoDisponible && derechoDisponible>0;else noDisponible">
+                        <ng-container *ngIf="beca.disponible > 0; else noSolicitudes">
+                          <button
+                            class="btn btn-primary btn-sm w-100"
                             type="button"
                             (click)="solicitar(beca)"
-                            [disabled]="beca.disponible<=0 || derechoDisponible<=0"
-                          >
-                            <i class="bi bi-send-check-fill"></i>
+                            [disabled]="beca.disponible <= 0 || derechoDisponible <= 0">
+                            Solicitar
                           </button>
                         </ng-container>
-                        </div>
-                      </div>
-
-                    </div>
+                      </ng-container>
+                    </ng-container>
                   </div>
+
+                  <ng-template #noDisponible>
+                    <div class="btn btn-danger btn-sm w-100 no-hover">
+                      <i class="bi bi-exclamation-circle me-1"></i> Sin solicitudes
+                    </div>
+                  </ng-template>
+
+                  <!-- Mensaje: Sin vacantes -->
+                  <ng-template #noSolicitudes>
+                    <div class="btn btn-warning btn-sm w-100 no-hover">
+                      <i class="bi bi-x-circle me-1"></i> Sin vacantes
+                    </div>
+                  </ng-template>
+
+                  <!-- Mensaje: Beca propia -->
+                  <ng-template #suPublicacion>
+                    <div class="btn btn-secondary btn-sm w-100 no-hover">
+                      <i class="bi bi-lock-fill me-1"></i> Beca propia
+                    </div>
+                  </ng-template>
                 </div>
+
               </div>
+
             </div>
           </div>
-        </section>
-      </ng-container>
+        </div>
+      </div>
     </ng-container>
-  </div>
+  </ng-container>
+
   <!-- Responsive Horizontal End -->
 
 </div>

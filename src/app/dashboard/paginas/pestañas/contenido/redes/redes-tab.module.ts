@@ -10,8 +10,9 @@ import { BotonCargandoComponent } from "../../../../../../standalone/boton-carga
 import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
 import { EditarMiembrosComponent } from './editar-miembros/editar-miembros.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -33,7 +34,9 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     ErrorFormularioComponent,
     NgbTooltipModule,
     FormsModule,
-    FilterPipeModule
+    FilterPipeModule,
+    NgxDatatableModule,
+    NgbDropdownModule
 ]
 })
 export class RedesTabModule { }

@@ -1,0 +1,21 @@
+.no-hover {
+  pointer-events: none; /* No clickeable */
+  background-color: #ffc107; /* Color normal de btn-warning */
+  color: #212529; /* Color de texto normal */
+  box-shadow: none !important; /* Saca el efecto de click */
+  transition: none !important; /* Saca la transición suave */
+}
+
+.no-hover:hover,
+.no-hover:focus,
+.no-hover:active {
+  background-color: #ffc107 !important; /* Fijo, sin cambio */
+  color: #212529 !important; /* Fijo, sin cambio */
+}
+
+.card-body {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

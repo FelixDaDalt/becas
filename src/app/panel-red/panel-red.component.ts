@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, Subscription, take, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Red } from 'src/interfaces/red';
 import { RedService } from 'src/servicios/red.service';
+import { RoleDirective } from 'src/directiva/role.directiva';
 
 @Component({
   selector: 'app-panel-red',
@@ -12,10 +13,12 @@ import { RedService } from 'src/servicios/red.service';
 })
 export class PanelRedComponent implements OnInit, OnDestroy{
 
+  @ViewChild(RoleDirective) roleDirective!: RoleDirective;
   private queryParamsSubscription: Subscription | undefined;
   idRed = null
   red$:Observable<Red | null>=of(null)
   apiFile=environment.fileUrl
+  rolActual: number = 0;
   constructor(private redService:RedService,
     private route:ActivatedRoute,
     private router:Router){
@@ -34,6 +37,15 @@ export class PanelRedComponent implements OnInit, OnDestroy{
 
 
   });
+
+  setTimeout(() =>
+    this.roleDirective.currentRole.pipe(take(1)).subscribe(
+      (rol) => {
+        console.log(rol)
+        if(rol)
+        this.rolActual = rol
+      }
+    ));
   }
 
 ngOnDestroy(): void {
@@ -41,4 +53,6 @@ ngOnDestroy(): void {
     this.queryParamsSubscription.unsubscribe();
   }
 }
+
+
 }

@@ -40,53 +40,68 @@
       </div>
 
 
-      <!-- Encabezados -->
-      <div class="card mb-2 bg-transparent no-shadow d-none d-md-block sh-3">
-        <div class="card-body pt-0 pb-0 h-100">
-          <div class="row g-0 h-100 align-items-center">
-            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">ESTADO</div>
-            <div class="col-6 col-md-3 text-alternate text-medium text-muted text-small">FECHA</div>
-            <div class="col-6 col-md-3 text-alternate text-medium text-muted text-small">USUARIO</div>
-            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">AL COLEGIO</div>
-            <div class="col-6 col-md-2 text-alternate text-medium text-muted text-small">ALUMNO</div>
-          </div>
-        </div>
-      </div>
 
       <!-- Datos -->
       <div class="scroll-out" *ngIf="listado$ | async as listado">
         <ng-container *ngIf="(listado | filterBy: filter).length>0;else sinDatos">
-          <div class="scroll-by-count" data-count="10">
-            <div class="card mb-2 sh-19 sh-md-8" *ngFor="let solicitud of listado || [] | filterBy: filter">
-              <div class="card-body pt-0 pb-0 h-100">
-                <div class="row g-0 h-100 align-items-center" style="cursor: pointer;" (click)="verSolicitud(solicitud)">
-                  <div class="col-6 col-md-2 text-alternate">
-                    <span
-                      class="badge text-uppercase"
-                      [ngClass]="{
-                        'bg-outline-primary': solicitud.estado.id === 0,
-                        'bg-outline-secondary': solicitud.estado.id === 1,
-                        'bg-outline-success': solicitud.estado.id === 5,
-                        'bg-outline-danger': solicitud.estado.id === 2,
-                        'bg-outline-warning': solicitud.estado.id === 3,
-                        'bg-outline-dark': solicitud.estado.id === 4,
-                        'bg-danger': solicitud.estado.id === 6,
-                      }"
-                    >
-                      {{ solicitud.estado.nombre }}
-                    </span>
-                  </div>
-                  <div class="col-6 col-md-3 text-alternate">{{ solicitud.fecha | date: 'dd/MM/yyyy HH:mm' }} hs</div>
-                  <div class="col-6 col-md-3 text-alternate text-truncate">
-                    {{ solicitud.solicitante.usuario }}
-                  </div>
-                  <div class="col-6 col-md-2 text-alternate text-truncate" >{{ solicitud.solicitud.colegio }}</div>
-                  <div class="col-6 col-md-2 text-alternate text-truncate" >{{ solicitud.solicitud.alumno }}</div>
+           <ngx-datatable
+            class="bootstrap"
+            [rows]="listado | filterBy: filter"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [rowHeight]="'auto'"
+            [limit]="10">
 
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- Estado -->
+          <ngx-datatable-column name="Estado" [flexGrow]="1" prop="estado.nombre" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span
+                class="badge text-uppercase"
+                [ngClass]="{
+                  'bg-outline-primary': row.estado.id === 0,
+                  'bg-outline-secondary': row.estado.id === 1,
+                  'bg-outline-success': row.estado.id === 5,
+                  'bg-outline-danger': row.estado.id === 2,
+                  'bg-outline-warning': row.estado.id === 3,
+                  'bg-outline-dark': row.estado.id === 4,
+                  'bg-danger': row.estado.id === 6
+                }">
+                {{ row.estado.nombre }}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Fecha -->
+          <ngx-datatable-column name="Fecha" [flexGrow]="2" prop="fecha" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.fecha | date: 'dd/MM/yyyy HH:mm' }} hs
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Usuario solicitante -->
+          <ngx-datatable-column name="Responsable" *Roles="[1,2]" [flexGrow]="2" prop="solicitante.usuario" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.solicitante.usuario }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Colegio solicitado -->
+          <ngx-datatable-column name="Colegio Solicitante" [flexGrow]="2" prop="solicitud.colegio" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.solicitud.colegio }}
+            </ng-template>
+          </ngx-datatable-column>
+
+
+          <!-- Alumno -->
+          <ngx-datatable-column name="Alumno" [flexGrow]="2" prop="solicitud.alumno" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.solicitud.alumno }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          </ngx-datatable>
         </ng-container>
       </div>
     </section>

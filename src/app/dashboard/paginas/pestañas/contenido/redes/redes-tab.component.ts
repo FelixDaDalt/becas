@@ -48,7 +48,7 @@ export class RedesTabComponent{
 
   confirmarEliminar(red:Red){
     const modalEliminar = this.modalService.open(ConfirmarComponent,{backdrop:'static'})
-    modalEliminar.componentInstance.itemAEliminar = 'Red:'+ red.nombre + ', Anfitrion: '+ red.Anfitrion?.nombre
+    modalEliminar.componentInstance.itemAEliminar = 'Red:'+ red.nombre + ', Patrocinador: '+ red.Anfitrion?.nombre
     modalEliminar.result.then(r=>{
       if(r)
         this.eliminarRed(red.id)

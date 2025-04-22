@@ -1,0 +1,28 @@
+.accordion-item {
+  border-radius: 0.5rem; /* Bordes redondeados */
+  border: 1px solid #dee2e6; /* Bordes suaves */
+  overflow: hidden;
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Sombrita leve */
+}
+
+.accordion-button {
+  background-color: #f8f9fa; /* Fondo clarito del botón */
+  font-size: 0.95rem; /* Letra un poquito más chica */
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e9ecef; /* Fondo un poco más oscuro cuando está abierto */
+  color: #0d6efd; /* Texto azul cuando está abierto */
+}
+
+.accordion-body {
+  background-color: #fdfdfe; /* Fondo muy clarito */
+  font-size: 0.85rem; /* Texto más pequeño en el cuerpo */
+}
+
+.list-group-item {
+  background-color: transparent; /* Sin fondo feo */
+  border: none; /* Sin borde extra */
+  padding-left: 0;
+}

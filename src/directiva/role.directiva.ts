@@ -1,6 +1,6 @@
 // role.directive.ts
 import { Directive, ElementRef, EventEmitter, Input, Optional, Output, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AuthService } from 'src/core/auth.service';
 
 
@@ -29,6 +29,7 @@ export class RoleDirective {
   }
 
   @Output() accessGranted = new BehaviorSubject<boolean>(false);  // Evento para emitir el acceso
+  @Output() currentRole = new BehaviorSubject<number | null>(null);
 
   constructor(
     @Optional() private templateRef: TemplateRef<any>,
@@ -40,6 +41,10 @@ export class RoleDirective {
   private evaluateAccess(): void {
     this.authService.currentUser.subscribe(usuario => {
       const hasAccess = usuario && this.allowedRoles.includes(usuario.id_rol);
+
+      if (usuario) {
+          this.currentRole.next(usuario.id_rol);  // 🚀 Emitimos el rol actual
+      }
 
       if(hasAccess)
         this.accessGranted.next(hasAccess);

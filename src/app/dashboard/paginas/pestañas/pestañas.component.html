@@ -3,6 +3,10 @@
 <!--Pestañas-->
 <ul class="nav nav-tabs responsive-tabs mb-2" role="tablist" >
 
+  <li class="nav-item me-1" role="presentation" *Roles="[0]">
+    <a class="nav-link" routerLink="dashboard" routerLinkActive="active" role="tab" ><i class="bi bi-diagram-2-fill me-1"></i>Dashboard</a>
+  </li>
+
   <li class="nav-item me-1" role="presentation" *Roles="[0,1,2,3]">
     <a class="nav-link" routerLink="redes" routerLinkActive="active" role="tab" ><i class="bi bi-diagram-2-fill me-1"></i>Redes</a>
   </li>
@@ -25,11 +29,15 @@
 
   <!-- <li class="nav-item me-1" role="presentation" *Roles="[1,2]">
     <a class="nav-link" routerLink="delegados" routerLinkActive="active" role="tab"><i class="bi bi-person-lines-fill me-1"></i>Delegados</a>
-  </li>
+  </li>-->
 
   <li class="nav-item me-1" role="presentation" *Roles="[1,2]">
     <a class="nav-link" routerLink="autorizados" routerLinkActive="active" role="tab"><i class="bi bi-person-fill-check me-1"></i>Autorizados</a>
-  </li> -->
+  </li>
+
+  <li class="nav-item me-1" role="presentation" *Roles="[0]">
+    <a class="nav-link" routerLink="tareas" routerLinkActive="active" role="tab"><i class="bi-tools me-1"></i>Tareas</a>
+  </li>
 
   <li class="nav-item me-1" role="presentation" *Roles="[0]">
     <a class="nav-link" routerLink="registros" routerLinkActive="active" role="tab"><i class="bi bi-list-task me-1"></i>Registros</a>

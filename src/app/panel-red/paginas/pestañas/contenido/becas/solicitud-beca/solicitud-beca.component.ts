@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { shareReplay, Subscription } from 'rxjs';
-import { RoleDirective } from 'src/directiva/role.directiva';
+import { map, shareReplay, Subscription } from 'rxjs';
 import { AutorizadoService } from 'src/servicios/autorizado.service';
 import { BecaService } from 'src/servicios/beca.service';
 
@@ -11,15 +10,13 @@ import { BecaService } from 'src/servicios/beca.service';
   templateUrl: './solicitud-beca.component.html',
   styleUrls: ['./solicitud-beca.component.css'],
 })
-export class SolicitudBecaComponent implements OnInit, OnDestroy {
+export class SolicitudBecaComponent implements OnInit {
   @Input() idBeca?: number;
   @Input() idRed?: number;
   @Input() maximo: number = 0;
   activeTabIndex = 0; // Índice de la pestaña acti
   formSolicitud: FormGroup;
-  autorizados$ = this.autorizadoService.autorizados$.pipe(shareReplay(1));
-  @ViewChild(RoleDirective) roleDirective!: RoleDirective;
-  roleDirectivaSus: Subscription | null = null;
+  autorizados$ = this.autorizadoService.autorizados$.pipe(shareReplay(1),map(aut => aut.filter(x=>x.suspendido == 0)));
 
   constructor(
     private fb: FormBuilder,
@@ -32,15 +29,11 @@ export class SolicitudBecaComponent implements OnInit, OnDestroy {
       alumnos: this.fb.array([]),
     });
   }
-  ngOnDestroy(): void {
-    if (this.roleDirectivaSus) {
-      this.roleDirectivaSus.unsubscribe();
-    }
-  }
+
 
   ngOnInit(): void {
     if (this.idBeca){ this.formSolicitud.patchValue({ id_beca: this.idBeca })
-    this.autorizadoService.obtenerAutorizados()
+      this.autorizadoService.obtenerAutorizados()
     };
   }
 
@@ -64,35 +57,12 @@ export class SolicitudBecaComponent implements OnInit, OnDestroy {
       ],
       fecha_nacimiento: [null, Validators.required],
       detalle: [null],
-      id_pariente: [null],
+      id_pariente: [null,Validators.required],
     });
     this.alumnos.push(alumnoForm);
     this.maximo--;
-    setTimeout(() => {
-      this.activeTabIndex = this.alumnos.length - 1;
-      if (this.roleDirectivaSus == null) {
-        this.roleDirectivaSus = this.roleDirective.accessGranted.subscribe(
-          (hasAccess) => {
-            if (hasAccess) {
-              this.seleccionarPariente(alumnoForm);
-            }
-          }
-        );
-      }
-    }, 1000);
   }
 
-  private seleccionarPariente(alumnoForm: FormGroup): void {
-    // Obtener autorizados solo cuando el acceso sea permitido
-    this.autorizadoService.obtenerAutorizados();
-
-    // Agregar validador requerido a 'id_pariente'
-    const idParienteControl = alumnoForm.get('id_pariente');
-    if (idParienteControl) {
-      idParienteControl.setValidators([Validators.required]);
-      idParienteControl.updateValueAndValidity(); // Forzar validación
-    }
-  }
 
   // Método para eliminar un alumno por índice
   eliminarAlumno(index: number, event: Event): void {

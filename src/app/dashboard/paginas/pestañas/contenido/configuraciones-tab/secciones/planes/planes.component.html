@@ -1,0 +1,99 @@
+<div class="row">
+
+  <!-- Planes existentes -->
+  <div class="col-6 mb-0 mt-0 p-1">
+    <div class="card border-end h-100">
+      <h4 class="card-header pb-2 mb-2 mt-1 pt-1 text-primary">
+        Planes Comerciales
+      </h4>
+
+      <!-- Listado de Planes -->
+      <ng-container *ngIf="planes$ | async as planes">
+        <div class="card-body p-2" *ngIf="planes.length > 0; else sinDatos" style="height: 320px; overflow-y: auto;">
+          <div class="col" *ngFor="let plan of planes">
+            <div class="d-flex flex-column nav-link p-2 border rounded mb-2 position-relative" style="cursor: pointer;">
+
+              <!-- Icono de borrar arriba a la derecha -->
+              <i
+                class="bi bi-trash text-danger position-absolute top-50 end-0 translate-middle-y me-2 fs-5"
+                style="cursor: pointer;"
+                ngbTooltip="Eliminar Plan"
+                *ngIf="plan.id > 0"
+                (click)="confirmarEliminar(plan); $event.stopPropagation()"
+                title="Eliminar Plan">
+              </i>
+
+              <!-- Contenido del plan -->
+              <div (click)="seleccionarPlan(plan)">
+                <div class="fw-bold text-primary">
+                  <i class="bi bi-file-earmark-check me-1"></i> {{ plan.nombre }}
+                </div>
+                <div class="small text-muted">
+                  <strong>Identificador:</strong> {{ plan.identificador }}
+                </div>
+                <div class="small text-muted">
+                  <strong>Bonificación:</strong> {{ plan.bonificacion }}%
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+  <!-- Alta / Edición de Plan -->
+  <div class="col-6 mb-0 mt-0 p-1">
+    <div class="card border-end h-100">
+      <h4 class="card-header pb-2 mb-2 mt-1 pt-1 text-primary">
+        {{ planForm.get('id')?.value ? 'Editar Plan' : 'Nuevo Plan' }}
+      </h4>
+
+      <!-- Formulario Alta / Edición -->
+      <div class="card-body p-2">
+        <form [formGroup]="planForm">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Identificador</label>
+            <input type="text" class="form-control" placeholder="Identificador..." formControlName="identificador" [readOnly]="planSeleccionado?.editable == 0">
+            <app-error-formulario [control]="planForm.get('identificador')"></app-error-formulario>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Nombre</label>
+            <input type="text" class="form-control" placeholder="Nombre del plan..." formControlName="nombre" [readOnly]="planSeleccionado?.editable == 0">
+            <app-error-formulario [control]="planForm.get('nombre')"></app-error-formulario>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Bonificación (%)</label>
+            <input type="number" class="form-control" placeholder="Bonificación..." formControlName="bonificacion" [readOnly]="planSeleccionado?.editable == 0">
+            <app-error-formulario [control]="planForm.get('bonificacion')"></app-error-formulario>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer con botones Guardar y Cancelar -->
+      <div class="card-footer p-2 text-end">
+        <button type="button" class="btn btn-primary me-2" [disabled]="planForm.invalid || planSeleccionado?.editable==0" (click)="guardarPlan()">
+          {{ planForm.get('id')?.value ? 'Actualizar Plan' : 'Guardar Plan' }}
+        </button>
+
+        <button *ngIf="planForm.get('id')?.value" type="button" class="btn btn-outline-secondary" (click)="reiniciarFormulario()">
+          Cancelar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Sin datos -->
+<ng-template #sinDatos>
+  <app-sin-datos></app-sin-datos>
+</ng-template>

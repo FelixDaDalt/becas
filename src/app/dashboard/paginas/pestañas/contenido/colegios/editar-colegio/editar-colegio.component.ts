@@ -4,6 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { map, shareReplay, take, tap } from 'rxjs';
 import { Colegio } from 'src/interfaces/colegio';
 import { ColegioService } from 'src/servicios/colegio.service';
+import { FormasPagoService } from 'src/servicios/formas_pago.service';
+import { PlanesService } from 'src/servicios/planes.service';
 import { ZonasService } from 'src/servicios/zonas.service';
 
 
@@ -45,12 +47,16 @@ export class EditarColegioComponent implements OnInit {
         );
       })
     );
+    planPago$= this.planesService.planes$.pipe(shareReplay(1))
+    formaPago$ = this.formasPagoService.pagos$.pipe(shareReplay(1))
 
     constructor(
       private fb:FormBuilder,
       private activeModal:NgbActiveModal,
       private colegioService:ColegioService,
-      private zonaService:ZonasService)
+      private zonaService:ZonasService,
+      private planesService:PlanesService,
+      private formasPagoService:FormasPagoService)
     {
       this.wizardForm = this.fb.group({
         // Paso 1: Datos principales
@@ -75,7 +81,9 @@ export class EditarColegioComponent implements OnInit {
         }),
         // Paso 4: Personalización
         personalizacion: this.fb.group({
-          logo: [null]
+          logo: [null],
+          id_plan: [null,[Validators.required]],
+          id_forma_pago: [null,[Validators.required]],
         }),
       })
     }
@@ -105,6 +113,11 @@ export class EditarColegioComponent implements OnInit {
         contacto?.patchValue({
           telefono: this.colegio.telefono,
           email: this.colegio.email
+        })
+
+        personalizacion?.patchValue({
+          id_plan:this.colegio.id_plan_plan?.id,
+          id_forma_pago:this.colegio.id_forma_pago_forma_pago?.id,
         })
 
       }
@@ -181,6 +194,8 @@ export class EditarColegioComponent implements OnInit {
       formData.append('colegio[telefono]', contacto.telefono);
       formData.append('colegio[email]', contacto.email);
       formData.append('colegio[id_zona]', ubicacion.id_zona);
+      formData.append('colegio[id_plan]', personalizacion.id_plan);
+      formData.append('colegio[id_forma_pago]', personalizacion.id_forma_pago);
 
       if (this.archivoSeleccionado) {
         // Agregar logo si es un archivo

@@ -15,17 +15,43 @@ export const environment = {
       borrar: '/zona/borrarLocalidad',
       actualizar: '/zona/actualizarLocalidad',
     },
+    plan: {
+      nueva: '/plan/nuevoPlan',
+      borrar: '/plan/borrarPlan',
+      actualizar: '/plan/actualizarPlan',
+      obtener: '/plan/obtenerPlanes',
+    },
+    tareas: {
+      forzarBaja: '/tareas/forzar-baja',
+      notificarPorVencer: '/tareas/notificar-porVencer',
+      notificarVencidas: '/tareas/notificar-Vencidas',
+      obtenerEjecuciones:'/tareas/obtener-ejecuciones',
+      comprobarRed:'/tareas/comprobar-red',
+      sincronizarRed:'/tareas/sincronizar-red'
+    },
+    parametros: {
+      obtener: '/parametros/obtener',
+      actualizar: '/parametros/actualizar',
+    },
+    pagos: {
+      actualizar: '/pagos/actualizarPagos',
+      obtener: '/pagos/obtenerPagos',
+    },
     responsable: {
       listado:'/responsable/listado',
       alta:'/responsable/alta'
     },
-    delegado: {
-      listado:'/delegado/listado',
-      alta:'/delegado/alta'
-    },
+    // delegado: {
+    //   listado:'/delegado/listado',
+    //   alta:'/delegado/alta'
+    // },
     autorizado: {
       listado:'/autorizado/listado',
-      alta:'/autorizado/alta'
+      alta:'/autorizado/alta',
+      editar:'/autorizado/editar',
+      obtener:'/autorizado/obtener',
+      suspender:'/autorizado/suspender',
+      borrar:'/autorizado/borrar',
     },
     colegio: {
       listado:'/colegio/listado',
@@ -34,7 +60,8 @@ export const environment = {
       suspender:'/colegio/suspender',
       detalle:'/colegio/detalle',
       borrar:'/colegio/borrar',
-      editar:'/colegio/editar'
+      editar:'/colegio/editar',
+      ver_colegio:'/colegio/ver-colegio'
     },
     admin:{
       alta:'/admin/alta',
@@ -89,7 +116,11 @@ export const environment = {
       dar_baja:'/beca/dar-baja'
     },
     notificaciones:{
-      listado:'/notificacion/listado'
+      listado:'/notificacion/listado',
+      admin:'/notificacion/listadoAdmin'
+    },
+    dashboard:{
+      listado:'/dashboard/',
     },
   }
 

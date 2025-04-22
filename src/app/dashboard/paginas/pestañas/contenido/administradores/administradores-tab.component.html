@@ -11,69 +11,101 @@
 </div>
 
 <ng-container *ngIf="(administradores$ | async) as administradores">
-  <div class="table-responsive" *ngIf="(administradores | filterBy: filter).length > 0; else sinDatos">
-    <table class="table table-hover table-bordered table-striped align-middle text-center">
-      <thead class="table-primary">
-        <tr>
-          <th>Foto</th>
-          <th>DNI</th>
-          <th>Apellido y Nombre</th>
-          <th>Estado</th>
-          <th class="text-center">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let administrador of administradores || [] | filterBy: filter">
-          <td class="text-center">
-            <img [src]="apiFile + administrador.foto" alt="Foto" style="height: 40px; width: 40px;" class="rounded-circle" />
-          </td>
-          <td>{{ administrador.dni }}</td>
-          <td>{{ administrador.apellido }}, {{ administrador.nombre }}</td>
-          <td>
-            <span class="badge rounded-pill" [ngClass]="administrador.suspendido == 1 ? 'bg-danger' : 'bg-success'">
-              {{ administrador.suspendido == 1 ? 'Suspendido' : 'Activo' }}
-            </span>
-          </td>
-          <td class="text-center">
-            <button type="button"
-              class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-              ngbTooltip="Reiniciar Contraseña"
-              container="body"
-              placement="bottom"
-              (click)="reiniciarPassword(administrador.id)">
-              <i class="bi bi-key-fill"></i>
-            </button>
+  <ng-container *ngIf="(administradores | filterBy: filter).length > 0; else sinDatos">
 
-            <button type="button"
-              class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-              ngbTooltip="Suspender Ingreso"
-              container="body"
-              placement="bottom"
-              (click)="suspender(administrador.id)">
-              <i [ngClass]="administrador.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-            </button>
+    <ngx-datatable
+      class="bootstrap"
+      [rows]="administradores | filterBy:filter"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [limit]="10"
+      [scrollbarH]="true">
 
-            <div ngbDropdown container="body" class="btn-group">
-              <button
-                class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-                ngbDropdownToggle>
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <div
-                ngbDropdownMenu
-                aria-labelledby="dropdownMenu"
-                class="dropdown-menu-end">
-                <button class="dropdown-item" (click)="verAdmin(administrador.id)">Ver</button>
-                <button class="dropdown-item" (click)="editar(administrador)">Editar</button>
-                <button class="dropdown-item" (click)="confirmarEliminar(administrador)">Eliminar</button>
-              </div>
-            </div>
+  <!-- Foto -->
+  <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="100">
+    <ng-template let-row="row" ngx-datatable-cell-template>
 
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <img [src]="apiFile + row.foto" alt="Foto" style="height: 64px; width: 64px; object-fit: cover;" class="rounded-circle ms-4">
+
+        <!-- Badge Estado encima -->
+        <span class="badge badge-estado"
+              [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
+          {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
+        </span>
+
+    </ng-template>
+  </ngx-datatable-column>
+
+
+  <!-- DNI -->
+  <ngx-datatable-column name="DNI" prop="dni" [sortable]="true" [width]="130">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.dni }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Apellido y Nombre -->
+  <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      {{ row.apellido }}, {{ row.nombre }}
+    </ng-template>
+  </ngx-datatable-column>
+
+
+  <!-- Acciones -->
+  <ngx-datatable-column name="Acciones" [sortable]="false" [width]="240">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <div class="text-center">
+        <button
+                    class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                    ngbTooltip="Ver Administrador"
+                    container="body"
+                    placement="bottom"
+                    (click)="verAdmin(row.id)">
+                    <i class="bi bi-eye-fill"></i>
+                  </button>
+
+        <button type="button"
+          class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+          ngbTooltip="Reiniciar Contraseña"
+          container="body"
+          placement="bottom"
+          (click)="reiniciarPassword(row.id)">
+          <i class="bi bi-key-fill"></i>
+        </button>
+
+        <button type="button"
+          class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+          ngbTooltip="Suspender Ingreso"
+          container="body"
+          placement="bottom"
+          (click)="suspender(row.id)">
+          <i [ngClass]="row.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+        </button>
+
+        <div ngbDropdown container="body" class="btn-group">
+          <button
+            class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+            ngbDropdownToggle>
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <div
+            ngbDropdownMenu
+            aria-labelledby="dropdownMenu"
+            class="dropdown-menu-end">
+            <button class="dropdown-item" (click)="editar(row)">Editar</button>
+            <button class="dropdown-item" (click)="confirmarEliminar(row)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+
+    </ngx-datatable>
+
+  </ng-container>
 </ng-container>
 
 

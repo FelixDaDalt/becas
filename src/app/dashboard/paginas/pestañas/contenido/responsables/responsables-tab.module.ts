@@ -7,6 +7,7 @@ import { RoleDirective } from 'src/directiva/role.directiva';
 import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { FormsModule } from '@angular/forms';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -22,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     NgbTooltipModule,
     FilterPipeModule,
     FormsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgxDatatableModule
   ]
 })
 export class ResponsablesTabModule { }

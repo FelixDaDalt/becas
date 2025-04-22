@@ -20,75 +20,109 @@
 
     <!--Colegios TABLA-->
     <ng-container *ngIf="(colegios$ | async) as colegios">
-      <table class="table table-hover table-bordered table-striped" *ngIf="(colegios | filterBy: filter).length > 0; else sinDatos">
-        <thead class="table-primary">
-          <tr>
-            <th>Estado</th>
-            <th>Logo</th>
-            <th>Nombre</th>
-            <th>Dirección</th>
-            <th class="text-center">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let colegio of colegios || [] | filterBy:filter">
-            <td class="align-middle text-center">
-              <span class="badge"
-                    [ngClass]="{
-                      'bg-danger': colegio.suspendido,
-                      'bg-success': !colegio.suspendido
-                    }">
-                {{ colegio.suspendido ? 'Suspendido' : 'Activo' }}
-              </span>
-            </td>
-            <td class="text-center align-middle">
-              <img *ngIf="colegio.foto" [src]="apiFile + colegio.foto" alt="Logo" style="height: 50px; object-fit: contain;" />
-            </td>
-            <td class="align-middle">{{ colegio.nombre }}</td>
-            <td class="align-middle">
-              {{ colegio.direccion_calle }} {{ colegio.direccion_numero }} - {{ colegio.localidad }}
-            </td>
-            <td class="text-center align-middle">
+      <ng-container *ngIf="(colegios | filterBy:filter).length>0;else sinDatos">
 
-              <button
-                class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-                ngbTooltip="Agregar Responsable"
-                container="body"
-                placement="bottom"
-                (click)="agregarResponsable(colegio.id)">
-                <i class="bi bi-person-fill-add"></i>
-              </button>
+        <ngx-datatable
+          class="bootstrap"
+          [rows]="colegios | filterBy:filter"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          [rowHeight]="'auto'"
+          [limit]="10"
+          [scrollbarH]="true">
 
-              <button
-                class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-                ngbTooltip="Suspender Colegio"
-                container="body"
-                placement="bottom"
-                (click)="suspenderColegio(colegio.id)">
-                <i [ngClass]="colegio.suspendido ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-              </button>
+          <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="nombre-con-fondo" [ngStyle]="{'background-image': 'url(' + apiFile + row.foto + ')'}">
+                <span class="nombre-texto">{{ row.nombre }}</span>
 
+                <!-- Badge Estado -->
+                <span class="badge badge-estado"
+                      [ngClass]="{
+                        'bg-danger': row.suspendido,
+                        'bg-success': !row.suspendido
+                      }">
+                  {{ row.suspendido ? 'Suspendido' : 'Activo' }}
+                </span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
 
-              <div ngbDropdown class="btn-group" container="body">
+          <!-- Dirección -->
+          <ngx-datatable-column name="Dirección" prop="direccion_calle" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.direccion_calle }} {{ row.direccion_numero }} - {{ row.localidad }}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Pago-->
+          <ngx-datatable-column name="Forma Pago" prop="id_forma_pago_forma_pago" [sortable]="true" *Roles="[0]">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+             {{ row.id_forma_pago_forma_pago.nombre}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Plan-->
+          <ngx-datatable-column name="Plan" prop="id_plan_plan" [sortable]="true" *Roles="[0]">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.id_plan_plan.nombre}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Acciones -->
+          <ngx-datatable-column name="Acciones" [sortable]="false" [width]="260">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div class="text-center">
+
                 <button
                   class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-                  ngbDropdownToggle>
-                  <i class="bi bi-three-dots-vertical"></i>
+                  ngbTooltip="Ver Colegio"
+                  container="body"
+                  placement="bottom"
+                  (click)="detalleColegio(row.id)">
+                  <i class="bi bi-eye-fill"></i>
                 </button>
-                <div
-                  ngbDropdownMenu
-                  aria-labelledby="dropdownMenu"
-                  class="dropdown-menu-end">
-                  <button class="dropdown-item" (click)="detalleColegio(colegio.id)">Ver</button>
-                  <button class="dropdown-item" (click)="editarColegio(colegio)">Editar</button>
-                  <button class="dropdown-item" (click)="confirmarEliminar(colegio)">Eliminar</button>
+
+                <button
+                  class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                  ngbTooltip="Agregar Responsable"
+                  container="body"
+                  placement="bottom"
+                  (click)="agregarResponsable(row.id)">
+                  <i class="bi bi-person-fill-add"></i>
+                </button>
+
+                <button
+                  class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                  [ngbTooltip]="row.suspendido?'Activar Colegio':'Suspender Colegio'"
+                  container="body"
+                  placement="bottom"
+                  (click)="suspenderColegio(row.id)">
+                  <i [ngClass]="row.suspendido ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                </button>
+
+                <div ngbDropdown class="btn-group" container="body">
+                  <button
+                    class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                    ngbDropdownToggle>
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <div
+                    ngbDropdownMenu
+                    aria-labelledby="dropdownMenu"
+                    class="dropdown-menu-end">
+                    <button class="dropdown-item" (click)="editarColegio(row)">Editar</button>
+                    <button class="dropdown-item" (click)="confirmarEliminar(row)">Eliminar</button>
+                  </div>
                 </div>
               </div>
+            </ng-template>
+          </ngx-datatable-column>
 
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        </ngx-datatable>
+
+      </ng-container>
     </ng-container>
 
 

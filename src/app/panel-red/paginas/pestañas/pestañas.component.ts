@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { shareReplay, Subscription, take } from 'rxjs';
+import { EditarMiembrosComponent } from 'src/app/dashboard/paginas/pestañas/contenido/redes/editar-miembros/editar-miembros.component';
 import { AuthService } from 'src/core/auth.service';
 import { RedService } from 'src/servicios/red.service';
 
@@ -11,8 +13,12 @@ import { RedService } from 'src/servicios/red.service';
 })
 export class PestañasRedComponent implements OnInit{
   private queryParamsSubscription: Subscription | undefined;
+
+
   idRed?:number
-  constructor(private router: Router, private redService:RedService,private route:ActivatedRoute,) {}
+  constructor(private router: Router,
+    private redService:RedService,
+    private route:ActivatedRoute) {}
 
   ngOnInit(): void {
     this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
@@ -29,4 +35,5 @@ export class PestañasRedComponent implements OnInit{
    isActive(ruta: string): boolean {
     return this.router.url.includes(ruta);
   }
+
 }

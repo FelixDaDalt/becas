@@ -1,14 +1,15 @@
 <div class="row gx-4 gy-5">
   <!-- Columna Izquierda -->
-  <div class="col-12 col-xl-4 col-xxl-3">
-    <app-mi-colegio-columna [idRed]="idRed" *Roles="[1,2,3]"></app-mi-colegio-columna>
-    <app-mis-datos-columna *Roles="[0]"></app-mis-datos-columna>
+  <div class="col-12 col-xl-3 col-xxl-3" *Roles="[1,2,3]" >
+    <app-mi-colegio-columna [idRed]="idRed"></app-mi-colegio-columna>
   </div>
   <!-- Columna Izquierda End -->
 
 
   <!-- Columna Derecha -->
-  <div class="col-12 col-xl-8 col-xxl-9" *ngIf="(red$ | async) as red">
+
+    <div [ngClass]="rolActual == 0 ? 'col-12' : 'col-12 col-xl-9 col-xxl-9'" *ngIf="(red$ | async) as red">
+
     <div class="card w-100 sh-25 sh-sm-30 border border-1 border-ligth rounded rounded-1">
       <img [src]="apiFile+red.foto" class="card-img h-100"
         alt="card image" />
@@ -30,7 +31,7 @@
                   </span>
                   <span class="badge bg-warning">
                     <i class="bi bi-star-fill me-2"></i>
-                    <span class="fw-bold">{{red.Anfitrion?.nombre || 'Sin Anfitrion'}}</span>
+                    <span class="fw-bold">{{red.Anfitrion?.nombre || 'Sin Patrocinador'}}</span>
                   </span>
 
 
@@ -47,7 +48,8 @@
         <!--Carga de Paginas-->
       </div>
     </div>
-  </div>
+    </div>
+
   <!-- Columna Derecha -->
 </div>
 

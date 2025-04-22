@@ -87,6 +87,7 @@
                         {{autorizado.apellido}}, {{autorizado.nombre}}
                       </option>
                     </select>
+                    <p><app-error-formulario [control]="alumnos.at(i).get('id_pariente')"></app-error-formulario></p>
                   </div>
 
                   <textarea class="form-control form-control-sm" formControlName="detalle" placeholder="Detalle" rows="4"></textarea>

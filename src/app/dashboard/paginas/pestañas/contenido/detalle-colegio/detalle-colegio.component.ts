@@ -14,6 +14,8 @@ import { ResponsableService } from 'src/servicios/responsable.service';
 import { RegistroService } from 'src/servicios/registro.service';
 import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
 import { environment } from 'src/environments/environment';
+import { Autorizado } from 'src/interfaces/autorizado';
+import { EditarAutorizadoComponent } from 'src/standalone/editar-autorizado/editar-autorizado.component';
 
 @Component({
   selector: 'app-detalle-colegio',
@@ -84,9 +86,9 @@ export class DetalleColegioComponent implements OnInit, OnDestroy {
     )
   }
 
-  verUsuario(idAutorizado:number){
+  verUsuario(idUsuario:number){
     const modalUsuario = this.modalService.open(PerfilUsuarioComponent,{backdrop:'static'})
-    modalUsuario.componentInstance.idUsuario = idAutorizado
+    modalUsuario.componentInstance.idUsuario = idUsuario
   }
 
   confirmarEliminar(usuario:Usuario){

@@ -1,42 +1,36 @@
-.no-records-container {
+.no-records-card {
+  border: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  min-height: 300px; /* 👈 Altura mínima para que no quede chiquito */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.no-records-content {
   text-align: center;
-  color: #6c757d; /* Puedes ajustar el color */
-  padding: 1rem;
-  box-sizing: border-box;
-  padding-top: 50px;
+  padding: 2rem 1rem;
 }
 
 .no-records-icon {
-  font-size: 3rem; /* Tamaño del icono */
+  font-size: 3rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.no-records-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #495057;
   margin-bottom: 0.5rem;
-  color: #adb5bd; /* Color del icono */
 }
 
-.no-records-message {
-  font-size: 1.5rem; /* Tamaño del mensaje principal */
-  margin: 0;
-  color: #495057; /* Color del mensaje */
-}
-
-.no-records-submessage {
-  font-size: 1rem; /* Tamaño del mensaje secundario */
-  color: #6c757d; /* Color del submensaje */
+.no-records-subtitle {
+  font-size: 1rem;
+  color: #868e96;
   margin-top: 0.5rem;
-}
-.no-records-message {
-  font-size: 24px; /* Tamaño del mensaje principal */
-  font-weight: bold; /* Negrita para destacar el mensaje */
-  color: #343a40; /* Color del texto, puedes cambiarlo */
-  margin-bottom: 8px; /* Espacio debajo del mensaje */
-}
-
-.no-records-submessage {
-  font-size: 16px; /* Tamaño del mensaje secundario */
-  color: #6c757d; /* Color del texto, puedes cambiarlo */
 }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Colegio } from 'src/interfaces/colegio';
 import { ComprobarService } from './comprobar.service';
 import { ColegioDetalle } from 'src/interfaces/colegio_detalle';
+import { ver_colegio } from 'src/interfaces/ver_colegio';
 
 
 @Injectable({
@@ -16,12 +17,17 @@ export class ColegioService {
   colegios$ = this.colegiosSubject.asObservable().pipe(shareReplay(1));
   private colegioSubject = new BehaviorSubject<Colegio | null>(null);
   colegio$ = this.colegioSubject.asObservable().pipe(shareReplay(1));
+
   private colegioDetalleSubject = new BehaviorSubject<ColegioDetalle | null>(
     null
   );
   colegioDetalle$ = this.colegioDetalleSubject
     .asObservable()
     .pipe(shareReplay(1));
+
+    private verColegioSubject = new BehaviorSubject<ver_colegio | null>(null);
+
+    verColegio$ = this.verColegioSubject.asObservable().pipe(shareReplay(1));
 
   constructor(
     private http: HttpClient,
@@ -85,17 +91,7 @@ export class ColegioService {
       );
   }
 
-  // private getColegio() {
-  //   return this.http
-  //     .get(`${environment.apiUrl}${environment.endpoint.colegio.obtener}`)
-  //     .pipe(map((respuesta: any) => respuesta.data));
-  // }
 
-  // obtenerColegio() {
-  //   this.getColegio()
-  //     .pipe(take(1))
-  //     .subscribe((colegio) => this.colegioSubject.next(colegio));
-  // }
 
   private getDetalle(idColegio?: number | string) {
     return this.http
@@ -131,4 +127,22 @@ export class ColegioService {
         this.obtenerColegios()
       })
   )}
+
+  private getVerColegio(idColegio?: number | string) {
+    return this.http
+      .get(
+        `${environment.apiUrl}${environment.endpoint.colegio.ver_colegio}${
+          idColegio ? `?id=${idColegio}` : ''
+        }`
+      )
+      .pipe(
+        tap(r=>console.log(r)),
+        map((respuesta: any) => respuesta.data));
+  }
+
+  verColegio(idColegio:number){
+    this.getVerColegio(idColegio)
+    .pipe(take(1))
+    .subscribe((colegio) => this.verColegioSubject.next(colegio));
+  }
 }

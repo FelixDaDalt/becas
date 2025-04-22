@@ -2,3 +2,39 @@ a{
   cursor: pointer;
 }
 
+.scroll-container {
+  max-height: 400px; /* Altura máxima visible */
+  overflow-y: auto; /* Scroll vertical automático */
+  padding-right: 10px; /* Espacio para el scroll */
+}
+
+/* Estilo bonito para el scroll (moderno) */
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Firefox */
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.nav-tabs {
+  display: flex !important; /* 👈 Forzar tabs en fila */
+  flex-wrap: nowrap;        /* 👈 Que no se vayan para abajo */
+  border-bottom: 1px solid #dee2e6;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: -1px; /* Para que se vea bien el borde */
+}
+

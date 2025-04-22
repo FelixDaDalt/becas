@@ -25,13 +25,16 @@ export class SolicitudesComponent implements OnDestroy, OnInit {
     nombre:'Rechazadas'
   },{
     id:3,
-    nombre:'Dada de Bajas'
+    nombre:'Pendientes de Baja'
   },{
     id:4,
-    nombre:'Caidas'
+    nombre:'Vencidas'
   },{
     id:5,
     nombre:'Aprobadas'
+  },{
+    id:6,
+    nombre:'Dadas de baja'
   }]
   active:number=-1
 

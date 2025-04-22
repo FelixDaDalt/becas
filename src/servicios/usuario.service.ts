@@ -13,12 +13,13 @@ export class usuarioService {
 
   private readonly aceptarTYC='usuario/aceptarTyc'
   private readonly cambiarPass='usuario/cambiarPassword'
+
   private meSubject = new BehaviorSubject<Usuario | null>(null)
   me$ = this.meSubject.asObservable().pipe(shareReplay(1))
 
   constructor(private http: HttpClient,
     private toast:ToastrService,
-  private authService:AuthService) { }
+    private authService:AuthService) { }
 
   cambiarPassword(password:any){
     return this.http.put(`${environment.apiUrl}${environment.endpoint.usuario.cambiarPassword}`,password).pipe(
@@ -61,7 +62,7 @@ export class usuarioService {
   )}
 
   private me(){
-    const endpoint = this.authService.getUserRole() == 0?
+    const endpoint = this.authService.getUserRole() <= 0?
     `${environment.apiUrl}${environment.endpoint.admin.me}`: `${environment.apiUrl}${environment.endpoint.usuario.me}`
     return this.http.get(endpoint).pipe(
       take(1),

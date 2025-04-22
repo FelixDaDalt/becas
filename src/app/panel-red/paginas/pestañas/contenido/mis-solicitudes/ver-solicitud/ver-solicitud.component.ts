@@ -14,7 +14,7 @@ import { RedService } from 'src/servicios/red.service';
 export class VerSolicitudComponent implements OnInit{
 
     private queryParamsSubscription: Subscription | undefined;
-    detalle$ = this.becaService.miSolicitudDetalle$.pipe(shareReplay(1))
+    detalle$ = this.becaService.miSolicitudDetalle$.pipe(shareReplay(1),tap(r=>console.log(r)))
     idSolicitud?:number
     idRed?:number
     resolucion=false

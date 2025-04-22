@@ -7,7 +7,8 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
 import { RolClassDirective } from 'src/directiva/class.directiva';
 import { RoleDirective } from 'src/directiva/role.directiva';
 import { RegistroColegioComponent } from './registro-colegio/registro-colegio.component';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     RolClassDirective,
     RoleDirective,
     RegistroColegioComponent,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgbDropdownModule,
+    NgxDatatableModule
 ]
 })
 export class DetalleColegioModule { }

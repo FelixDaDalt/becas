@@ -1,0 +1,101 @@
+<div class="row">
+
+  <!-- Pagos existentes -->
+  <div class="col-6 mb-0 mt-0 p-1">
+    <div class="card border-end h-100">
+      <h4 class="card-header pb-2 mb-2 mt-1 pt-1 text-primary">
+        Formas de pago
+      </h4>
+
+      <!-- Listado de Pagos -->
+      <ng-container *ngIf="pagos$ | async as pagos">
+        <div class="card-body p-2" *ngIf="pagos.length > 0; else sinDatos" style="height: 320px; overflow-y: auto;">
+          <div class="col" *ngFor="let pago of pagos">
+            <div class="d-flex flex-column nav-link p-2 border rounded mb-2 position-relative" style="cursor: pointer;">
+              <div (click)="seleccionarPago(pago)">
+                <div class="fw-bold text-primary">
+                  <i class="bi bi-cash-coin me-1"></i> {{ pago.nombre }}
+                </div>
+                <div class="small text-muted">
+                  <strong>Identificador:</strong> {{ pago.identificador }}
+                </div>
+                <div class="small text-muted">
+                  <strong>Descuento:</strong> {{ pago.descuento }}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Edición de Pago -->
+  <div class="col-6 mb-0 mt-0 p-1">
+    <div class="card border-end h-100">
+      <h4 class="card-header pb-2 mb-2 mt-1 pt-1 text-primary">
+        Editar Forma de Pago
+      </h4>
+
+      <!-- Formulario Edición -->
+      <div class="card-body p-2">
+        <form [formGroup]="pagoForm">
+          <fieldset [disabled]="!pagoForm.get('id')?.value">
+            <!-- Bloqueamos el form si no hay selección -->
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Identificador</label>
+              <input type="text" class="form-control" placeholder="Identificador..." formControlName="identificador" readonly>
+              <app-error-formulario [control]="pagoForm.get('identificador')"></app-error-formulario>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre</label>
+              <input type="text" class="form-control" placeholder="Nombre del pago..." formControlName="nombre" readonly>
+              <app-error-formulario [control]="pagoForm.get('nombre')"></app-error-formulario>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Descuento (%)</label>
+              <input type="number" class="form-control" placeholder="Descuento..." formControlName="descuento" [readOnly]="pagoSeleccionado?.editable == 0">
+              <app-error-formulario [control]="pagoForm.get('descuento')"></app-error-formulario>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+
+      <!-- Footer con botones Guardar y Cancelar -->
+      <div class="card-footer p-2 text-end">
+        <button
+          type="button"
+          class="btn btn-primary me-2"
+          [disabled]="pagoForm.invalid || !pagoForm.get('id')?.value || pagoSeleccionado?.editable==0"
+          (click)="guardarPago()">
+          Actualizar Pago
+        </button>
+
+        <button
+          *ngIf="pagoForm.get('id')?.value"
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="reiniciarFormulario()">
+          Cancelar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Sin datos -->
+<ng-template #sinDatos>
+  <app-sin-datos></app-sin-datos>
+</ng-template>
+
+
+<!-- Sin datos -->
+<ng-template #sinDatos>
+  <app-sin-datos></app-sin-datos>
+</ng-template>

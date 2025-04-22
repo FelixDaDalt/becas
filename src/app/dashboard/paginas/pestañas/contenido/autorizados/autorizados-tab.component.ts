@@ -2,14 +2,12 @@ import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { shareReplay } from 'rxjs';
-import { AuthService } from 'src/core/auth.service';
 import { environment } from 'src/environments/environment';
-import { Usuario } from 'src/interfaces/usuario';
-import { AdminService } from 'src/servicios/admin.service';
+import { Autorizado } from 'src/interfaces/autorizado';
 import { AutorizadoService } from 'src/servicios/autorizado.service';
 import { ConfirmarComponent } from 'src/standalone/confirmar/confirmar.component';
-import { EditarMisDatosComponent } from 'src/standalone/editar-mis-datos/editar-mis-datos.component';
-import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usuario.component';
+import { EditarAutorizadoComponent } from 'src/standalone/editar-autorizado/editar-autorizado.component';
+
 
 
 @Component({
@@ -18,13 +16,12 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
   styleUrls: ['./autorizados-tab.component.css']
 })
 export class AutorizadosTabComponent{
-  apiFile=environment.fileUrl
+
   cacheautorizados = false;
   autorizados$=this.autorizadoService.autorizados$.pipe(shareReplay(1))
 
   constructor(
     private autorizadoService:AutorizadoService,
-    private adminService:AdminService,
     private activeRoute: ActivatedRoute,
     private router: Router,
     private modalService:NgbModal){}
@@ -36,12 +33,8 @@ export class AutorizadosTabComponent{
     }
   }
 
-  reiniciarPassword(id:number){
-    this.adminService.reiniciarPassword('user',id)
-  }
-
-  suspender(idAutorizado:number){
-    this.adminService.suspenderUsuario(idAutorizado).subscribe(respuesta=>
+  suspenderAutorizado(idAutorizado:number){
+    this.autorizadoService.suspenderAutorizado(idAutorizado).subscribe(respuesta=>
       this.autorizadoService.obtenerAutorizados()
     )
   }
@@ -50,30 +43,25 @@ export class AutorizadosTabComponent{
     this.router.navigate(['../alta-autorizado'], {relativeTo: this.activeRoute })
   }
 
-  verUsuario(idAutorizado:number){
-    const modalUsuario = this.modalService.open(PerfilUsuarioComponent,{backdrop:'static'})
-    modalUsuario.componentInstance.idUsuario = idAutorizado
-  }
 
-  confirmarEliminar(usuario:Usuario){
+  confirmarEliminar(autorizado:Autorizado){
     const modalEliminar = this.modalService.open(ConfirmarComponent,{backdrop:'static'})
-    modalEliminar.componentInstance.itemAEliminar = usuario.apellido + ', '+ usuario.nombre
+    modalEliminar.componentInstance.itemAEliminar = autorizado.apellido + ', '+ autorizado.nombre
     modalEliminar.result.then(r=>{
       if(r)
-        this.eliminarUsuario(usuario.id)
+        this.eliminarAutorizado(autorizado.id)
     })
   }
 
-  private eliminarUsuario(idUsuario:number){
-    this.adminService.eliminarUsuario(idUsuario).subscribe(respuesta=>{
+  private eliminarAutorizado(idAutorizado:number){
+    this.autorizadoService.eliminarAutorizado(idAutorizado).subscribe(respuesta=>{
       this.autorizadoService.obtenerAutorizados()
     })
   }
 
-  editar(Autorizado:Usuario){
-    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
-    modalEditar.componentInstance.idUsuario = Autorizado.id
-    modalEditar.componentInstance.idRol = Autorizado.id_rol
+  editarAutorizado(Autorizado:Autorizado){
+    const modalEditar = this.modalService.open(EditarAutorizadoComponent,{backdrop:'static'})
+    modalEditar.componentInstance.idAutorizado = Autorizado.id
     modalEditar.result.then(r=>{
       if(r)
         this.autorizadoService.obtenerAutorizados()

@@ -1,3 +1,5 @@
+import { forma_pagos } from "./forma_pagos";
+import { plan } from "./plan";
 import { Usuario } from "./usuario";
 import { zona_localidad } from "./zona";
 
@@ -19,6 +21,8 @@ export interface Colegio {
   anfitrion?:number
   foto?:string
   id_zona?:number
+  id_forma_pago_forma_pago?:forma_pagos
+  id_plan_plan?:plan
 }
 
 

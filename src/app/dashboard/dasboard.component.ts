@@ -11,27 +11,4 @@ import { AuthService } from 'src/core/auth.service';
 })
 export class DasboardComponent{
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private activeRoute: ActivatedRoute
-  ) {
-    this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd) // Solo actúa en NavigationEnd
-      )
-      .subscribe(() => {
-        const rol = this.authService.getUserRole();
-        const ruta = this.router.url;
-
-        // Redirige según el rol y la URL actual
-        if (rol == 0 && !ruta.includes('dashboard/')) {
-          this.router.navigate(['redes'], { relativeTo: this.activeRoute });
-        } else if (!ruta.includes('dashboard/')) {
-          this.router.navigate(['redes'], { relativeTo: this.activeRoute });
-        }
-      });
-  }
-
-
 }

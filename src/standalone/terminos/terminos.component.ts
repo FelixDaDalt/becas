@@ -6,6 +6,7 @@ import { Usuario } from 'src/interfaces/usuario';
 import { TerminosService } from 'src/servicios/terminos.service';
 import { usuarioService } from 'src/servicios/usuario.service';
 import { ErrorFormularioComponent } from "../error-formulario/error-formulario.component";
+import { shareReplay } from 'rxjs';
 
 
 @Component({
@@ -19,9 +20,10 @@ export class tycComponent{
 
   formulario: FormGroup;
   mostrarPassword = false;
-  terminos=this.terminosService.tyc$
+  terminos=this.terminosService.tyc$.pipe(shareReplay(1))
 
   @Input() usuario?:Usuario
+  @Input() soloMostrar = false
 
   constructor(private activeModal: NgbActiveModal,
     private fb:FormBuilder,

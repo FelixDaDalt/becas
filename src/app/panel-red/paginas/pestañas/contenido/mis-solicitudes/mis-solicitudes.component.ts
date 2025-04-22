@@ -24,13 +24,17 @@ estados=[{
     nombre:'Rechazadas'
   },{
     id:3,
-    nombre:'Dada de Bajas'
+    nombre:'Pendientes de Baja'
   },{
     id:4,
-    nombre:'Caidas'
+    nombre:'Vencidas'
   },{
     id:5,
     nombre:'Aprobadas'
+  },
+  {
+    id:6,
+    nombre:'Dada de Bajas'
   }]
 
   active:number=-1

@@ -1,0 +1,32 @@
+.tarea-card {
+  transition: transform 0.2s, background-color 0.2s;
+  border-radius: 1rem;
+}
+
+.tarea-card:hover {
+  transform: translateY(-5px);
+  background-color: #f8f9fa;
+}
+
+.tarea-icon {
+  font-size: 4rem;
+  color: #0d6efd;
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Fondo oscuro translúcido */
+  backdrop-filter: blur(5px); /* Difuminado */
+  z-index: 1050; /* Bien arriba */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-content {
+  text-align: center;
+}

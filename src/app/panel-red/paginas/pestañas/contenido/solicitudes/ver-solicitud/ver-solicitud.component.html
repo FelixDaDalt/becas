@@ -115,7 +115,7 @@
                                             'bg-primary': detalle.estado.id === 0,
                                             'bg-secondary': detalle.estado.id === 1,
                                             'bg-success': detalle.estado.id === 5,
-                                            'bg-danger': detalle.estado.id === 2,
+                                            'bg-danger': detalle.estado.id === 2 || detalle.estado.id === 6,
                                             'bg-warning': detalle.estado.id === 3,
                                             'bg-dark': detalle.estado.id === 4
                                           }"
@@ -145,9 +145,7 @@
           <div class="row g-4 justify-content-center" *ngIf="detalle.estado.id == 0">
             <div class="col-auto">
               <ng-container *ngIf="!this.resolucion">
-                <button class="btn btn-info btn-sm me-2" type="button"  *Roles="[1,2]" (click)="resolver()">
-                  <i class="bi bi-plus-circle me-2"></i>Resolver
-                </button>
+                <app-boton-cargando (action)="resolver()" label="Resolver" *Roles="[1,2]"></app-boton-cargando>
               </ng-container>
 
               <button class="btn btn-quaternary btn-sm" type="button" *ngIf="this.resolucion" (click)="resolver()">

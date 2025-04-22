@@ -14,4 +14,8 @@ export interface Miembro{
     bde: number
     borrado: number
     id_colegio_colegio: Colegio
+
 }
+
+
+

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
+import { RoleDirective } from 'src/directiva/role.directiva';
 
 
 
@@ -13,11 +14,13 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    RoleDirective,
   ],
   exports:[
     FooterComponent,
     HeaderComponent,
+
   ]
 })
 export class EstructuraModule { }

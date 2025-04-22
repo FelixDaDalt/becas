@@ -10,37 +10,37 @@ import { Usuario } from 'src/interfaces/usuario';
 })
 export class DelegadoService {
 
-  private delegadosSubject = new BehaviorSubject<Usuario[]>([])
-  delegados$ = this.delegadosSubject.asObservable().pipe(shareReplay(1))
+  // private delegadosSubject = new BehaviorSubject<Usuario[]>([])
+  // delegados$ = this.delegadosSubject.asObservable().pipe(shareReplay(1))
 
-  constructor(
-    private http: HttpClient,
-    private toast:ToastrService) {
+  // constructor(
+  //   private http: HttpClient,
+  //   private toast:ToastrService) {
 
-  }
+  // }
 
-  private getdelegados(){
-    return this.http.get(`${environment.apiUrl}${environment.endpoint.delegado.listado}`).pipe(
-      map((respuesta:any) => respuesta.data))
-  }
+  // private getdelegados(){
+  //   return this.http.get(`${environment.apiUrl}${environment.endpoint.delegado.listado}`).pipe(
+  //     map((respuesta:any) => respuesta.data))
+  // }
 
-  obtenerDelegados(){
-      this.getdelegados().pipe(take(1)).subscribe(
-        delegados=>{
-          this.delegadosSubject.next(delegados)
-        })
-  }
+  // obtenerDelegados(){
+  //     this.getdelegados().pipe(take(1)).subscribe(
+  //       delegados=>{
+  //         this.delegadosSubject.next(delegados)
+  //       })
+  // }
 
 
-  altaDelegado(nuevoDelegado: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}${environment.endpoint.delegado.alta}`, nuevoDelegado).pipe(
-      take(1),
-      tap((respuesta: any) => {
-        this.toast.success(respuesta.mensaje);
-        this.obtenerDelegados()
-      }),
-    )
-  }
+  // altaDelegado(nuevoDelegado: any): Observable<any> {
+  //   return this.http.post(`${environment.apiUrl}${environment.endpoint.delegado.alta}`, nuevoDelegado).pipe(
+  //     take(1),
+  //     tap((respuesta: any) => {
+  //       this.toast.success(respuesta.mensaje);
+  //       this.obtenerDelegados()
+  //     }),
+  //   )
+  // }
 
 
 }

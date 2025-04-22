@@ -21,14 +21,9 @@ export class ZonasComponent {
       }
     }))
 
-  zonaForm:FormGroup
   localidadForm:FormGroup
 
   constructor(private zonasService:ZonasService,private fb:FormBuilder){
-    this.zonaForm = this.fb.group({
-      nombre:[null,[Validators.required,Validators.minLength(3)]]
-    })
-
     this.localidadForm = this.fb.group({
       nombre:[null,[Validators.required,Validators.minLength(3)]],
       id_zona:[null,[Validators.required]]
@@ -41,14 +36,7 @@ export class ZonasComponent {
     this.localidades = zonaSeleccionada.zona_localidads || []
   }
 
-  guardarZona(){
-    if (this.zonaForm.valid) {
-    this.zonasService.nuevaZona(this.zonaForm.value)
-    this.zonaForm.get('nombre')?.patchValue(null);
-    }else{
-      this.zonaForm.markAsTouched()
-    }
-  }
+
 
   guardarLocalidad(){
     if (this.localidadForm.valid) {

@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AltaBecaComponent } from './alta-beca/alta-beca.component';
 import { shareReplay, Subscription, take, tap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RedService } from 'src/servicios/red.service';
 import { BecaService } from 'src/servicios/beca.service';
 import { SolicitudBecaComponent } from './solicitud-beca/solicitud-beca.component';
 import { environment } from 'src/environments/environment';
+import { VerColegioComponent } from 'src/app/ver-colegio/ver-colegio.component';
 
 @Component({
   selector: 'app-becas',
@@ -39,7 +40,8 @@ export class BecasComponent implements OnInit, OnDestroy{
   constructor(private modalService:NgbModal,
   private redService:RedService,
   private becaService:BecaService,
-  private route:ActivatedRoute){
+  private route:ActivatedRoute,
+private router:Router){
 
   }
 
@@ -107,5 +109,11 @@ updateFilter() {
     }
     ]
   };
+}
+
+verColegio(idColegio:number){
+  const modalColegio = this.modalService.open(VerColegioComponent, { size: 'lg', backdrop: 'static' })
+  modalColegio.componentInstance.idColegio = idColegio
+  modalColegio.componentInstance.modal = true;
 }
 }

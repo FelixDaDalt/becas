@@ -10,6 +10,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EditarColegioComponent } from './editar-colegio/editar-colegio.component';
 import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { RoleDirective } from 'src/directiva/role.directiva';
 
 
 
@@ -28,7 +30,9 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     NgbTooltipModule,
     FilterPipeModule,
     FormsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    NgxDatatableModule,
+    RoleDirective
 ]
 })
 export class ColegiosTabModule { }

@@ -1,0 +1,184 @@
+<div class="container-fluid mt-2" *ngIf="dashboard$ | async as dashboard">
+
+  <div class="section-block borde border-1" (click)="tareas()">
+    <h5 class="section-title">Requerimiento de atención</h5>
+    <div class="row g-4" *ngIf="notificaciones$ | async as notificaciones">
+
+      <!-- 🔵 Por Vencer -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card small-card h-100 shadow-sm p-3 d-flex flex-row align-items-center">
+
+          <div class="icon-container bg-info text-white me-3">
+            <i class="bi bi-hourglass-split"></i>
+          </div>
+
+          <div class="flex-grow-1 text-center">
+            <div class="small text-muted">Becas Por vencer</div>
+            <div class="h3 fw-bold text-info">{{ notificaciones.becas.porVencer }}</div>
+            <div class="small text-danger fw-bold">{{notificaciones.proximo.proxima}}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 🟠 Vencidas -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card small-card h-100 shadow-sm p-3 d-flex flex-row align-items-center">
+
+          <div class="icon-container bg-warning text-white me-3">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </div>
+
+          <div class="flex-grow-1 text-center">
+            <div class="small text-muted">Vencidas</div>
+            <div class="h3 fw-bold text-warning">{{ notificaciones.becas.vencidas }}</div>
+            <div class="small text-danger fw-bold">{{notificaciones.proximo.proxima}}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 🔴 Pendientes de Baja -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card small-card h-100 shadow-sm p-3 d-flex flex-row align-items-center">
+
+          <div class="icon-container bg-danger text-white me-3">
+            <i class="bi bi-x-circle-fill"></i>
+          </div>
+
+          <div class="flex-grow-1 text-center">
+            <div class="small text-muted">Pendientes de Baja</div>
+            <div class="h3 fw-bold text-danger">{{ notificaciones.becas.pendienteBaja }}</div>
+            <div class="small text-danger fw-bold">{{notificaciones.proximo.proximaPendiente}}</div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-block">
+    <h5 class="section-title">Resumen del sistema</h5>
+    <div class="row g-4">
+
+      <!-- 🔵 Ocupación de Solicitudes -->
+      <div class="col-12 col-lg-3">
+        <div class="card custom-card h-100">
+          <div class="card-body p-4 text-center">
+            <h5><strong>Ocupación de Solicitudes</strong></h5>
+            <div *ngIf="barChartOptions.series && barChartOptions.chart && barChartOptions.xaxis && barChartOptions.yaxis
+            && barChartOptions.plotOptions && barChartOptions.fill && barChartOptions.dataLabels && barChartOptions.tooltip
+            && barChartOptions.legend">
+              <apx-chart
+                [series]="barChartOptions.series"
+                [chart]="barChartOptions.chart"
+                [xaxis]="barChartOptions.xaxis"
+                [yaxis]="barChartOptions.yaxis"
+                [plotOptions]="barChartOptions.plotOptions"
+                [fill]="barChartOptions.fill"
+                [dataLabels]="barChartOptions.dataLabels"
+                [tooltip]="barChartOptions.tooltip"
+                [legend]="barChartOptions.legend">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🎯 Tarjetas Resumen -->
+      <div class="col-12 col-lg-6">
+        <div class="row g-3">
+          <div class="col-6" *ngFor="let card of dashboard.cards">
+            <div class="card small-card text-center h-100">
+              <div class="card-body py-4">
+                <div class="small text-muted">{{ card.titulo }}</div>
+                <div class="h3 fw-bold text-{{ card.color }}">{{ card.valor }}</div>
+                <div class="small mt-2 text-muted" [innerHTML]="card.subtitulo"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 📈 Distribución por Estado -->
+      <div class="col-12 col-lg-3">
+        <div class="card custom-card h-100">
+          <div class="card-body p-4 text-center">
+            <h5><strong>Distribución por Estado</strong></h5>
+            <div *ngIf="chartOptions.series && chartOptions.chart
+            && chartOptions.labels && chartOptions.responsive && chartOptions.legend && chartOptions.dataLabels">
+              <apx-chart
+                [series]="chartOptions.series"
+                [chart]="chartOptions.chart"
+                [labels]="chartOptions.labels"
+                [responsive]="chartOptions.responsive"
+                [legend]="chartOptions.legend"
+                [dataLabels]="chartOptions.dataLabels">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-block">
+    <h5 class="section-title">Ultimas Solicitudes</h5>
+    <div class="card custom-card">
+      <div class="card-body p-4">
+        <div *ngIf="dashboard.ultimasSolicitudes.length > 0; else sinSolicitudes">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Fecha</th>
+                  <th>Colegio Solicitante</th>
+                  <th>Colegio Ofertante</th>
+                  <th>Estado</th>
+                  <th>Resolución</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let solicitud of dashboard.ultimasSolicitudes">
+                  <td>{{ solicitud.fechaHora | date:'short' }}</td>
+                  <td>{{ solicitud.colegioSolicito.nombre }}</td>
+                  <td>{{ solicitud.colegioPublico.nombre }}</td>
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-warning': solicitud.estado.id == 0,
+                      'bg-success': solicitud.estado.id == 5,
+                      'bg-danger': solicitud.estado.id == 2,
+                      'bg-info': solicitud.estado.id == 1,
+                      'bg-secondary': solicitud.estado.id != 0 && solicitud.estado.id != 5 && solicitud.estado.id != 2 && solicitud.estado.id != 1
+                    }">
+                      {{ solicitud.estado.nombre }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="badge" [ngClass]="{
+                      'bg-info': solicitud.resolucion.id == 0,
+                      'bg-success': solicitud.resolucion.id == 1,
+                      'bg-danger': solicitud.resolucion.id == 2,
+                      'bg-warning': solicitud.resolucion.id == 3
+                    }">
+                      {{ solicitud.resolucion.nombre }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #sinSolicitudes>
+          <p class="text-muted text-center">No hay solicitudes recientes.</p>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -47,7 +47,16 @@
                   <span class="align-middle">Ayuda</span>
                 </a>
               </li>
+              <li>
+                <a (click)="reportar()">
+                  <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                  <span class="align-middle">Reportar un problema</span>
+                </a>
+              </li>
             </ul>
+          </div>
+          <div class="col-12 p-1 mb-1 pt-1">
+            <div class="separator-light"></div>
           </div>
           <div class="col-12 pe-1 ps-1">
             <ul class="list-unstyled ">
@@ -89,103 +98,164 @@
             <div class="position-relative d-inline-flex">
               <i data-acorn-icon="bell" data-acorn-size="18"></i>
 
+
+                <ng-container *ngIf="notificacionesAdmin$ | async as notificacionesAdmin">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 3px 6px; min-width: 16px;" *ngIf="notificacionesAdmin.total > 0" >
+                      <div *Roles="[0]">{{notificacionesAdmin.total}}</div>
+                    </span>
+                </ng-container>
+
+
               <!-- Badge más pequeño -->
-              <ng-container *ngIf="notificaciones$ | async as notificaciones">
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 3px 6px; min-width: 16px;" *ngIf="notificaciones.total > 0" >
-                    {{notificaciones.total}}
-                  </span>
-              </ng-container>
+
+                  <ng-container *ngIf="notificaciones$ | async as notificaciones">
+                      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px; padding: 3px 6px; min-width: 16px;" *ngIf="notificaciones.total > 0" >
+                        <div *Roles="[1]">{{notificaciones.total}}</div>
+                      </span>
+                  </ng-container>
+
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
-            <ng-container *ngIf="notificaciones$ | async as notificaciones">
-              <div class="scroll-container"> <!-- Contenedor con scroll -->
-                <ng-container *ngIf="notificaciones.total > 0;else sinNotificaciones">
-                <!-- 🔵 Mis Solicitudes -->
-                <div *ngIf="notificaciones.misSolicitudes.length > 0" class="mb-2">
-                  <h6 class="text-primary fw-bold border-bottom pb-2 small">📌 Mis Solicitudes</h6>
+            <div *Roles="[0]">
+              <ng-container *ngIf="notificacionesAdmin$ | async as notificacionesAdmin">
+                <div class="scroll-container w-100"> <!-- Contenedor con scroll -->
+                  <ng-container *ngIf="notificacionesAdmin.total > 0;else sinNotificaciones">
+                  <!-- 🔵 Mis Solicitudes -->
+                  <h6 class="text-primary fw-bold border-bottom pb-2 small">📌 BECAS</h6>
                   <ul class="list-unstyled border-last-none">
-                    <li *ngFor="let miSolicitud of notificaciones.misSolicitudes"
-                        class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
-
-                      <!-- 📷 Imagen -->
-                      <img [src]="apiFile + miSolicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
-
-                      <!-- 📝 Información -->
-                      <div>
-                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="!miSolicitud.vencida && !miSolicitud.porVencer">
-                          <strong>{{ miSolicitud.colegio }}</strong> <span class="text-success"> ha resuelto tu solicitud.</span>
-                          <br />
-                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                        </a>
-                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.vencida">
-                          <strong>Solicitud a {{ miSolicitud.colegio }}</strong> <span class="text-danger"> se ha vencido.</span>
-                          <br />
-                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                        </a>
-                        <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.porVencer && !miSolicitud.vencida">
-                          <strong>Solicitud a {{ miSolicitud.colegio }}</strong> <span class="text-warning"> esta por vencer.</span>
-                          <br />
-                          <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                        </a>
-                      </div>
+                    <li class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+                      Por Vencer: {{notificacionesAdmin.becas.porVencer}}
+                    </li>
+                    <li class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+                      Vencidas: {{notificacionesAdmin.becas.vencidas}}
+                    </li>
+                    <li class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+                      Pendiente de Baja: {{notificacionesAdmin.becas.pendienteBaja}}
                     </li>
                   </ul>
+                  </ng-container>
+
+                  <ng-template #sinNotificaciones>
+                    <div>
+                      <h6 class="text-primary fw-bold small pb-0 mb-0">Sin Notificaciones</h6>
+                    </div>
+                  </ng-template>
                 </div>
+              </ng-container>
+            </div>
 
-                <!-- 🔴 Solicitudes Recibidas -->
-                <div *ngIf="notificaciones.solicitudes.length > 0" class="mb-2">
-                  <h6 class="text-danger fw-bold border-bottom pb-2 small">📌 Solicitudes Recibidas</h6>
-                  <ul class="list-unstyled border-last-none">
-                    <li *ngFor="let solicitud of notificaciones.solicitudes"
-                        class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
-
-                      <!-- 📷 Imagen -->
-                      <img [src]="apiFile + solicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
-
-                      <!-- 📝 Información -->
-                      <div>
-                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="!solicitud.vencida && !solicitud.porVencer">
-                          <strong>{{ solicitud.colegio }}</strong>
-                          <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-info': solicitud.desestimado}">
-                            {{ solicitud.desestimado ? ' ha desestimado una solicitud' : ' te ha solicitado una beca' }}
-                          </span>
-                          <br />
-                          <span class="text-muted d-block mt-1">
-                            {{ solicitud.fecha| date:'dd/MM/yyyy HH:mm' }}
-                          </span>
-                        </a>
-
-                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="solicitud.vencida">
-                          <strong>Solicitud de {{ solicitud.colegio }}</strong>
-                          <span class="text-danger"> se ha vencido.</span>
-                          <br />
-                          <span class="text-muted d-block mt-1">
-                            {{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}
-                          </span>
-                        </a>
-
-                        <a (click)="verSolicitud(solicitud)"  class="text-dark small" *ngIf="solicitud.porVencer && !solicitud.vencida">
-                          <strong>Solicitud de {{ solicitud.colegio }}</strong>
-                          <span class="text-warning"> esta por vencer.</span>
-                          <br />
-                          <span class="text-muted d-block mt-1">
-                            {{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}
-                          </span>
-                        </a>
-                      </div>
+            <div *Roles="[1]">
+              <ng-container *ngIf="notificaciones$ | async as notificaciones">
+                <div class="scroll-container">
+                  <!-- Tabs de navegación -->
+                  <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        [class.active]="tabSeleccionado === 'misSolicitudes'"
+                        (click)="tabSeleccionado = 'misSolicitudes'; $event.preventDefault(); $event.stopPropagation()">
+                        📌 Enviado ({{ notificaciones.misSolicitudes.length }})
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="nav-link"
+                        [class.active]="tabSeleccionado === 'solicitudes'"
+                        (click)="tabSeleccionado = 'solicitudes'; $event.preventDefault(); $event.stopPropagation()">
+                        📌 Recibido ({{ notificaciones.solicitudes.length }})
+                      </a>
                     </li>
                   </ul>
-                </div>
-                </ng-container>
 
-                <ng-template #sinNotificaciones>
-                  <div>
-                    <h6 class="text-primary fw-bold small pb-0 mb-0">Sin Notificaciones</h6>
+                  <!-- Contenido de "Mis Solicitudes" -->
+                  <div *ngIf="tabSeleccionado === 'misSolicitudes'">
+                    <div *ngIf="notificaciones.misSolicitudes.length > 0; else sinMisSolicitudes">
+                      <ul class="list-unstyled border-last-none">
+                        <li *ngFor="let miSolicitud of notificaciones.misSolicitudes"
+                            class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+
+                          <!-- 📷 Imagen -->
+                          <img [src]="apiFile + miSolicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+
+                          <!-- 📝 Info -->
+                          <div>
+                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="!miSolicitud.vencida && !miSolicitud.porVencer">
+                              <strong>{{ miSolicitud.colegio }}</strong>
+                              <span class="text-success"> ha resuelto tu solicitud.</span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+
+                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.vencida">
+                              <strong>Solicitud a {{ miSolicitud.colegio }}</strong>
+                              <span class="text-danger"> se ha vencido.</span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+
+                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.porVencer && !miSolicitud.vencida">
+                              <strong>Solicitud a {{ miSolicitud.colegio }}</strong>
+                              <span class="text-warning"> está por vencer.</span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <ng-template #sinMisSolicitudes>
+                      <div class="text-muted small">Sin solicitudes enviadas.</div>
+                    </ng-template>
                   </div>
-                </ng-template>
-              </div>
-            </ng-container>
+
+                  <!-- Contenido de "Solicitudes Recibidas" -->
+                  <div *ngIf="tabSeleccionado === 'solicitudes'">
+                    <div *ngIf="notificaciones.solicitudes.length > 0; else sinSolicitudesRecibidas">
+                      <ul class="list-unstyled border-last-none">
+                        <li *ngFor="let solicitud of notificaciones.solicitudes"
+                            class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
+
+                          <!-- 📷 Imagen -->
+                          <img [src]="apiFile + solicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+
+                          <!-- 📝 Info -->
+                          <div>
+                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="!solicitud.vencida && !solicitud.porVencer">
+                              <strong>{{ solicitud.colegio }}</strong>
+                              <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-info': solicitud.desestimado}">
+                                {{ solicitud.desestimado ? ' ha desestimado una solicitud' : ' te ha solicitado una beca' }}
+                              </span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+
+                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="solicitud.vencida">
+                              <strong>Solicitud de {{ solicitud.colegio }}</strong>
+                              <span class="text-danger"> se ha vencido.</span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+
+                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="solicitud.porVencer && !solicitud.vencida">
+                              <strong>Solicitud de {{ solicitud.colegio }}</strong>
+                              <span class="text-warning"> está por vencer.</span>
+                              <br />
+                              <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+                            </a>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <ng-template #sinSolicitudesRecibidas>
+                      <div class="text-muted small">Sin solicitudes recibidas.</div>
+                    </ng-template>
+                  </div>
+
+                </div>
+              </ng-container>
+
+            </div>
           </div>
 
         </li>

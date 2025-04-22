@@ -13,3 +13,55 @@
 .text-white span{
   font-size: 12px;
 }
+
+/* Mensaje de no datos */
+.empty-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #6c757d; /* Gris Bootstrap */
+  font-size: 1.1rem;
+  background-color: #f8f9fa; /* Fondo gris muy clarito */
+  border-radius: 10px;
+  border: 1px dashed #ced4da; /* Borde suave */
+  margin-bottom: 1rem;
+}
+
+/* Ícono más grande */
+.empty-message i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #0d6efd; /* Azul clarito */
+}
+
+.nombre-con-fondo {
+  position: relative;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.5); /* 👈 fondo semitransparente encima */
+  background-blend-mode: lighten; /* 👈 combina el color y la imagen */
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nombre-texto {
+  position: relative;
+  color: white; /* Color del texto encima */
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+

@@ -13,6 +13,7 @@ import { ErrorFormularioComponent } from "../../../../../../standalone/error-for
 import { BotonCargandoComponent } from "../../../../../../standalone/boton-cargando/boton-cargando.component";
 import { DarBajaSolicitudComponent } from './ver-solicitud/dar-baja-solicitud/dar-baja-solicitud.component';
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 
@@ -34,7 +35,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     ErrorFormularioComponent,
     BotonCargandoComponent,
     FormsModule,
-    FilterPipeModule
+    FilterPipeModule,
+    NgxDatatableModule
 ]
 })
 export class MisSolicitudesModule { }

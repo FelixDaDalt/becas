@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { NotificacionService } from 'src/servicios/notificacion.service';
 import { RedService } from 'src/servicios/red.service';
 import { MiSolicitud, Solicitud } from 'src/interfaces/notificaciones';
+import { ReporteErrorComponent } from 'src/standalone/reporte-problema/reporte.component';
 
 @Component({
   selector: 'app-header',
@@ -28,7 +29,10 @@ export class HeaderComponent implements AfterViewInit {
 
   user$ = this.usuarioService.me$.pipe(shareReplay(1));
   apiFile=environment.fileUrl
+
   notificaciones$=this.notificacionesService.notificacion$.pipe(shareReplay(1),tap(r=>console.log(r)))
+  notificacionesAdmin$=this.notificacionesService.notificacionAdmin$.pipe(shareReplay(1),tap(r=>console.log(r)))
+  tabSeleccionado = 'misSolicitudes';
 
   constructor(private usuarioService: usuarioService,
     private router: Router,
@@ -38,6 +42,8 @@ export class HeaderComponent implements AfterViewInit {
   private redService:RedService ) {
     (window as any).navegar = this.navegar.bind(this);
       this.usuarioService.obtenerMe()
+      const idRol = this.authService.getUserRole()
+      idRol == 0?this.notificacionesService.obtenerNotificacionesAdmin():
       this.notificacionesService.obtenerNotificaciones()
   }
 
@@ -91,4 +97,10 @@ export class HeaderComponent implements AfterViewInit {
       idRed:solicitud.id_red,idSolicitud:solicitud.id
     }})
   }
+
+  reportar(){
+      const tycModal = this.modalService.open(ReporteErrorComponent, {
+        size: 'xl'
+      });
+    }
 }

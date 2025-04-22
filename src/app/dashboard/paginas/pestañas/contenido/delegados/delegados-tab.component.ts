@@ -18,79 +18,79 @@ import { PerfilUsuarioComponent } from 'src/standalone/perfil-usuario/perfil-usu
   styleUrls: ['./delegados-tab.component.css']
 })
 export class DelegadosTabComponent{
-  apiFile=environment.fileUrl
-  cachedelegados = false;
-  delegados$=this.delegadoService.delegados$.pipe(shareReplay(1))
+  // apiFile=environment.fileUrl
+  // cachedelegados = false;
+  // delegados$=this.delegadoService.delegados$.pipe(shareReplay(1))
 
-  constructor(
-    private delegadoService:DelegadoService,
-    private adminService:AdminService,
-    private activeRoute: ActivatedRoute,
-    private router: Router,
-    private modalService:NgbModal){}
+  // constructor(
+  //   private delegadoService:DelegadoService,
+  //   private adminService:AdminService,
+  //   private activeRoute: ActivatedRoute,
+  //   private router: Router,
+  //   private modalService:NgbModal){}
 
-  ngOnInit(): void {
-    if(!this.cachedelegados){
-      this.delegadoService.obtenerDelegados()
-      this.cachedelegados = true
-    }
-  }
+  // ngOnInit(): void {
+  //   if(!this.cachedelegados){
+  //     this.delegadoService.obtenerDelegados()
+  //     this.cachedelegados = true
+  //   }
+  // }
 
-  reiniciarPassword(id:number){
-    this.adminService.reiniciarPassword('user',id)
-  }
+  // reiniciarPassword(id:number){
+  //   this.adminService.reiniciarPassword('user',id)
+  // }
 
-  suspender(idResponsable:number){
-    this.adminService.suspenderUsuario(idResponsable).subscribe(respuesta=>
-      this.delegadoService.obtenerDelegados()
-    )
-  }
+  // suspender(idResponsable:number){
+  //   this.adminService.suspenderUsuario(idResponsable).subscribe(respuesta=>
+  //     this.delegadoService.obtenerDelegados()
+  //   )
+  // }
 
-  alta(){
-    this.router.navigate(['../alta-delegado'], {relativeTo: this.activeRoute })
-  }
+  // alta(){
+  //   this.router.navigate(['../alta-delegado'], {relativeTo: this.activeRoute })
+  // }
 
-  verUsuario(idResponsable:number){
-    const modalUsuario = this.modalService.open(PerfilUsuarioComponent,{backdrop:'static'})
-    modalUsuario.componentInstance.idUsuario = idResponsable
-  }
+  // verUsuario(idResponsable:number){
+  //   const modalUsuario = this.modalService.open(PerfilUsuarioComponent,{backdrop:'static'})
+  //   modalUsuario.componentInstance.idUsuario = idResponsable
+  // }
 
-  confirmarEliminar(usuario:Usuario){
-    const modalEliminar = this.modalService.open(ConfirmarComponent,{backdrop:'static'})
-    modalEliminar.componentInstance.itemAEliminar = usuario.apellido + ', '+ usuario.nombre
-    modalEliminar.result.then(r=>{
-      if(r)
-        this.eliminarUsuario(usuario.id)
-    })
-  }
+  // confirmarEliminar(usuario:Usuario){
+  //   const modalEliminar = this.modalService.open(ConfirmarComponent,{backdrop:'static'})
+  //   modalEliminar.componentInstance.itemAEliminar = usuario.apellido + ', '+ usuario.nombre
+  //   modalEliminar.result.then(r=>{
+  //     if(r)
+  //       this.eliminarUsuario(usuario.id)
+  //   })
+  // }
 
-  private eliminarUsuario(idUsuario:number){
-    this.adminService.eliminarUsuario(idUsuario).subscribe(respuesta=>{
-      this.delegadoService.obtenerDelegados()
-    })
-  }
+  // private eliminarUsuario(idUsuario:number){
+  //   this.adminService.eliminarUsuario(idUsuario).subscribe(respuesta=>{
+  //     this.delegadoService.obtenerDelegados()
+  //   })
+  // }
 
-  editar(Delegado:Usuario){
-    const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
-    modalEditar.componentInstance.idUsuario = Delegado.id
-    modalEditar.componentInstance.idRol = Delegado.id_rol
-    modalEditar.result.then(r=>{
-      if(r)
-        this.delegadoService.obtenerDelegados()
-    })
-  }
+  // editar(Delegado:Usuario){
+  //   const modalEditar = this.modalService.open(EditarMisDatosComponent,{backdrop:'static'})
+  //   modalEditar.componentInstance.idUsuario = Delegado.id
+  //   modalEditar.componentInstance.idRol = Delegado.id_rol
+  //   modalEditar.result.then(r=>{
+  //     if(r)
+  //       this.delegadoService.obtenerDelegados()
+  //   })
+  // }
 
-  filter: any;
-  busqueda: string = '';
-  updateFilter() {
-    this.filter = {
-      $or: [
-        { dni: this.busqueda },
-        { nombre: this.busqueda },
-        { apellido: this.busqueda },
-        { telefono: this.busqueda },
-        { celular: this.busqueda }
-      ]
-    };
-  }
+  // filter: any;
+  // busqueda: string = '';
+  // updateFilter() {
+  //   this.filter = {
+  //     $or: [
+  //       { dni: this.busqueda },
+  //       { nombre: this.busqueda },
+  //       { apellido: this.busqueda },
+  //       { telefono: this.busqueda },
+  //       { celular: this.busqueda }
+  //     ]
+  //   };
+  // }
 }

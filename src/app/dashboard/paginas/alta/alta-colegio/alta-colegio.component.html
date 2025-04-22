@@ -129,7 +129,7 @@
 
 
                   </div>
-                  <span class="ms-5 text-primary">Zona</span>
+                  <span class="ms-5 text-primary">Provincia</span>
                   <app-error-formulario [control]="wizardForm.get('ubicacion.id_zona')"></app-error-formulario>
                 </label>
               </div>
@@ -168,6 +168,44 @@
           <div *ngIf="currentStep === 3" formGroupName="personalizacion">
             <h5>Personalización</h5>
             <div class="row">
+
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-box"></i></span>
+                    <ng-select
+                      class="form-control form-control-sm"
+                      [items]="formaPago$ | async"
+                      bindLabel="nombre"
+                      bindValue="id"
+                      placeholder="Seleccione una Forma de Pago"
+                      formControlName="id_forma_pago">
+                    </ng-select>
+                  </div>
+                  <span class="ms-5 text-primary">Forma de Pago</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.id_forma_pago')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-box"></i></span>
+                    <ng-select
+                      class="form-control form-control-sm"
+                      [items]="planPago$ | async"
+                      bindLabel="nombre"
+                      bindValue="id"
+                      placeholder="Seleccione una Plan de Pago"
+                      formControlName="id_plan">
+                    </ng-select>
+                  </div>
+                  <span class="ms-5 text-primary">Plan de Pago</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.id_plan')"></app-error-formulario>
+                </label>
+              </div>
 
               <div class="col-12 mb-5">
                 <div class="col-12 mb-3">

@@ -43,6 +43,12 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/autorizados/autorizados-tab.module').then(m => m.AutorizadosTabModule)
     },
     {
+      path:'tablon',
+      canActivate: [RoleGuard],
+      data: { roles: [0] },
+      loadChildren: () => import('./contenido/dashboard/dashboard.module').then(m => m.DashboardModule)
+    },
+    {
       path:'redes',
       canActivate: [RoleGuard],
       data: { roles: [0,1,2,3] },
@@ -55,15 +61,16 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/configuraciones-tab/configuraciones-tab.module').then(m => m.ConfiguracionesTabModule)
     },
     {
+      path:'tareas',
+      canActivate: [RoleGuard],
+      data: { roles: [0] },
+      loadChildren: () => import('./contenido/tareas/tareas.module').then(m => m.TareasModule)
+    },
+    {
       path:'registros',
       canActivate: [RoleGuard],
       data: { roles: [0,1,2] },
       loadChildren: () => import('./contenido/registro/registro-tab.module').then(m => m.RegistroTabModule)
-    },
-    {
-      path:'',
-      redirectTo:'redes',
-      pathMatch:'full'
     }]
   }
 ];

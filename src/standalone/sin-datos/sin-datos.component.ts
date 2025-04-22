@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./sin-datos.component.css']
 })
 export class SinDatosComponent {
-  @Input() mensaje = 'Parece que no hay nada por aquí. ¿Qué tal si comienzas a agregar algunos?'
+  @Input() mensaje = ''
 
   constructor(){
 

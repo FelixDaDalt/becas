@@ -44,4 +44,43 @@ export class AutorizadoService {
   }
 
 
+  obtenerAutorizado(idUsuario:number){
+    return this.http.get(`${environment.apiUrl}${environment.endpoint.autorizado.obtener}?idAutorizado=${idUsuario}`).pipe(
+      take(1),
+      map((respuesta: any) => respuesta.data)
+  )}
+
+  editarAutorizado(usuario:any){
+    return this.http.put(`${environment.apiUrl}${environment.endpoint.autorizado.editar}`,usuario).pipe(
+      take(1),
+      tap((respuesta: any) => {
+        this.toast.success(respuesta.mensaje)
+      })
+  )}
+
+  suspenderAutorizado(idAutorizado: number) {
+    return this.http
+      .put(
+        `${environment.apiUrl}${environment.endpoint.autorizado.suspender}?idAutorizado=${idAutorizado}`,
+        null
+      )
+      .pipe(
+        take(1),
+        tap((respuesta: any) => {
+          this.toast.success(respuesta.mensaje);
+        })
+      );
+  }
+
+  eliminarAutorizado(idUsuario:number){
+    return this.http.put(`${environment.apiUrl}${environment.endpoint.autorizado.borrar}?idAutorizado=${idUsuario}`,null)
+    .pipe(
+      take(1),
+      tap((respuesta: any) => {
+        this.toast.success(respuesta.mensaje);
+      })
+    )
+  }
+
+
 }
