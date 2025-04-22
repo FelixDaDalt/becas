@@ -33,7 +33,6 @@ export class EjecucionesComponent {
       fechaHasta: this.filtros.fechaHasta,
       tipo: this.filtros.tipo // 👈 tipo ya es array
     }).pipe(take(1)).subscribe(resp => {
-      console.log(resp)
       this.historial = resp.data;
       this.paginaActual = resp.paginaActual;
       this.totalPaginas = resp.paginas;

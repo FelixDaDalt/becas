@@ -122,4 +122,32 @@ export class DetalleColegioComponent implements OnInit, OnDestroy {
     })
   }
 
+  filterResponsable: any;
+  busquedaResponsable: string = '';
+  updateFilterResponsable() {
+    this.filterResponsable = {
+      $or: [
+        { dni: this.busquedaResponsable },
+        { nombre: this.busquedaResponsable },
+        { apellido: this.busquedaResponsable },
+        { telefono: this.busquedaResponsable },
+        { celular: this.busquedaResponsable }
+      ]
+    };
+  }
+
+  filterAutorizados: any;
+  busquedaAutorizados: string = '';
+  updateFilterAutorizados() {
+    this.filterAutorizados = {
+      $or: [
+        { dni: this.busquedaAutorizados },
+        { nombre: this.busquedaAutorizados },
+        { apellido: this.busquedaAutorizados },
+        { telefono: this.busquedaAutorizados },
+        { celular: this.busquedaAutorizados }
+      ]
+    };
+  }
+
 }

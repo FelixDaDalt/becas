@@ -56,6 +56,13 @@
             </ng-template>
           </ngx-datatable-column>
 
+          <!-- Zona  -->
+          <ngx-datatable-column name="Zona" prop="id_zona_zona_localidad" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.id_zona_zona_localidad?.nombre}}, {{ row.id_zona_zona_localidad?.id_zona_zona?.nombre}}
+            </ng-template>
+          </ngx-datatable-column>
+
           <!-- Pago-->
           <ngx-datatable-column name="Forma Pago" prop="id_forma_pago_forma_pago" [sortable]="true" *Roles="[0]">
             <ng-template let-row="row" ngx-datatable-cell-template>

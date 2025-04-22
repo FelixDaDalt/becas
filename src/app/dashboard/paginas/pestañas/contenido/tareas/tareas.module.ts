@@ -1,3 +1,4 @@
+import { SuperAdminDirective } from 'src/directiva/superAdmin.directiva';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -24,7 +25,8 @@ import { EjecucionesComponent } from './ejecuciones/ejecuciones.component';
     SinDatosComponent,
     NgbTooltipModule,
     FormsModule,
-    NgbAccordionModule
+    NgbAccordionModule,
+    SuperAdminDirective
 ]
 })
 export class TareasModule { }

@@ -1,5 +1,5 @@
 <!-- 🎯 Historial de Ejecuciones -->
-<div class="mt-5">
+
   <h4 class="text-primary mb-3">Historial de Ejecuciones</h4>
 
   <!-- 🔎 Filtros -->
@@ -97,7 +97,7 @@
                   📄 <strong>Beca ID:</strong> {{ log.id_beca_solicitud }} |
                   {{ log.tipo_notificacion }} |
                   <i class="bi bi-send"></i> Solicitante: {{ log.email_colegio_solicitante }}
-                  → <i class="bi bi-building"></i> Slicitado: {{ log.email_colegio_ofrecio }}
+                  → <i class="bi bi-building"></i> Ofertante: {{ log.email_colegio_ofrecio }}
                 </small>
               </li>
             </ul>
@@ -112,7 +112,7 @@
     </div>
   </div>
 
-</div>
+
 <ng-template #sinHistorial>
   <div class="alert alert-warning">
     No hay ejecuciones registradas.

@@ -106,4 +106,9 @@ export class AuthService {
     const rolUsuario = this.getUserRole();
     return rolesPermitidos.includes(rolUsuario);
   }
+
+  getSuperAdmin(): number {
+    const user = this.getUser();
+    return user?.superAdmin ;
+  }
 }

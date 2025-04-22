@@ -41,7 +41,6 @@ export class PanelRedComponent implements OnInit, OnDestroy{
   setTimeout(() =>
     this.roleDirective.currentRole.pipe(take(1)).subscribe(
       (rol) => {
-        console.log(rol)
         if(rol)
         this.rolActual = rol
       }

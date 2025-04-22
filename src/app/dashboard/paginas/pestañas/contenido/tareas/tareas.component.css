@@ -30,3 +30,13 @@
 .spinner-content {
   text-align: center;
 }
+
+.section-block {
+  background: #ffffff; /* Fondo blanco o el que uses */
+  border: 1px solid #dee2e6; /* 🎯 Borde gris MUY claro */
+  border-radius: 1rem; /* 🎯 Esquinas redondeadas suaves */
+  padding: 2rem 1.5rem; /* 🎯 Espaciado interno */
+  margin-bottom: 2rem; /* 🎯 Separación entre secciones */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* 🎯 Sombra muy sutil */
+  transition: all 0.3s ease; /* 🎯 Animación sutil */
+}

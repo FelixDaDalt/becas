@@ -50,7 +50,6 @@ export class PlanesComponent {
 
   seleccionarPlan(planSeleccionado: plan) {
     this.planSeleccionado = planSeleccionado
-    console.log(planSeleccionado)
     // 🔥 Patchea el formulario con el plan seleccionado
     this.planForm.patchValue({
       id: planSeleccionado.id,

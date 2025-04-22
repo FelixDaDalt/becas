@@ -9,6 +9,8 @@ import { RoleDirective } from 'src/directiva/role.directiva';
 import { RegistroColegioComponent } from './registro-colegio/registro-colegio.component';
 import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { FilterPipeModule } from 'ngx-filter-pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     RegistroColegioComponent,
     NgbTooltipModule,
     NgbDropdownModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FilterPipeModule,
+    FormsModule
 ]
 })
 export class DetalleColegioModule { }

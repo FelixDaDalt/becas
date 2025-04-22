@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PestañasComponent } from './pestañas.component';
 import { RoleGuard } from 'src/core/roleGuard';
+import { SuperAdminGuard } from 'src/core/superAdminGuard';
 
 // ACA RUTAS DE LAS PESTAÑAS //
 const routes: Routes = [

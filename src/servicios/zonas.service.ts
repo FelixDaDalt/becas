@@ -84,10 +84,11 @@ export class ZonasService {
   }
 
   borrarLocalidad(idLocalidad:number){
-    this.http.put(`${environment.apiUrl}${environment.endpoint.localidad.borrar}?id=${idLocalidad}`,null).pipe(
-      take(1)).subscribe((respuesta:any)=>{
+    return this.http.put(`${environment.apiUrl}${environment.endpoint.localidad.borrar}?id=${idLocalidad}`,null).pipe(
+      take(1),
+      tap((respuesta:any)=>{
         this.toast.success(respuesta.mensaje)
         this.actualizarListado()
-      })
+      }))
   }
 }

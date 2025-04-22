@@ -42,12 +42,12 @@
           <small class="text-muted">{{ detalle.colegio.localidad }}, {{ detalle.colegio.provincia }} ({{ detalle.colegio.cp }})</small>
 
           <ul class="list-group list-group-flush text-start mt-3">
-            <li class="list-group-item"><i class="bi bi-credit-card-2-front me-2"></i><strong>CUIT:</strong> {{ detalle.colegio.cuit }}</li>
-            <li class="list-group-item"><i class="bi bi-geo me-2"></i><strong>Dirección:</strong> {{ detalle.colegio.direccion_calle }} {{ detalle.colegio.direccion_numero }}</li>
-            <li class="list-group-item"><i class="bi bi-map me-2"></i><strong>Zona:</strong> {{ detalle.colegio.id_zona_zona_localidad?.id_zona_zona?.nombre }}</li>
-            <li class="list-group-item"><i class="bi bi-pin-map me-2"></i><strong>Localidad:</strong> {{ detalle.colegio.id_zona_zona_localidad?.nombre }}</li>
-            <li class="list-group-item"><i class="bi bi-telephone me-2"></i><strong>Teléfono:</strong> {{ detalle.colegio.telefono }}</li>
-            <li class="list-group-item"><i class="bi bi-envelope me-2"></i><strong>Email:</strong> {{ detalle.colegio.email || 'No definido' }}</li>
+            <li class="list-group-item"><i class="bi bi-credit-card-2-front text-primary me-2"></i><strong class="text-primary">CUIT:</strong> {{ detalle.colegio.cuit }}</li>
+            <li class="list-group-item"><i class="bi bi-geo text-primary me-2"></i><strong class="text-primary">Dirección:</strong> {{ detalle.colegio.direccion_calle }} {{ detalle.colegio.direccion_numero }}</li>
+            <li class="list-group-item"><i class="bi bi-crosshair text-primary me-2"></i><strong class="text-primary">Zona:</strong> {{ detalle.colegio.id_zona_zona_localidad?.nombre }}, {{ detalle.colegio.id_zona_zona_localidad?.id_zona_zona?.nombre }}</li>
+            <li class="list-group-item"><i class="bi bi-pin-map text-primary me-2"></i><strong class="text-primary">Localidad:</strong> {{ detalle.colegio.id_zona_zona_localidad?.nombre }}</li>
+            <li class="list-group-item"><i class="bi bi-telephone text-primary me-2"></i><strong class="text-primary">Teléfono:</strong> {{ detalle.colegio.telefono }}</li>
+            <li class="list-group-item"><i class="bi bi-envelope text-primary me-2"></i><strong class="text-primary">Email:</strong> {{ detalle.colegio.email || 'No definido' }}</li>
           </ul>
         </div>
       </div>

@@ -22,7 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           // Errores del lado del cliente
           errorMessage = `${error.error.message}`;
         } else {
-          console.log(error)
           // Errores del lado del servidor
           errorTitle = `${error.error.Error}`;
           errorMessage = `${error.error.Descripcion}`;

@@ -38,7 +38,6 @@ export class EditarAutorizadoComponent implements OnInit{
     if(this.idAutorizado)
       this.autorizadoService.obtenerAutorizado(this.idAutorizado).pipe(take(1),shareReplay(1)).subscribe(
         autorizado=>{
-          console.log(autorizado)
           this.formularioEdicion.patchValue(autorizado)}
       )
   }

@@ -60,8 +60,6 @@ export class DashboardComponent implements OnInit {
   notificaciones$ = this.notificacionesService.notificacionAdmin$.pipe(shareReplay(1))
   dashboard$ = this.dashboardService.dashboard$.pipe(
     tap(dashboard => {
-      console.log(dashboard);
-
       if (dashboard && dashboard.becasPorEstado) {
         this.chartOptions = {
           chart: {

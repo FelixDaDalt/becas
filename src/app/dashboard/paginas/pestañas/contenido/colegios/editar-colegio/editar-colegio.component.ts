@@ -31,7 +31,6 @@ export class EditarColegioComponent implements OnInit {
     zonas$=this.zonaService.zonas$.pipe(shareReplay(1))
     localidades$ = this.zonas$.pipe(
       map(zonas => {
-        console.log(zonas)
         // Crear un mapeo de id_zona a nombre de zona
         const zonaMap = zonas.reduce((acc:any, zona:any) => {
           acc[zona.id] = zona.nombre;

@@ -12,6 +12,7 @@ export interface CurrentUser {
   id_colegio_colegio: IdColegioColegio
   id_rol_role: IdRolRole
   foto:string
+  superAdmin?:number
 }
 
 export interface IdColegioColegio {

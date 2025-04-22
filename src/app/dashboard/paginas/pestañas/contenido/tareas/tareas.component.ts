@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { shareReplay, tap } from 'rxjs';
+import { finalize, shareReplay, tap } from 'rxjs';
 import { plan } from 'src/interfaces/plan';
 import { zona_localidad, zona } from 'src/interfaces/zona';
 import { PlanesService } from 'src/servicios/planes.service';
@@ -54,48 +54,55 @@ export class TareasComponent {
     this.loading = true
 
     if (tarea.accion === 'procesarBecasBaja') {
-      this.tareasService.ejecutarBajas().subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarBajas().pipe(
+        finalize(() => this.loading = false)
+      ).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
-        this.loading = false
-
       })
       return
     }
 
     if (tarea.accion === 'procesarBecasPorVencer') {
-      this.tareasService.ejecutarPorVencer().subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarPorVencer().pipe(
+        finalize(() => this.loading = false)
+      ).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
-        this.loading = false
       })
       return
     }
 
     if (tarea.accion === 'procesarBecasVencidas') {
-      this.tareasService.ejecutarVencidas().subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarVencidas().pipe(
+        finalize(() => this.loading = false)
+        ).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
-        this.loading = false
       })
       return
     }
 
     if (tarea.accion === 'verificarRedes') {
       this.verificarRed = true
-      this.tareasService.comprobarRed().subscribe((r:any)=>{
-        console.log(r)
+      this.tareasService.comprobarRed().pipe(
+        finalize(() => this.loading = false)
+      ).subscribe((r:any)=>{
         this.respuesta = r
-        this.loading = false
       })
       return
     }
   }
 
   sincronizarRed(idRed:number){
-    this.tareasService.sincronizarRed(idRed).subscribe(r=>{
+    this.loading = true
+    this.tareasService.sincronizarRed(idRed).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe(r=>{
       this.sincronizaciones[idRed] = r;
-      this.tareasService.comprobarRed(idRed).subscribe((r:any)=>{
+      this.tareasService.comprobarRed(idRed).pipe(
+        finalize(() => this.loading = false)
+      ).subscribe((r:any)=>{
         if (r && r.length > 0) {
           const nuevaRed = r[0]; // 🔥 porque comprobarRed devuelve array
 

@@ -64,11 +64,32 @@
                   <div class="sh-5 d-flex align-items-center lh-1-25">Localidad</div>
                 </div>
                 <div class="col-auto">
-                  <div class="sh-5 d-flex align-items-center">{{detalle.colegio.localidad}}, {{detalle.colegio.id_zona_zona_localidad?.id_zona_zona?.nombre}}, ({{detalle.colegio.cp}})</div>
+                  <div class="sh-5 d-flex align-items-center">{{detalle.colegio.localidad}}, ({{detalle.colegio.cp}})</div>
                 </div>
+
               </div>
             </div>
           </div>
+          <div class="row g-0 align-items-center mb-2">
+            <div class="col-auto">
+              <div class="border border-primary sw-5 sh-5 rounded-xl d-flex justify-content-center align-items-center">
+                <i class="bi bi-crosshair text-primary"></i>
+              </div>
+            </div>
+            <div class="col ps-3">
+              <div class="row g-0">
+                <div class="col">
+                  <div class="sh-5 d-flex align-items-center lh-1-25">Zona</div>
+                </div>
+                <div class="col-auto">
+                  <div class="sh-5 d-flex align-items-center">{{detalle.colegio.id_zona_zona_localidad?.id_zona_zona?.nombre}},{{detalle.colegio.id_zona_zona_localidad?.nombre}} </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
           <!--Telefono-->
           <div class="row g-0 align-items-center mb-2">
             <div class="col-auto">
@@ -121,133 +142,121 @@
 
         <!-- Buscador -->
         <div class="row mb-3 g-2">
-          <div class="col mb-1">
-            <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
-              <input class="form-control" placeholder="Search" />
-              <span class="search-magnifier-icon">
-                <i data-acorn-icon="search"></i>
-              </span>
-              <span class="search-delete-icon d-none">
-                <i data-acorn-icon="close"></i>
-              </span>
-            </div>
-          </div>
-          <div class="col-auto text-end mb-1">
-            <div class="dropdown-as-select d-inline-block" data-childselector="span">
-              <button class="btn p-0 shadow" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <span class="btn btn-foreground-alternate dropdown-toggle sw-13">All</span>
-              </button>
-              <div class="dropdown-menu shadow dropdown-menu-end">
-                <a class="dropdown-item active" href="#">All</a>
-                <a class="dropdown-item" href="#">Active</a>
-                <a class="dropdown-item" href="#">Inactive</a>
-              </div>
-            </div>
+          <div class="input-group input-group-sm mb-3">
+            <!-- Alta -->
+
+            <!-- Búsqueda -->
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1"
+                   [(ngModel)]="busquedaResponsable" (ngModelChange)="updateFilterResponsable()">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="bi bi-search text-primary"></i>
+            </span>
           </div>
         </div>
         <!-- Buscador -->
 
         <!-- Listado -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5" *ngIf="detalle.usuarios.responsables.length>0;else sinDatos">
-          <ngx-datatable
-  class="bootstrap"
-  [rows]="detalle.usuarios.responsables"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [rowHeight]="'auto'"
-  [limit]="10"
-  [scrollbarH]="true">
 
-  <!-- Foto -->
-  <ngx-datatable-column name="Foto" [sortable]="false" [width]="80">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <div class="text-center">
-        <img [src]="apiFile + row.foto" alt="Foto" class="rounded-circle" style="height: 40px; width: 40px; object-fit: cover;">
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
+        <ng-container *ngIf="(detalle.usuarios.responsables | filterBy:filterResponsable).length>0;else sinDatos">
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5">
+            <ngx-datatable
+              class="bootstrap"
+              [rows]="detalle.usuarios.responsables | filterBy:filterResponsable"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="10"
+              [scrollbarH]="true">
 
-  <!-- DNI -->
-  <ngx-datatable-column name="DNI" prop="dni" [sortable]="true" [width]="130">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.dni }}
-    </ng-template>
-  </ngx-datatable-column>
+              <!-- Foto -->
+              <ngx-datatable-column name="Foto" [sortable]="false" [width]="80">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
+                    <img [src]="apiFile + row.foto" alt="Foto" class="rounded-circle" style="height: 40px; width: 40px; object-fit: cover;">
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
 
-  <!-- Apellido y Nombre -->
-  <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.apellido }}, {{ row.nombre }}
-    </ng-template>
-  </ngx-datatable-column>
+              <!-- DNI -->
+              <ngx-datatable-column name="DNI" prop="dni" [sortable]="true" [width]="130">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.dni }}
+                </ng-template>
+              </ngx-datatable-column>
 
-  <!-- Colegio -->
-  <ngx-datatable-column name="Colegio" prop="id_colegio_colegio.nombre" [sortable]="true">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      {{ row.id_colegio_colegio?.nombre }}
-    </ng-template>
-  </ngx-datatable-column>
+              <!-- Apellido y Nombre -->
+              <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.apellido }}, {{ row.nombre }}
+                </ng-template>
+              </ngx-datatable-column>
 
-  <!-- Estado -->
-  <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <div class="text-center">
-        <span class="badge rounded-pill"
-              [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
-          {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
-        </span>
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
+              <!-- Colegio -->
+              <ngx-datatable-column name="Colegio" prop="id_colegio_colegio.nombre" [sortable]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.id_colegio_colegio?.nombre }}
+                </ng-template>
+              </ngx-datatable-column>
 
-  <!-- Acciones -->
-  <ngx-datatable-column name="Acciones" [sortable]="false" [width]="260">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <div class="text-center">
+              <!-- Estado -->
+              <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
+                    <span class="badge rounded-pill"
+                          [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
+                      {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
+                    </span>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
 
-        <button type="button"
-          class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-          ngbTooltip="Reiniciar Contraseña"
-          container="body"
-          placement="bottom"
-          (click)="reiniciarPassword(row.id)">
-          <i class="bi bi-key-fill"></i>
-        </button>
+              <!-- Acciones -->
+              <ngx-datatable-column name="Acciones" [sortable]="false" [width]="260">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
 
-        <button type="button"
-          class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-          ngbTooltip="Suspender Ingreso"
-          container="body"
-          placement="bottom"
-          (click)="suspender(row.id)">
-          <i [ngClass]="row.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
-        </button>
+                    <button type="button"
+                      class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                      ngbTooltip="Reiniciar Contraseña"
+                      container="body"
+                      placement="bottom"
+                      (click)="reiniciarPassword(row.id)">
+                      <i class="bi bi-key-fill"></i>
+                    </button>
 
-        <div ngbDropdown class="btn-group" container="body">
-          <button
-            class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-            ngbDropdownToggle>
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <div
-            ngbDropdownMenu
-            aria-labelledby="dropdownMenu"
-            class="dropdown-menu-end">
-            <button class="dropdown-item" (click)="verUsuario(row.id)">Ver</button>
-            <button class="dropdown-item" (click)="editar(row)">Editar</button>
-            <button class="dropdown-item" (click)="confirmarEliminar(row)">Eliminar</button>
+                    <button type="button"
+                      class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                      ngbTooltip="Suspender Ingreso"
+                      container="body"
+                      placement="bottom"
+                      (click)="suspender(row.id)">
+                      <i [ngClass]="row.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
+                    </button>
+
+                    <div ngbDropdown class="btn-group" container="body">
+                      <button
+                        class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
+                        ngbDropdownToggle>
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <div
+                        ngbDropdownMenu
+                        aria-labelledby="dropdownMenu"
+                        class="dropdown-menu-end">
+                        <button class="dropdown-item" (click)="verUsuario(row.id)">Ver</button>
+                        <button class="dropdown-item" (click)="editar(row)">Editar</button>
+                        <button class="dropdown-item" (click)="confirmarEliminar(row)">Eliminar</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+            </ngx-datatable>
           </div>
-        </div>
-
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
-
-</ngx-datatable>
-
-        </div>
+        </ng-container>
         <!-- Listado -->
       </div>
       <!-- Responsables -->
@@ -349,97 +358,85 @@
 
           <!-- Buscador -->
           <div class="row mb-3 g-2">
-            <div class="col mb-1">
-              <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 shadow bg-foreground">
-                <input class="form-control" placeholder="Search" />
-                <span class="search-magnifier-icon">
-                  <i data-acorn-icon="search"></i>
-                </span>
-                <span class="search-delete-icon d-none">
-                  <i data-acorn-icon="close"></i>
-                </span>
-              </div>
-            </div>
-            <div class="col-auto text-end mb-1">
-              <div class="dropdown-as-select d-inline-block" data-childselector="span">
-                <button class="btn p-0 shadow" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                  <span class="btn btn-foreground-alternate dropdown-toggle sw-13">All</span>
-                </button>
-                <div class="dropdown-menu shadow dropdown-menu-end">
-                  <a class="dropdown-item active" href="#">All</a>
-                  <a class="dropdown-item" href="#">Active</a>
-                  <a class="dropdown-item" href="#">Inactive</a>
-                </div>
-              </div>
+            <div class="input-group input-group-sm mb-3">
+              <!-- Alta -->
+
+              <!-- Búsqueda -->
+              <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1"
+                     [(ngModel)]="busquedaAutorizados" (ngModelChange)="updateFilterAutorizados()">
+              <span class="input-group-text" id="basic-addon1">
+                <i class="bi bi-search text-primary"></i>
+              </span>
             </div>
           </div>
           <!-- Buscador -->
 
           <!-- Listado -->
-          <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5" *ngIf="detalle.autorizados.length>0;else sinDatos">
+          <ng-container *ngIf="(detalle.autorizados | filterBy:filterAutorizados).length>0;else sinDatos">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xxl-2 g-2 mb-5">
 
-            <ngx-datatable
-            class="bootstrap"
-            [rows]="detalle.autorizados"
-            [columnMode]="'force'"
-            [headerHeight]="50"
-            [footerHeight]="50"
-            [rowHeight]="'auto'"
-            [limit]="10"
-            [scrollbarH]="true">
+              <ngx-datatable
+              class="bootstrap"
+              [rows]="detalle.autorizados | filterBy:filterAutorizados"
+              [columnMode]="'force'"
+              [headerHeight]="50"
+              [footerHeight]="50"
+              [rowHeight]="'auto'"
+              [limit]="10"
+              [scrollbarH]="true">
 
-            <!-- Apellido y Nombre -->
-            <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.apellido }}, {{ row.nombre }}
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- Apellido y Nombre -->
+              <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.apellido }}, {{ row.nombre }}
+                </ng-template>
+              </ngx-datatable-column>
 
-            <!-- DNI -->
-            <ngx-datatable-column name="DNI" prop="dni" [sortable]="true" [width]="130">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.dni }}
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- DNI -->
+              <ngx-datatable-column name="DNI" prop="dni" [sortable]="true" [width]="130">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.dni }}
+                </ng-template>
+              </ngx-datatable-column>
 
-            <!-- Teléfono -->
-            <ngx-datatable-column name="Teléfono" prop="telefono" [sortable]="true" [width]="150">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.telefono }}
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- Teléfono -->
+              <ngx-datatable-column name="Teléfono" prop="telefono" [sortable]="true" [width]="150">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.telefono }}
+                </ng-template>
+              </ngx-datatable-column>
 
-            <!-- Celular -->
-            <ngx-datatable-column name="Celular" prop="celular" [sortable]="true" [width]="150">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.celular }}
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- Celular -->
+              <ngx-datatable-column name="Celular" prop="celular" [sortable]="true" [width]="150">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.celular }}
+                </ng-template>
+              </ngx-datatable-column>
 
-            <!-- Email -->
-            <ngx-datatable-column name="Email" prop="email" [sortable]="true">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row.email }}
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- Email -->
+              <ngx-datatable-column name="Email" prop="email" [sortable]="true">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.email }}
+                </ng-template>
+              </ngx-datatable-column>
 
-            <!-- Estado -->
-            <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                <div class="text-center">
-                  <span class="badge rounded-pill"
-                        [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
-                    {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
-                  </span>
-                </div>
-              </ng-template>
-            </ngx-datatable-column>
+              <!-- Estado -->
+              <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
+                    <span class="badge rounded-pill"
+                          [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
+                      {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
+                    </span>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
 
-          </ngx-datatable>
+            </ngx-datatable>
 
 
-          </div>
+            </div>
+          </ng-container>
           <!-- Listado -->
       </div>
       <!-- Autorizados -->

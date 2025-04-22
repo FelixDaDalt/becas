@@ -5,6 +5,7 @@ import { PestañasRoutingModule } from './pestañas-routing.module';
 import { RoleDirective } from 'src/directiva/role.directiva';
 
 
+
 @NgModule({
   declarations: [
     PestañasComponent
@@ -12,9 +13,7 @@ import { RoleDirective } from 'src/directiva/role.directiva';
   imports: [
     CommonModule,
     PestañasRoutingModule,
-    RoleDirective,
-
-
-  ]
+    RoleDirective
+   ]
 })
 export class PestañasModule { }

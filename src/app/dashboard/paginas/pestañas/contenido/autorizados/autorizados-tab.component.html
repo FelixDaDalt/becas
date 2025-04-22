@@ -26,17 +26,7 @@
     [limit]="10"
     [scrollbarH]="true">
 
-        <!-- Estado -->
-        <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            <div class="text-center">
-              <span class="badge rounded-pill"
-                    [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
-                {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
-              </span>
-            </div>
-          </ng-template>
-        </ngx-datatable-column>
+
 
     <!-- Apellido y Nombre -->
     <ngx-datatable-column name="Apellido y Nombre" prop="apellido" [sortable]="true">
@@ -73,13 +63,25 @@
       </ng-template>
     </ngx-datatable-column>
 
+      <!-- Estado -->
+      <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="text-center">
+            <span class="badge rounded-pill"
+                  [ngClass]="row.suspendido == 1 ? 'bg-danger' : 'bg-success'">
+              {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
+            </span>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
     <!-- Acciones -->
     <ngx-datatable-column name="Acciones" [sortable]="false" [width]="200">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div class="text-center">
           <button type="button"
             class="btn btn-outline-primary btn-icon btn-icon-only btn-sm me-1"
-            ngbTooltip="Suspender Ingreso"
+            ngbTooltip="Suspender"
             container="body"
             placement="bottom"
             (click)="suspenderAutorizado(row.id)">

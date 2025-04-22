@@ -136,7 +136,6 @@ export class ColegioService {
         }`
       )
       .pipe(
-        tap(r=>console.log(r)),
         map((respuesta: any) => respuesta.data));
   }
 

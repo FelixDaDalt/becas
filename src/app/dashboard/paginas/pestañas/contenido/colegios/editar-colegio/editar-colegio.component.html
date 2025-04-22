@@ -112,14 +112,14 @@
                 <label class="top-label">
                   <div class="input-group">
 
-                    <span class="input-group-text bg-white"><i class="text-primary bi bi-box"></i></span>
+                    <span class="input-group-text bg-white"><i class="bi bi-crosshair text-primary"></i></span>
                     <ng-select
                       class="form-control form-control-sm"
                       [items]="localidades$ | async"
                       bindLabel="nombre"
                       bindValue="id"
                       groupBy="nombre_zona"
-                      placeholder="Seleccione una localidad"
+                      placeholder="Seleccione una Zona/Localidad"
                       formControlName="id_zona">
                       <ng-template ng-optgroup-tmp let-item="item">
                         <span>{{ item.nombre_zona }}</span>
@@ -129,7 +129,7 @@
                       </ng-template>
                     </ng-select>
                   </div>
-                  <span class="ms-5 text-primary">Provincia</span>
+                  <span class="ms-5 text-primary">Zona</span>
                   <app-error-formulario [control]="wizardForm.get('ubicacion.id_zona')"></app-error-formulario>
                 </label>
               </div>
