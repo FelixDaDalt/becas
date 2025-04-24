@@ -1,7 +1,7 @@
 
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Subject, interval } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subject, Subscription, interval } from 'rxjs';
 import { switchMap, takeUntil, shareReplay, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Notificacion } from 'src/interfaces/notificaciones';
@@ -10,7 +10,7 @@ import { AuthService } from 'src/core/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NotificacionService implements OnDestroy {
+export class NotificacionService{
 
   private notificacionSubject = new BehaviorSubject<Notificacion | null>(null);
   notificacion$ = this.notificacionSubject.asObservable().pipe(shareReplay(1));
@@ -18,7 +18,7 @@ export class NotificacionService implements OnDestroy {
   private notificacionAdminSubject = new BehaviorSubject<any | null>(null);
   notificacionAdmin$ = this.notificacionAdminSubject.asObservable().pipe(shareReplay(1));
 
-  private destroy$ = new Subject<void>();
+  private pollingSub?: Subscription;
 
   constructor(private http: HttpClient, private authService:AuthService) {
     this.iniciarPolling();
@@ -36,26 +36,28 @@ export class NotificacionService implements OnDestroy {
 
 
   private iniciarPolling() {
-    const idRol = this.authService.getUserRole(); // 🔥 Lo sacás solo una vez
+    this.pollingSub?.unsubscribe();
 
-    interval(60000)
-      .pipe(
-        switchMap(() => idRol === 0 ? this.notificacionesAdmin() : this.notificaciones()),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((notificaciones) => {
-        if (idRol === 0) {
-          this.notificacionAdminSubject.next(notificaciones);
-        } else {
-          this.notificacionSubject.next(notificaciones);
-        }
-      });
+    const idRol = this.authService.getUserRole();
+
+    this.pollingSub = this.authService.isAuthenticated$
+    .pipe(
+      switchMap((autenticado) => {
+        if (!autenticado) return EMPTY;
+        return interval(60000).pipe(
+          switchMap(() => idRol === 0 ? this.notificacionesAdmin() : this.notificaciones())
+        );
+      })
+    )
+    .subscribe((notificaciones) => {
+      if (idRol === 0) {
+        this.notificacionAdminSubject.next(notificaciones);
+      } else {
+        this.notificacionSubject.next(notificaciones);
+      }
+    });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
 
   obtenerNotificaciones() {
     this.notificaciones().pipe(take(1)).subscribe(

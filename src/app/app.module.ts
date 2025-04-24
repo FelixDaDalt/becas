@@ -15,6 +15,8 @@ import { LOCALE_ID} from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { SpinnerComponent } from "../standalone/spinner/spinner.component";
+import { RedInterceptor } from 'src/interceptors/RedInterceptor';
 
 
 registerLocaleData(localeEs, 'es');
@@ -32,12 +34,15 @@ registerLocaleData(localeEs, 'es');
     ToastrModule.forRoot(),
     EstructuraModule,
     NgSelectModule,
-    NgxDatatableModule
-  ],
+    NgxDatatableModule,
+    SpinnerComponent
+],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RedInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CargandoInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: CargandoInterceptor, multi: true },
+
     { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [AppComponent]

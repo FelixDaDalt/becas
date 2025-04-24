@@ -44,7 +44,7 @@
                   <p class="card-subtitle mb-2 text-muted small text-truncate"><i class="bi bi-person-vcard-fill me-1"></i> {{beca.usuario.apellido }}, {{ beca.usuario.nombre }}</p>
 
                   <div class="mb-2 small">
-                    <div><strong>{{ beca.disponible}} solicitudes disponibles</strong> · <p class="text-muted"><i class="bi bi-clock me-2"></i>{{ beca.fecha_hora | date: "dd/MM HH:mm 'hs'" }}</p></div>
+                    <div><strong>{{ beca.disponible}} becas disponibles</strong> · <p class="text-muted"><i class="bi bi-clock me-2"></i>{{ beca.fecha_hora | date: "dd/MM HH:mm 'hs'" }}</p></div>
                   </div>
 
                   <div class="mt-auto" *ngIf="idColegio != beca.colegio.id; else suPublicacion">

@@ -1,15 +1,3 @@
-<!-- Spinner de carga -->
-<div *ngIf="loading" class="spinner-overlay">
-  <div class="spinner-content text-center">
-    <div class="spinner-border text-primary mb-3" role="status" style="width: 4rem; height: 4rem;">
-      <span class="visually-hidden">Cargando...</span>
-    </div>
-    <div class="fw-bold text-white">
-      <h5>Procesando la tarea...</h5>
-      <p class="small">Por favor, no cierre ni recargue la página</p>
-    </div>
-  </div>
-</div>
 
 <div class="row g-3 mb-4" *superAdmin>
   <div class="col-12 col-sm-6 col-md-4 col-lg-4" *ngFor="let tarea of tareas">
@@ -74,7 +62,13 @@
 </div>
 
 <div class="section-block borde border-1">
-  <app-ejecuciones *ngIf="!verificarRed" ></app-ejecuciones>
+  <div class="pb-4">
+    <app-reporte-errores *ngIf="!verificarRed"></app-reporte-errores>
+  </div>
+<hr>
+  <div class="pb-4">
+    <app-ejecuciones *ngIf="!verificarRed" ></app-ejecuciones>
+  </div>
 </div>
 
 <!-- 🎯 Resultados -->

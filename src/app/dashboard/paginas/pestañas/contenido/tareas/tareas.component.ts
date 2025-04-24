@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { finalize, shareReplay, tap } from 'rxjs';
+import { finalize, shareReplay, take, tap } from 'rxjs';
 import { plan } from 'src/interfaces/plan';
 import { zona_localidad, zona } from 'src/interfaces/zona';
 import { PlanesService } from 'src/servicios/planes.service';
@@ -17,7 +17,7 @@ import { NotificacionService } from 'src/servicios/notificacion.service';
   styleUrls: ['./tareas.component.css']
 })
 export class TareasComponent {
-  loading = false;
+
   verificarRed = false;
 
   tareas = [
@@ -51,12 +51,10 @@ export class TareasComponent {
   ) {}
 
   ejecutarTarea(tarea: any) {
-    this.loading = true
+
 
     if (tarea.accion === 'procesarBecasBaja') {
-      this.tareasService.ejecutarBajas().pipe(
-        finalize(() => this.loading = false)
-      ).subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarBajas().pipe(take(1)).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
       })
@@ -64,9 +62,7 @@ export class TareasComponent {
     }
 
     if (tarea.accion === 'procesarBecasPorVencer') {
-      this.tareasService.ejecutarPorVencer().pipe(
-        finalize(() => this.loading = false)
-      ).subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarPorVencer().pipe(take(1)).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
       })
@@ -74,9 +70,7 @@ export class TareasComponent {
     }
 
     if (tarea.accion === 'procesarBecasVencidas') {
-      this.tareasService.ejecutarVencidas().pipe(
-        finalize(() => this.loading = false)
-        ).subscribe((r:BecasBaja)=>{
+      this.tareasService.ejecutarVencidas().pipe(take(1)).subscribe((r:BecasBaja)=>{
         this.respuesta = r
         this.notificacionService.obtenerNotificacionesAdmin()
       })
@@ -85,9 +79,7 @@ export class TareasComponent {
 
     if (tarea.accion === 'verificarRedes') {
       this.verificarRed = true
-      this.tareasService.comprobarRed().pipe(
-        finalize(() => this.loading = false)
-      ).subscribe((r:any)=>{
+      this.tareasService.comprobarRed().pipe(take(1)).subscribe((r:any)=>{
         this.respuesta = r
       })
       return
@@ -95,14 +87,11 @@ export class TareasComponent {
   }
 
   sincronizarRed(idRed:number){
-    this.loading = true
     this.tareasService.sincronizarRed(idRed).pipe(
-      finalize(() => this.loading = false)
+      take(1)
     ).subscribe(r=>{
       this.sincronizaciones[idRed] = r;
-      this.tareasService.comprobarRed(idRed).pipe(
-        finalize(() => this.loading = false)
-      ).subscribe((r:any)=>{
+      this.tareasService.comprobarRed(idRed).pipe(take(1)).subscribe((r:any)=>{
         if (r && r.length > 0) {
           const nuevaRed = r[0]; // 🔥 porque comprobarRed devuelve array
 

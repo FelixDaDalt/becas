@@ -1,4 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
+import { RedService } from 'src/core/red.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,21 @@ import { AfterViewInit, Component } from '@angular/core';
 })
 export class AppComponent implements AfterViewInit{
 
-  constructor(){}
+  isOnline = true;
+  volvioConectividad = false;
+
+  constructor(private redService: RedService) {
+    this.redService.isOnline$.subscribe(status => {
+      if (!this.isOnline && status === true) {
+        this.volvioConectividad = true;
+        setTimeout(() => this.volvioConectividad = false, 3000); // 3 segundos
+      }
+
+      this.isOnline = status;
+    });
+
+  }
+
 
   ngAfterViewInit(): void {
     const Scripts = (window as any).Scripts;

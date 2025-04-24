@@ -1,3 +1,13 @@
+<div *ngIf="!isOnline" class="offline-banner">
+  <i class="fas fa-exclamation-triangle"></i> ¡Sin conexión a Internet!
+</div>
+
+<div *ngIf="volvioConectividad" class="online-banner">
+  <i class="fas fa-wifi"></i> ¡Conexión restablecida!
+</div>
+
+
+<app-spinner></app-spinner>
 <div id="root">
   <router-outlet></router-outlet>
 </div>

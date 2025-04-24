@@ -28,6 +28,7 @@ export class AutorizadoService {
   obtenerAutorizados(){
       this.getAutorizados().pipe(take(1)).subscribe(
         autorizados=>{
+          console.log(autorizados)
           this.autorizadosSubject.next(autorizados)
         })
   }
@@ -78,6 +79,7 @@ export class AutorizadoService {
       take(1),
       tap((respuesta: any) => {
         this.toast.success(respuesta.mensaje);
+        this.obtenerAutorizados()
       })
     )
   }

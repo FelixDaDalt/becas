@@ -7,6 +7,7 @@ import { SinDatosComponent } from 'src/standalone/sin-datos/sin-datos.component'
 import { NgbAccordionModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TareasComponent } from './tareas.component';
 import { EjecucionesComponent } from './ejecuciones/ejecuciones.component';
+import { ReporteErroresComponent } from './errores/errores.component';
 
 
 
@@ -14,7 +15,8 @@ import { EjecucionesComponent } from './ejecuciones/ejecuciones.component';
 @NgModule({
   declarations: [
     TareasComponent,
-    EjecucionesComponent
+    EjecucionesComponent,
+    ReporteErroresComponent
   ],
   imports: [
     CommonModule,

@@ -10,12 +10,19 @@ export class CargandoInterceptor implements HttpInterceptor {
   constructor(private cargandoService: CargandoService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.cargandoService.setLoading(true); // Activar loading al iniciar la solicitud
+    const excluirLoading = request.url.includes('/notificacion');
+
+    if (!excluirLoading) {
+      this.cargandoService.setLoading(true);
+    }
 
     return next.handle(request).pipe(
       finalize(() => {
-        setTimeout(() => this.cargandoService.setLoading(false), 500) // Se ejecuta siempre al finalizar la solicitud
+        if (!excluirLoading) {
+          setTimeout(() => this.cargandoService.setLoading(false), 100);
+        }
       })
     );
   }
 }
+

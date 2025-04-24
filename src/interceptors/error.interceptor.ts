@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         if (error.error instanceof ErrorEvent) {
           // Errores del lado del cliente
-          errorMessage = `${error.error.message}`;
+          errorMessage = `${error?.error?.message}`;
         } else {
           // Errores del lado del servidor
           errorTitle = `${error.error.Error}`;

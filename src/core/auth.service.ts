@@ -18,14 +18,33 @@ export class AuthService {
   public currentUser: Observable<CurrentUser | null>;
 
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
 
   constructor(
     private http: HttpClient, private router: Router) {
-    const storedUser = localStorage.getItem('user');  // Corregir aquí: solo parseamos el usuario, no el token
+    const storedUser = localStorage.getItem('user');
     this.currentUserSubject = new BehaviorSubject<CurrentUser | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable().pipe(shareReplay(1));
+
+    window.addEventListener('storage', (event) => {
+      if (event.key === this.tokenKey && event.newValue === null) {
+        // Se borró el token en otra pestaña
+        this.handleSessionExpired();
+      }
+    });
+  }
+
+  private handleSessionExpired(): void {
+    this.currentUserSubject.next(null);
+    this.isAuthenticatedSubject.next(false);
+
+    const rol = this.getUserRole();
+    if (rol > 0) {
+      this.router.navigate(['login']);
+    } else {
+      this.router.navigate(['admin', 'login']);
+    }
   }
 
  private checkAuthentication(): boolean {

@@ -1,0 +1,44 @@
+.offline-banner {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+.blocked-banner {
+  background-color: #c6dc35;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+
+
+.online-banner {
+  background-color: #28a745; /* verde */
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+  animation: fadeOut 3s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}

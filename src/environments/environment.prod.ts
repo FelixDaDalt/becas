@@ -122,6 +122,11 @@ export const environment = {
     dashboard:{
       listado:'/dashboard/',
     },
+    reporte: {
+      listado:'/reporte/listado',
+      alta:'/reporte/nuevo',
+      borrar:'/reporte/borrar',
+    }
   }
 
 
