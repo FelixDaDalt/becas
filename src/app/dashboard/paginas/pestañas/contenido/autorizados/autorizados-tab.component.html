@@ -63,6 +63,27 @@
       </ng-template>
     </ngx-datatable-column>
 
+    <!--Cantidad -->
+    <ngx-datatable-column name="Cantidad" prop="cantidad" [sortable]="true">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.cantidad }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Utilizadas -->
+    <ngx-datatable-column name="Utilizadas" prop="utilizadas" [sortable]="true">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.utilizadas }}
+      </ng-template>
+    </ngx-datatable-column>
+
+     <!-- Disponibles-->
+     <ngx-datatable-column name="Disponibles" prop="disponible" [sortable]="true">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        {{ row.disponible }}
+      </ng-template>
+    </ngx-datatable-column>
+
       <!-- Estado -->
       <ngx-datatable-column name="Estado" prop="suspendido" [sortable]="true" [width]="120">
         <ng-template let-row="row" ngx-datatable-cell-template>

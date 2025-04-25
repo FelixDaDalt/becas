@@ -6,9 +6,10 @@
       <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
         <ul class="breadcrumb pt-0">
 
-          <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let last = last">
+          <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let first = first; let last = last">
             <ng-container *ngIf="!last">
-              <a [routerLink]="breadcrumb.url" [queryParams]="queryParams">
+              <i class="bi bi-house-fill" *ngIf="first"></i>
+              <a [ngClass]="{ 'breadcrumb-destacado': first }" [routerLink]="breadcrumb.url" [queryParams]="queryParams">
                 {{ breadcrumb.label }}
               </a>
             </ng-container>

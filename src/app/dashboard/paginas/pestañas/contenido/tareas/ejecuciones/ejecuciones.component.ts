@@ -23,7 +23,15 @@ export class EjecucionesComponent {
   totalPaginas = 1;
   totalItems = 0;
 
-  constructor(private tareasService:TareasService){}
+  constructor(private tareasService:TareasService){
+    const hoy = new Date();
+    const hoyStr = hoy.toISOString().slice(0, 10); // formato 'YYYY-MM-DD'
+
+    this.filtros.fechaDesde = hoyStr;
+    this.filtros.fechaHasta = hoyStr;
+
+    this.buscarHistorial();
+  }
 
   buscarHistorial() {
     this.tareasService.obtenerEjecuciones({

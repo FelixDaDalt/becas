@@ -18,6 +18,7 @@ export class EditarAutorizadoComponent implements OnInit{
 
   @Input() idAutorizado?:number
   formularioEdicion:FormGroup
+  utilizadas = 0;
 
   constructor(private autorizadoService:AutorizadoService,
     private activeModal:NgbActiveModal,
@@ -31,16 +32,28 @@ export class EditarAutorizadoComponent implements OnInit{
       telefono: ['',Validators.pattern(/^\d+$/)],
       celular: ['',Validators.pattern(/^\d+$/)],
       email: ['',Validators.email],
+      cantidad: ['',[Validators.required,Validators.min(0)]],
+      utilizadas:['',[Validators.required,Validators.min(0)]]
     })
   }
 
   ngOnInit(): void {
-    if(this.idAutorizado)
-      this.autorizadoService.obtenerAutorizado(this.idAutorizado).pipe(take(1),shareReplay(1)).subscribe(
-        autorizado=>{
-          this.formularioEdicion.patchValue(autorizado)}
-      )
+  if (this.idAutorizado) {
+    this.autorizadoService.obtenerAutorizado(this.idAutorizado)
+      .pipe(take(1), shareReplay(1))
+      .subscribe(autorizado => {
+        this.utilizadas = autorizado.utilizadas;
+        this.formularioEdicion.patchValue(autorizado);
+
+        // Aplicar validador dinámico una vez que tenés becasUsadas
+        this.formularioEdicion.get('cantidad')?.setValidators([
+          Validators.required,
+          Validators.min(this.utilizadas) // 🔥 acá va la lógica
+        ]);
+        this.formularioEdicion.get('cantidad')?.updateValueAndValidity();
+      });
   }
+}
 
   cerrar(){
     this.activeModal.close()

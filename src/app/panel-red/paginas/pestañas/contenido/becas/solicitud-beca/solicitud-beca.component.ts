@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { map, shareReplay, Subscription } from 'rxjs';
+import { map, shareReplay, Subscription, tap } from 'rxjs';
 import { AutorizadoService } from 'src/servicios/autorizado.service';
 import { BecaService } from 'src/servicios/beca.service';
 

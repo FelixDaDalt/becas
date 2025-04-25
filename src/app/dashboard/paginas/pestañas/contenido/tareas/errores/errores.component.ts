@@ -23,7 +23,15 @@ export class ReporteErroresComponent {
   totalPaginas = 1;
   totalItems = 0;
 
-  constructor(private reporteService:ReporteService){}
+  constructor(private reporteService:ReporteService){
+    const hoy = new Date();
+    const hoyStr = hoy.toISOString().slice(0, 10); // formato 'YYYY-MM-DD'
+
+    this.filtros.fechaDesde = hoyStr;
+    this.filtros.fechaHasta = hoyStr;
+
+    this.buscarHistorial();
+  }
 
   buscarHistorial() {
     this.reporteService.obtenerReportes({
@@ -36,6 +44,7 @@ export class ReporteErroresComponent {
       this.paginaActual = resp.paginaActual;
       this.totalPaginas = resp.paginas;
       this.totalItems = resp.total;
+      console.log(this.historial)
     });
   }
 

@@ -36,6 +36,7 @@
               <app-error-formulario [control]="formularioEdicion.get('apellido')"></app-error-formulario>
             </label>
           </div>
+
           <div class="col-12 col-md-6 mb-3">
             <label class="top-label">
               <div class="input-group">
@@ -56,7 +57,7 @@
               <app-error-formulario [control]="formularioEdicion.get('celular')"></app-error-formulario>
             </label>
           </div>
-          <div class="col-12 col-md-12 mb-3">
+          <div class="col-12 col-md-6 mb-3">
             <label class="top-label">
               <div class="input-group">
                 <span class="input-group-text bg-white"><i class="text-primary bi bi-phone"></i></span>
@@ -64,6 +65,16 @@
               </div>
               <span class="ms-5 text-primary">Email</span>
               <app-error-formulario [control]="formularioEdicion.get('email')"></app-error-formulario>
+            </label>
+          </div>
+          <div class="col-12 col-md-6 mb-3">
+            <label class="top-label">
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="text-primary bi bi-card-checklist"></i></span>
+                <input class="form-control form-control-sm" type="number" formControlName="cantidad" placeholder="Ingrese la cantidad de becas que puede solicitar...">
+              </div>
+              <span class="ms-5 text-primary">Cantidad de Becas</span>
+              <app-error-formulario [control]="formularioEdicion.get('cantidad')"></app-error-formulario>
             </label>
           </div>
         </div>

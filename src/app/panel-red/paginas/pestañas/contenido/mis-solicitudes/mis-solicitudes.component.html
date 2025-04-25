@@ -51,7 +51,8 @@
             [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="'auto'"
-            [limit]="10">
+            [limit]="10"
+            (activate)="verSolicitud($event)">
 
           <!-- Estado -->
           <ngx-datatable-column name="Estado" [flexGrow]="1" prop="estado.nombre" [sortable]="true">
@@ -100,6 +101,7 @@
               {{ row.solicitud.alumno }}
             </ng-template>
           </ngx-datatable-column>
+
 
           </ngx-datatable>
         </ng-container>

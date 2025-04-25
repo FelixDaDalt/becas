@@ -35,7 +35,7 @@
                   <div class="input-group">
                     <span class="input-group-text bg-white"><i class="text-primary bi bi-percent"></i></span>
                     <input type="number" class="form-control form-control-sm" formControlName="porcentaje"
-                    [ngClass]="{ 'is-invalid':formularioEdicion.get('porcentaje')?.invalid && formularioEdicion.get('porcentaje')?.touched }" readonly>
+                    [ngClass]="{ 'is-invalid':formularioEdicion.get('porcentaje')?.invalid && formularioEdicion.get('porcentaje')?.touched }">
                   </div>
                   <span class="ms-5 text-primary">Porcentaje</span>
                   <app-error-formulario [control]="formularioEdicion.get('porcentaje')"></app-error-formulario>

@@ -49,12 +49,14 @@ export class AltaResponsableComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    const query:any = this.activeRoute.snapshot.queryParams;
-    if(query && query.idColegio){
-      const control = this.wizardForm.get('acceso.id_colegio')
-      control?.patchValue(Number(query.idColegio))
-      control?.disable()
-    }
+    this.activeRoute.queryParams.subscribe((query:any) => {
+      if (query && query.idColegio) {
+        this.colegioService.obtenerColegios()
+        const control = this.wizardForm.get('acceso.id_colegio');
+        control?.patchValue(Number(query.idColegio));
+        control?.disable();
+      }
+    });
   }
 
   get stepControls() {
@@ -80,7 +82,6 @@ export class AltaResponsableComponent implements OnInit{
     if (this.wizardForm.valid) {
       const formData = this.estructurarFormulario();
       this.responsableService.altaResponsable(formData).subscribe(respuesta=>{
-        const actualizar = true;
         this.router.navigate(['../responsables'],{relativeTo:this.activeRoute});
       })
     }else{
@@ -113,7 +114,7 @@ export class AltaResponsableComponent implements OnInit{
   private estructurarFormulario() {
     // Extraemos los valores de cada grupo del formulario
     const responsable = this.wizardForm.get('responsable')?.value;
-    const acceso = this.wizardForm.get('acceso')?.value;
+    const acceso = this.wizardForm.get('acceso')?.getRawValue();;
 
     // Construimos el objeto con el formato deseado
     const formulario = {
@@ -124,7 +125,7 @@ export class AltaResponsableComponent implements OnInit{
         telefono: responsable.telefono,
         celular: responsable.celular,
         email: responsable.email,
-        id_colegio:acceso.id_colegio,
+        id_colegio:acceso.id_colegio
       }
     return formulario;
   }

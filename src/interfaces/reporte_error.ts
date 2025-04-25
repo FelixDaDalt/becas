@@ -1,3 +1,4 @@
+import { Colegio } from "./colegio"
 import { Usuario } from "./usuario"
 
 export interface reporte_error{
@@ -8,4 +9,5 @@ export interface reporte_error{
   id_usuario_usuario:Usuario
   borrado:number
   fecha:string
+  id_colegio_colegio:Colegio
 }

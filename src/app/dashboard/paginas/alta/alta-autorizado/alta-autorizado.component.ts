@@ -25,10 +25,11 @@ export class AltaAutorizadoComponent{
     this.wizardForm = this.fb.group({
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
-        dni: ['', Validators.required],
+        dni: ['', [Validators.required,Validators.minLength(8)]],
         telefono: ['',Validators.pattern(/^\d+$/)],
         celular: ['',Validators.pattern(/^\d+$/)],
         email: ['',Validators.email],
+        cantidad: [0,[Validators.required,Validators.min(0)]],
     });
   }
 
@@ -46,7 +47,7 @@ export class AltaAutorizadoComponent{
   comprobarDni(){
     const dni = this.wizardForm.get('dni')?.value
     if(dni){
-      this.comprobarService.comprobarDni(dni).pipe(
+      this.comprobarService.comprobarDniAutorizado(dni).pipe(
         take(1)
       ).subscribe(
         disponible => {

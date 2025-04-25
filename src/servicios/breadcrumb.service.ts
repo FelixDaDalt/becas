@@ -42,9 +42,14 @@ export class BreadcrumbService {
     let accumulatedUrl = '';
 
     segments.forEach(segment => {
-      accumulatedUrl += `/${segment}`;
+      accumulatedUrl += `${segment}/`;
 
-      const label = this.formatLabel(segment);
+      let label = this.formatLabel(segment);
+
+      if(label.toUpperCase() =='DASHBOARD'){
+        label = 'INICIO'
+      }
+      console.log(accumulatedUrl )
 
       breadcrumbs.push({ label, url: accumulatedUrl });
     });

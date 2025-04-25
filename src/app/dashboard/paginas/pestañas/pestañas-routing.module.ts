@@ -62,7 +62,7 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/configuraciones-tab/configuraciones-tab.module').then(m => m.ConfiguracionesTabModule)
     },
     {
-      path:'tareas',
+      path:'reportes',
       canActivate: [RoleGuard],
       data: { roles: [0] },
       loadChildren: () => import('./contenido/tareas/tareas.module').then(m => m.TareasModule)

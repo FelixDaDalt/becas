@@ -83,8 +83,8 @@
                     <label class="form-label me-2">Hijo de:</label>
                     <select id="pariente" class="form-select form-control-sm flex-grow-1" formControlName="id_pariente">
                       <option [ngValue]='null' disabled selected>Seleccionar</option>
-                      <option [ngValue]='autorizado.id' *ngFor="let autorizado of autorizados$ | async">
-                        {{autorizado.apellido}}, {{autorizado.nombre}}
+                      <option [ngValue]='autorizado.id' *ngFor="let autorizado of autorizados$ | async" [disabled]="autorizado.disponible! <= 0">
+                        {{autorizado.apellido}}, {{autorizado.nombre}} <span *ngIf="autorizado.disponible! <= 0">(sin cupo)</span>
                       </option>
                     </select>
                     <p><app-error-formulario [control]="alumnos.at(i).get('id_pariente')"></app-error-formulario></p>

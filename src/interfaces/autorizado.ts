@@ -6,6 +6,9 @@ export interface Autorizado{
   telefono?: string;
   celular?: string;
   email: string;
-  suspendido:number
-  id_colegio:number
+  suspendido:number;
+  cantidad:number;
+  id_colegio:number;
+  utilizadas:number
+  disponible?:number
 }

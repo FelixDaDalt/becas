@@ -81,12 +81,14 @@ export class SolicitudesComponent implements OnDestroy, OnInit {
     }
   }
 
-  verSolicitud(solicitud:any){
-    this.route.navigate(['ver-solicitud'], {
-      relativeTo: this.activeRoute,
-      queryParams: { idSolicitud: solicitud.id }, // Agregar nuevo parámetro
-      queryParamsHandling: 'merge' // Combinar con los parámetros existentes
-    });
+  verSolicitud(event:any){
+    if (event.type === 'click') {
+      this.route.navigate(['ver-solicitud'], {
+        relativeTo: this.activeRoute,
+        queryParams: { idSolicitud: event.row.id }, // Agregar nuevo parámetro
+        queryParamsHandling: 'merge' // Combinar con los parámetros existentes
+      });
+    }
   }
 
   filter: any;
