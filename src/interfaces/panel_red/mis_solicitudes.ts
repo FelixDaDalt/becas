@@ -1,7 +1,6 @@
 export interface Mis_solicitudes {
   id: number
   fecha: string
-  sinLeer: boolean
   estado: Estado
   solicitante: Solicitante
   solicitud: Solicitud

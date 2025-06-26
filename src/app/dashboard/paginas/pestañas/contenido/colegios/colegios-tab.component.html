@@ -9,6 +9,7 @@
             <!-- Alta -->
             <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()"><i class="bi bi-plus-circle me-2"></i>Alta</button>
             <!-- Alta -->
+            <button class="btn btn-info btn-sm me-2" type="button" (click)="exportar()"><i class="bi bi-plus-circle me-2"></i>Exportar</button>
             <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar" aria-describedby="basic-addon1" [(ngModel)]="busqueda" (ngModelChange)="updateFilter()">
             <span class="input-group-text" id="basic-addon1"><i class="bi bi-search text-primary"></i></span>
           </div>
@@ -76,6 +77,23 @@
               {{ row.id_plan_plan.nombre}}
             </ng-template>
           </ngx-datatable-column>
+
+                    <!-- CBU -->
+                    <ngx-datatable-column name="CBU" prop="cbu" [sortable]="true" *Roles="[0]">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <p class="m-0 p-0">{{ row.cbu?row.cbu:'sin cbu'}}</p>
+                        <p class="m-0 p-0">{{ row.alias?row.alias:'sin alias'}}</p>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+          <!-- Vendedor-->
+          <ngx-datatable-column name="Vendedor" prop="id_vendedor_vendedor" [sortable]="true" *Roles="[0]">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row.id_vendedor_vendedor.apellido}}, {{ row.id_vendedor_vendedor.nombre}}
+            </ng-template>
+          </ngx-datatable-column>
+
+
 
           <!-- Acciones -->
           <ngx-datatable-column name="Acciones" [sortable]="false" [width]="260">

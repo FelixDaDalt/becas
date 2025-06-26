@@ -12,6 +12,7 @@ export interface Solicitud {
         foto: string,
         id_red: number,
 
+        resuelta:boolean,
         vencida: boolean,
         porVencer: boolean,
         desestimado: boolean,
@@ -26,6 +27,7 @@ export interface MiSolicitud {
   foto: string,
   id_red: number,
 
+  resuelta:boolean,
   vencida: boolean,
   porVencer: boolean,
   desestimado: boolean,

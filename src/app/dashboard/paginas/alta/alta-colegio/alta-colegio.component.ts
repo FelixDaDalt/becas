@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { map, shareReplay, take, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxImageCompressService } from 'ngx-image-compress';
@@ -7,6 +7,7 @@ import { ZonasService } from 'src/servicios/zonas.service';
 import { ColegioService } from 'src/servicios/colegio.service';
 import { PlanesService } from 'src/servicios/planes.service';
 import { FormasPagoService } from 'src/servicios/formas_pago.service';
+import { vendedorService } from 'src/servicios/vendedor.service';
 
 @Component({
   selector: 'app-alta-colegio',
@@ -49,6 +50,13 @@ export class AltaColegioComponent  {
 
   planPago$= this.planesService.planes$.pipe(shareReplay(1))
   formaPago$ = this.formasPagoService.pagos$.pipe(shareReplay(1))
+  vendedores$ = this.vendedoresService.vendedores$.pipe(shareReplay(1),
+    map(vs => vs.map(v => ({
+      ...v,
+      label: `${v.apellido}, ${v.nombre}${v.suspendido == 1 ? ' (suspendido)' : ''}`,
+      disabled: v.suspendido == 1
+    })))
+  );
 
   constructor(private fb: FormBuilder,
     private router:Router,
@@ -56,7 +64,8 @@ export class AltaColegioComponent  {
     private zonaService:ZonasService,
     private activeRoute:ActivatedRoute,
     private planesService:PlanesService,
-    private formasPagoService:FormasPagoService
+    private formasPagoService:FormasPagoService,
+    private vendedoresService:vendedorService
   ) {
 
     this.wizardForm = this.fb.group({
@@ -84,6 +93,9 @@ export class AltaColegioComponent  {
         logo: [null],
         id_forma_pago: [null,[Validators.required]],
         id_plan: [null,[Validators.required]],
+        id_vendedor: [null,[Validators.required]],
+        cbu: [null,[this.cbuValidator]],
+        alias: [null],
       }),
       // Paso 5: Responsable
       responsable: this.fb.group({
@@ -99,6 +111,12 @@ export class AltaColegioComponent  {
         password: ['', [Validators.required,Validators.minLength(8)]],
       })
     });
+  }
+
+  private cbuValidator(control: AbstractControl): ValidationErrors | null {
+    const valor = control.value;
+    const esValido = /^\d{22}$/.test(valor);
+    return esValido || !valor ? null : { cbu: true };
   }
 
   get stepControls() {
@@ -137,7 +155,7 @@ export class AltaColegioComponent  {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      this.archivoSeleccionado = input.files[0]; // Obtén el archivo seleccionado
+      this.archivoSeleccionado = input.files[0];
     } else {
       this.archivoSeleccionado = null;
     }
@@ -212,6 +230,9 @@ export class AltaColegioComponent  {
     formData.append('colegio[id_zona]', ubicacion.id_zona);
     formData.append('colegio[id_plan]', personalizacion.id_plan);
     formData.append('colegio[id_forma_pago]', personalizacion.id_forma_pago);
+    formData.append('colegio[id_vendedor]', personalizacion.id_vendedor);
+    formData.append('colegio[cbu]', personalizacion.cbu);
+    formData.append('colegio[alias]', personalizacion.alias);
 
     // Usuario (campos anidados)
     formData.append('usuario[dni]', acceso.dni);
@@ -224,7 +245,6 @@ export class AltaColegioComponent  {
 
 
     if (this.archivoSeleccionado) {
-      // Agregar logo si es un archivo
       formData.append('foto', this.archivoSeleccionado);
     }
 

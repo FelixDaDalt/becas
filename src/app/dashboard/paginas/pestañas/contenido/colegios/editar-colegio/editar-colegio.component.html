@@ -206,7 +206,49 @@
                 </label>
               </div>
 
-              <div class="col-12 mb-5">
+              <div class="col-12 col-md-6 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-bank"></i></span>
+                    <input class="form-control form-control-sm" formControlName="cbu" placeholder="Ingrese CBU">
+                  </div>
+                  <span class="ms-5 text-primary">CBU</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.cbu')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-4">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-type"></i></span>
+                    <input class="form-control form-control-sm" formControlName="alias" placeholder="Ingrese Alias">
+                  </div>
+                  <span class="ms-5 text-primary">Alias</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.alias')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-box"></i></span>
+                    <ng-select
+                      class="form-control form-control-sm"
+                      [items]="vendedores$ | async"
+                      bindLabel="label"
+                      bindValue="id"
+                      placeholder="Seleccione un vendedor"
+                      formControlName="id_vendedor"
+                      [disabled]="true">
+                  </ng-select>
+                  </div>
+                  <span class="ms-5 text-primary">Vendedor</span>
+                  <app-error-formulario [control]="wizardForm.get('personalizacion.id_vendedor')"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-6 mb-5">
 
 
                 <div class="col-12 mb-3">

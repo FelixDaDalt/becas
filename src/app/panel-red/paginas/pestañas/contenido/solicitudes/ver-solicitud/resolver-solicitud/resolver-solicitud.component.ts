@@ -30,8 +30,9 @@ export class ResolverSolicitudComponent implements OnInit{
 
   guardar(){
     if (this.resolverForm.valid && this.idRed) {
-      this.becaService.resolver(this.idRed,this.resolverForm.value)
-      this.resuelto.emit(true)
+      this.becaService.resolver(this.idRed,this.resolverForm.value).subscribe(()=>{
+        this.resuelto.emit(true)
+      })
     }else{
       this.resolverForm.markAllAsTouched()
     }

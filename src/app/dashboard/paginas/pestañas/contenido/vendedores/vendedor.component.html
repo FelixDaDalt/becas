@@ -1,7 +1,7 @@
 <div class="text-center">
   <div class="input-group input-group-sm mb-3">
     <!-- Alta -->
-    <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()" *Roles="[1,2]">
+    <button class="btn btn-info btn-sm me-2" type="button" (click)="alta()">
       <i class="bi bi-plus-circle me-2"></i>Alta
     </button>
     <!-- Búsqueda -->
@@ -13,12 +13,12 @@
   </div>
 </div>
 
-<ng-container *ngIf="(autorizados$ | async) as autorizados">
-  <ng-container *ngIf="(autorizados | filterBy:filter).length>0;else sinDatos">
+<ng-container *ngIf="(vendedores$ | async) as vendedores">
+  <ng-container *ngIf="(vendedores | filterBy:filter).length>0;else sinDatos">
 
     <ngx-datatable
     class="bootstrap"
-    [rows]="autorizados | filterBy:filter"
+    [rows]="vendedores | filterBy:filter"
     [columnMode]="'force'"
     [headerHeight]="50"
     [footerHeight]="50"
@@ -33,7 +33,7 @@
       <ng-template let-row="row" ngx-datatable-cell-template>
         {{ row.apellido }}, {{ row.nombre }}
 
-         <span class="badge badge-estado"
+        <span class="badge badge-estado"
               [ngClass]="row.suspendido == 1 ? 'bg-warning' : 'bg-success'">
           {{ row.suspendido == 1 ? 'Suspendido' : 'Activo' }}
         </span>
@@ -68,26 +68,6 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <!--Cantidad -->
-    <ngx-datatable-column name="Cantidad" prop="cantidad" [sortable]="true">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.cantidad }}
-      </ng-template>
-    </ngx-datatable-column>
-
-    <!-- Utilizadas -->
-    <ngx-datatable-column name="Utilizadas" prop="utilizadas" [sortable]="true">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.utilizadas }}
-      </ng-template>
-    </ngx-datatable-column>
-
-     <!-- Disponibles-->
-     <ngx-datatable-column name="Disponibles" prop="disponible" [sortable]="true">
-      <ng-template let-row="row" ngx-datatable-cell-template>
-        {{ row.disponible }}
-      </ng-template>
-    </ngx-datatable-column>
 
     <!-- Acciones -->
     <ngx-datatable-column name="Acciones" [sortable]="false" [width]="200">
@@ -98,7 +78,7 @@
             ngbTooltip="Suspender"
             container="body"
             placement="bottom"
-            (click)="suspenderAutorizado(row.id)">
+            (click)="suspenderVendedor(row.id)">
             <i [ngClass]="row.suspendido == 1 ? 'bi bi-unlock-fill' : 'bi bi-lock-fill'"></i>
           </button>
 
@@ -109,7 +89,7 @@
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <div ngbDropdownMenu class="dropdown-menu-end">
-              <button class="dropdown-item" (click)="editarAutorizado(row)">Editar</button>
+              <button class="dropdown-item" (click)="editarVendedor(row)">Editar</button>
               <button class="dropdown-item" (click)="confirmarEliminar(row)">Eliminar</button>
             </div>
           </div>

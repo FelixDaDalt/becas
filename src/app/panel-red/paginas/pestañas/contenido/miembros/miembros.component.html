@@ -12,7 +12,7 @@
   <ng-container *ngIf="miembros$ | async as miembros">
     <ng-container *ngIf="(miembros| filterBy:filter).length > 0; else sinDatos">
       <div class="col-12 col-md-6 col-lg-4 mb-4" *ngFor="let miembro of miembros || [] | filterBy:filter">
-        <div class="card h-100 position-relative">
+        <div class="card h-100 position-relative p-2" [ngStyle]="{'background-color': miembro.borrado || miembro.id_colegio_colegio.borrado ? '#FFF3F3':''}">
 
           <!-- 🏅 Anfitrión o Miembro -->
           <span class="badge badge-sm position-absolute end-0 top-0 m-2 z-index-1"
@@ -28,7 +28,7 @@
           </span>
 
           <!-- 🛑 Colegio Borrado -->
-          <span *ngIf="miembro.borrado" class="badge badge-sm bg-danger position-absolute start-0 top-0 m-2 z-index-1">
+          <span *ngIf="miembro.borrado || miembro.id_colegio_colegio.borrado" class="badge badge-sm bg-danger position-absolute end-0 m-2 z-index-1" style="top: 1.5rem;">
             Colegio Borrado
           </span>
 

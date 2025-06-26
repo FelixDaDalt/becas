@@ -8,7 +8,9 @@
   <small class="text-danger ms-2" *ngIf="control.hasError('maxFileSize')">El archivo no debe exceder los  1 MB.</small>
   <small class="text-danger ms-2" *ngIf="control.hasError('min')">Debe ser mayor o igual a {{ control.errors?.['min'].min }}.</small>
   <small class="text-danger ms-2" *ngIf="control.hasError('max')">Debe ser menor o igual a {{ control.errors?.['max'].max }}.</small>
-
+  <small class="text-danger ms-2" *ngIf="control.hasError('cbu')">
+    El CBU debe tener exactamente 22 dígitos numéricos.
+  </small>
   <!-- Agrega otros mensajes personalizados aquí si es necesario -->
   <div *ngIf="control?.valid && control?.value && !control?.errors?.['noDisponible'] && checkDisponibilidad">
     <small class="text-success">{{control.value}} está disponible</small>

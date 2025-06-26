@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SolicitudBecaComponent } from './solicitud-beca/solicitud-beca.component';
 import { ErrorFormularioComponent } from "../../../../../../standalone/error-formulario/error-formulario.component";
 import { FilterPipeModule } from 'ngx-filter-pipe';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 
@@ -30,7 +31,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
     ]),
     BotonCargandoComponent,
     ErrorFormularioComponent,
-    FilterPipeModule
+    FilterPipeModule,
+    NgSelectModule
 ]
 })
 export class BecasModule { }

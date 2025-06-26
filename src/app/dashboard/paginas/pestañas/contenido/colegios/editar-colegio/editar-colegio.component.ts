@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { map, shareReplay, take, tap } from 'rxjs';
 import { Colegio } from 'src/interfaces/colegio';
 import { ColegioService } from 'src/servicios/colegio.service';
 import { FormasPagoService } from 'src/servicios/formas_pago.service';
 import { PlanesService } from 'src/servicios/planes.service';
+import { vendedorService } from 'src/servicios/vendedor.service';
 import { ZonasService } from 'src/servicios/zonas.service';
 
 
@@ -48,14 +49,21 @@ export class EditarColegioComponent implements OnInit {
     );
     planPago$= this.planesService.planes$.pipe(shareReplay(1))
     formaPago$ = this.formasPagoService.pagos$.pipe(shareReplay(1))
-
+    vendedores$ = this.vendedoresService.vendedores$.pipe(shareReplay(1),
+    map(vs => vs.map(v => ({
+      ...v,
+      label: `${v.apellido}, ${v.nombre}${v.suspendido == 1 ? ' (suspendido)' : ''}`,
+      disabled: v.suspendido == 1
+    })))
+  );
     constructor(
       private fb:FormBuilder,
       private activeModal:NgbActiveModal,
       private colegioService:ColegioService,
       private zonaService:ZonasService,
       private planesService:PlanesService,
-      private formasPagoService:FormasPagoService)
+      private formasPagoService:FormasPagoService,
+      private vendedoresService:vendedorService)
     {
       this.wizardForm = this.fb.group({
         // Paso 1: Datos principales
@@ -83,9 +91,13 @@ export class EditarColegioComponent implements OnInit {
           logo: [null],
           id_plan: [null,[Validators.required]],
           id_forma_pago: [null,[Validators.required]],
+          id_vendedor: [null,[Validators.required]],
+          cbu: [null,[this.cbuValidator]],
+          alias: [null],
         }),
       })
     }
+
 
     ngOnInit(): void {
       if(this.colegio){
@@ -115,13 +127,22 @@ export class EditarColegioComponent implements OnInit {
         })
 
         personalizacion?.patchValue({
+          id_vendedor:this.colegio.id_vendedor_vendedor?.id,
           id_plan:this.colegio.id_plan_plan?.id,
           id_forma_pago:this.colegio.id_forma_pago_forma_pago?.id,
+          cbu:this.colegio?.cbu,
+          alias:this.colegio?.alias
         })
 
       }
 
     }
+
+    private cbuValidator(control: AbstractControl): ValidationErrors | null {
+        const valor = control.value;
+        const esValido = /^\d{22}$/.test(valor);
+        return esValido || !valor ? null : { cbu: true };
+      }
 
     get stepControls() {
       const steps = ['datosPrincipales', 'ubicacion', 'contacto', 'personalizacion'];
@@ -195,6 +216,9 @@ export class EditarColegioComponent implements OnInit {
       formData.append('colegio[id_zona]', ubicacion.id_zona);
       formData.append('colegio[id_plan]', personalizacion.id_plan);
       formData.append('colegio[id_forma_pago]', personalizacion.id_forma_pago);
+      formData.append('colegio[id_vendedor]', personalizacion.id_vendedor);
+      formData.append('colegio[cbu]', personalizacion.cbu);
+      formData.append('colegio[alias]', personalizacion.alias);
 
       if (this.archivoSeleccionado) {
         // Agregar logo si es un archivo

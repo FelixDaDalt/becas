@@ -48,6 +48,12 @@ const routes: Routes = [
       loadChildren: () => import('./paginas/alta/alta-autorizado/alta-autorizado.module').then(m => m.AltaAutorizadoModule)
     },
     {
+      path:'alta-vendedor',
+      canActivate:[RoleGuard],
+      data: { roles: [0] },
+      loadChildren: () => import('./paginas/alta/alta-vendedor/alta-vendedor.module').then(m => m.AltaVendedorModule)
+    },
+    {
       path:'alta-red',
       canActivate:[RoleGuard],
       data: { roles: [0] },

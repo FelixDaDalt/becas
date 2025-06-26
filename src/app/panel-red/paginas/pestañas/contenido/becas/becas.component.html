@@ -36,6 +36,7 @@
                   <!-- Disponible / No disponible (nuevo) -->
                   <span *ngIf="beca.disponible > 0" class="badge bg-success position-absolute top-0 start-0 m-2 text-uppercase">Disponible</span>
                   <span *ngIf="beca.disponible <= 0" class="badge bg-danger position-absolute top-0 start-0 m-2 text-uppercase">Agotada</span>
+                  <span *ngIf="beca.colegio.suspendido" class="badge bg-warning position-absolute top-0 end-0 m-2 text-uppercase">Suspendido</span>
                 </div>
 
                 <!-- Cuerpo -->
@@ -51,13 +52,15 @@
                     <ng-container *Roles="[1,2,3]">
                       <ng-container *ngIf="derechoDisponible && derechoDisponible>0;else noDisponible">
                         <ng-container *ngIf="beca.disponible > 0; else noSolicitudes">
-                          <button
-                            class="btn btn-primary btn-sm w-100"
-                            type="button"
-                            (click)="solicitar(beca)"
-                            [disabled]="beca.disponible <= 0 || derechoDisponible <= 0">
-                            Solicitar
-                          </button>
+
+                            <button
+                              class="btn btn-primary btn-sm w-100"
+                              type="button"
+                              (click)="solicitar(beca)"
+                              [disabled]="beca.disponible <= 0 || derechoDisponible <= 0 || beca.colegio.suspendido">
+                              Solicitar
+                            </button>
+
                         </ng-container>
                       </ng-container>
                     </ng-container>

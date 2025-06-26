@@ -30,7 +30,7 @@ export class HeaderComponent implements AfterViewInit {
   user$ = this.usuarioService.me$.pipe(shareReplay(1));
   apiFile=environment.fileUrl
 
-  notificaciones$=this.notificacionesService.notificacion$.pipe(shareReplay(1))
+  notificaciones$=this.notificacionesService.notificacion$.pipe(shareReplay(1),tap(r=>console.log(r)))
   notificacionesAdmin$=this.notificacionesService.notificacionAdmin$.pipe(shareReplay(1))
   tabSeleccionado = 'misSolicitudes';
 
@@ -102,5 +102,9 @@ export class HeaderComponent implements AfterViewInit {
       const tycModal = this.modalService.open(ReporteErrorComponent, {
         size: 'xl'
       });
+    }
+
+    home(){
+      this.router.navigate(['/'])
     }
 }

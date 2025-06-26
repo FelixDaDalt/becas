@@ -3,7 +3,7 @@
   <div class="nav-content d-flex" >
     <!-- Logo Start -->
     <div class="logo position-relative">
-      <a [routerLink]=''>
+      <a (click)="home()">
         <!-- Logo can be added directly -->
         <!-- <img src="img/logo/logo-white.svg" alt="logo" /> -->
 
@@ -76,11 +76,7 @@
     <!-- Icons Menu Start -->
 
       <ul class="list-unstyled list-inline text-center menu-icons">
-        <li class="list-inline-item">
-          <a href="#" data-bs-toggle="modal" data-bs-target="#searchPagesModal">
-            <i data-acorn-icon="search" data-acorn-size="18"></i>
-          </a>
-        </li>
+
         <li class="list-inline-item">
           <a href="#" id="pinButton" class="pin-button">
             <i data-acorn-icon="lock-on" class="unpin" data-acorn-size="18"></i>
@@ -175,28 +171,19 @@
                         <li *ngFor="let miSolicitud of notificaciones.misSolicitudes"
                             class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
 
-                          <!-- 📷 Imagen -->
-                          <img [src]="apiFile + miSolicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+                          <!-- 📷 Foto -->
+                          <img [src]="apiFile + miSolicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="Foto colegio" />
 
-                          <!-- 📝 Info -->
+                          <!-- 📝 Texto -->
                           <div>
-                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="!miSolicitud.vencida && !miSolicitud.porVencer">
-                              <strong>{{ miSolicitud.colegio }}</strong>
-                              <span class="text-success"> ha resuelto tu solicitud.</span>
-                              <br />
-                              <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                            </a>
-
-                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.vencida">
+                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small">
                               <strong>Solicitud a {{ miSolicitud.colegio }}</strong>
-                              <span class="text-danger"> se ha vencido.</span>
-                              <br />
-                              <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                            </a>
-
-                            <a (click)="verMiSolicitud(miSolicitud)" class="text-dark small" *ngIf="miSolicitud.porVencer && !miSolicitud.vencida">
-                              <strong>Solicitud a {{ miSolicitud.colegio }}</strong>
-                              <span class="text-warning"> está por vencer.</span>
+                                <span class="text-danger" *ngIf="miSolicitud.desestimado"> se ha DESESTIMADO.</span>
+                                <span class="text-danger" *ngIf="miSolicitud.vencida"> se ha VENCIDO.</span>
+                                <span class="text-warning" *ngIf="miSolicitud.porVencer"> está por VENCER.</span>
+                                <span class="text-warning" *ngIf="miSolicitud.porBaja"> se pidio la BAJA.</span>
+                                <span class="text-danger" *ngIf="miSolicitud.dadaDeBaja"> se ha dado de BAJA.</span>
+                                <span class="text-success" *ngIf="miSolicitud.resuelta"> se ha RESUELTO.</span>
                               <br />
                               <span class="text-muted d-block mt-1">{{ miSolicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
                             </a>
@@ -216,30 +203,19 @@
                         <li *ngFor="let solicitud of notificaciones.solicitudes"
                             class="mb-2 pb-2 border-bottom border-separator-light d-flex align-items-center">
 
-                          <!-- 📷 Imagen -->
-                          <img [src]="apiFile + solicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="..." />
+                          <!-- 📷 Foto -->
+                          <img [src]="apiFile + solicitud.foto" class="me-2 sw-3 sh-3 rounded-xl" alt="Foto colegio" />
 
-                          <!-- 📝 Info -->
+                          <!-- 📝 Texto -->
                           <div>
-                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="!solicitud.vencida && !solicitud.porVencer">
-                              <strong>{{ solicitud.colegio }}</strong>
-                              <span [ngClass]="{'text-success': !solicitud.desestimado, 'text-info': solicitud.desestimado}">
-                                {{ solicitud.desestimado ? ' ha desestimado una solicitud' : ' te ha solicitado una beca' }}
-                              </span>
-                              <br />
-                              <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                            </a>
-
-                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="solicitud.vencida">
+                            <a (click)="verSolicitud(solicitud)" class="text-dark small">
                               <strong>Solicitud de {{ solicitud.colegio }}</strong>
-                              <span class="text-danger"> se ha vencido.</span>
-                              <br />
-                              <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
-                            </a>
-
-                            <a (click)="verSolicitud(solicitud)" class="text-dark small" *ngIf="solicitud.porVencer && !solicitud.vencida">
-                              <strong>Solicitud de {{ solicitud.colegio }}</strong>
-                              <span class="text-warning"> está por vencer.</span>
+                                <span class="text-danger" *ngIf="solicitud.desestimado"> se ha DESESTIMADO.</span>
+                                <span class="text-danger" *ngIf="solicitud.vencida"> se ha VENCIDO.</span>
+                                <span class="text-warning" *ngIf="solicitud.porVencer"> está por VENCER.</span>
+                                <span class="text-warning" *ngIf="solicitud.porBaja"> se pidio la BAJA.</span>
+                                <span class="text-danger" *ngIf="solicitud.dadaDeBaja"> se ha dado de BAJA.</span>
+                                <span class="text-success" *ngIf="solicitud.resuelta"> se ha RESUELTO.</span>
                               <br />
                               <span class="text-muted d-block mt-1">{{ solicitud.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
                             </a>

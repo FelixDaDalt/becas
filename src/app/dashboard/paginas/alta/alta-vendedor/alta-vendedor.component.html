@@ -1,0 +1,87 @@
+<h2 class="small-title"></h2>
+
+<div class="card">
+  <img src="/assets/img/background/blue.jpg" class="card-img-top" alt="card image" style="height: 75px;">
+  <div class="card-img-overlay d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="display-4 text-white"><strong>Nuevo vendedor</strong></h1>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="card wizard h-100">
+      <div class="card-body">
+        <form [formGroup]="wizardForm">
+            <h5>Vendedor</h5>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-person-fill"></i></span>
+                    <input class="form-control form-control-sm" formControlName="nombre" placeholder="Ingrese nombre">
+                  </div>
+                  <span class="ms-5 text-primary">Nombre</span>
+                  <app-error-formulario [control]="wizardForm.get('nombre')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-person-lines-fill"></i></span>
+                    <input class="form-control form-control-sm" formControlName="apellido" placeholder="Ingrese apellido">
+                  </div>
+                  <span class="ms-5 text-primary">Apellido</span>
+                  <app-error-formulario [control]="wizardForm.get('apellido')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-6 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-card-checklist"></i></span>
+                    <input class="form-control form-control-sm" formControlName="dni" placeholder="Ingrese DNI" (blur)="comprobarDni()">
+                  </div>
+                  <span class="ms-5 text-primary">DNI</span>
+                  <app-error-formulario [control]="wizardForm.get('dni')" [checkDisponibilidad]="true"></app-error-formulario>
+                </label>
+              </div>
+
+              <div class="col-12 col-md-4 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-telephone"></i></span>
+                    <input class="form-control form-control-sm" formControlName="telefono" placeholder="Ingrese telefono">
+                  </div>
+                  <span class="ms-5 text-primary">Telefono</span>
+                  <app-error-formulario [control]="wizardForm.get('telefono')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-4 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-phone"></i></span>
+                    <input class="form-control form-control-sm" formControlName="celular" placeholder="Ingrese celular">
+                  </div>
+                  <span class="ms-5 text-primary">Celular</span>
+                  <app-error-formulario [control]="wizardForm.get('celular')"></app-error-formulario>
+                </label>
+              </div>
+              <div class="col-12 col-md-4 mb-3">
+                <label class="top-label">
+                  <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="text-primary bi bi-envelope-at"></i></span>
+                    <input class="form-control form-control-sm" formControlName="email" placeholder="Ingrese Email">
+                  </div>
+                  <span class="ms-5 text-primary">Email</span>
+                  <app-error-formulario [control]="wizardForm.get('email')"></app-error-formulario>
+                </label>
+              </div>
+            </div>
+        </form>
+      </div>
+
+      <div class="card-footer text-center border-0 pt-1">
+        <button (click)="cancelar()" class="btn btn-outline-danger me-2">Cancelar</button>
+        <app-boton-cargando (action)="submitForm()" label="Enviar"></app-boton-cargando>
+      </div>
+    </div>
+  </div>
+</div>

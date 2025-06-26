@@ -44,6 +44,12 @@ const routes: Routes = [
       loadChildren: () => import('./contenido/autorizados/autorizados-tab.module').then(m => m.AutorizadosTabModule)
     },
     {
+      path:'vendedores',
+      canActivate: [RoleGuard],
+      data: { roles: [0] },
+      loadChildren: () => import('./contenido/vendedores/vendedores.module').then(m => m.VendedoresModule)
+    },
+    {
       path:'tablon',
       canActivate: [RoleGuard],
       data: { roles: [0] },

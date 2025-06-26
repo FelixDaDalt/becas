@@ -142,15 +142,18 @@ export class BecaService {
   }
 
   resolver(idRed:number,resolucion:any){
-    this.http
+    return this.http
       .post(`${environment.apiUrl}${environment.endpoint.beca.resolver}?idRed=${idRed}`,resolucion)
       .pipe(
-        map((respuesta: any) => respuesta.data),
-        take(1))
-      .subscribe(respuesta=>{
-        this.obtenerSolicitudDetalle(idRed,resolucion.id_solicitud)
-        this.obtenerSolicitudes(idRed,-1)})
-        this.redService.obtenerMeRed(idRed)
+          take(1),
+          map((respuesta: any) => respuesta.data),
+          tap(()=>{
+            this.obtenerSolicitudDetalle(idRed,resolucion.id_solicitud)
+            this.obtenerSolicitudes(idRed,-1)
+            this.redService.obtenerMeRed(idRed)
+          })
+        )
+
   }
 
   desestimar(idRed:number,desestimar:any){

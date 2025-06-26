@@ -1,7 +1,6 @@
 export interface Solicitudes {
   id: number
   fecha: string
-  sinLeer: boolean
   estado: Estado
   solicitante: Solicitante
   colegioSolicitado: string

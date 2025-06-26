@@ -10,6 +10,14 @@ export class ComprobarService {
 
   constructor(private http: HttpClient) { }
 
+  comprobarDniVendedor(dni:string) : Observable<boolean>{
+    return this.http.get<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.admin.comprobar}?dniVendedor=${dni}`).pipe(
+      map(
+        (respuesta:any) => respuesta.disponible
+      ),
+      take(1))
+  }
+
   comprobarDniAutorizado(dni:string) : Observable<boolean>{
     return this.http.get<{ disponible: boolean }>(`${environment.apiUrl}${environment.endpoint.admin.comprobar}?dniAutorizado=${dni}`).pipe(
       map(
