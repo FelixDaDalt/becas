@@ -12,8 +12,8 @@ import { usuarioService } from 'src/servicios/usuario.service';
 })
 export class AuthService {
 
-  private tokenKey = 'auth_token';
-  private expirationKey = 'token_expiration';
+  private tokenKey = 'auth_token_demo';
+  private expirationKey = 'token_expiration_demo';
   private currentUserSubject: BehaviorSubject<CurrentUser | null>;
   public currentUser: Observable<CurrentUser | null>;
 

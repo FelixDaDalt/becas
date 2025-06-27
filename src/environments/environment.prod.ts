@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://rib.tecnohilet.com.ar/api',
-  fileUrl: 'https://rib.tecnohilet.com.ar/file',
+  apiUrl: 'https://rib.tecnohilet.com.ar/apiDemo',
+  fileUrl: 'https://rib.tecnohilet.com.ar/fileDemo',
   featureFlag: false,
   endpoint: {
     zona: {
